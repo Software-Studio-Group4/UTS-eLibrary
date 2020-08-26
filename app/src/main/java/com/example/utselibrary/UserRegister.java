@@ -26,7 +26,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -154,7 +156,7 @@ public class UserRegister extends AppCompatActivity {
         String userPass = getPass();
 
 
-        EditText firstNameTf, lastNameTf, courseTf, phoneNumberTf;
+        EditText firstNameTf, lastNameTf, uniIDTf, phoneNumberTf;
         Button nextBtn3, backBtn3;
         ProgressBar progressBar;
 
@@ -172,7 +174,7 @@ public class UserRegister extends AppCompatActivity {
             backBtn3 = findViewById(R.id.backBtn3);
             firstNameTf = findViewById(R.id.firstNameTf);
             lastNameTf = findViewById(R.id.lastNameTf);
-            courseTf = findViewById(R.id.courseTf);
+            uniIDTf = findViewById(R.id.uniIDTf);
             phoneNumberTf = findViewById(R.id.phoneNumberTf);
             progressBar = findViewById(R.id.progressBar);
             progressBar.setVisibility(View.INVISIBLE);
@@ -213,7 +215,7 @@ public class UserRegister extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
                     final String firstName = firstNameTf.getText().toString().trim();
                     final String lastName = lastNameTf.getText().toString().trim();
-                    final String course = courseTf.getText().toString().trim();
+                    final String uniID = uniIDTf.getText().toString().trim();
                     final String phoneNumber = phoneNumberTf.getText().toString().trim();
 
 
@@ -236,8 +238,8 @@ public class UserRegister extends AppCompatActivity {
                         return;
                     }
 
-                    if (TextUtils.isEmpty(course)) {
-                        courseTf.setError("Cannot have Empty Field");
+                    if (TextUtils.isEmpty(uniID)) {
+                        uniIDTf.setError("Cannot have Empty Field");
                         progressBar.setVisibility(View.INVISIBLE);
                         nextBtn3.setVisibility(View.VISIBLE);
                         return;
@@ -251,11 +253,21 @@ public class UserRegister extends AppCompatActivity {
                                 userID = fAuth.getCurrentUser().getUid();
                                 DocumentReference documentReference = fStore.collection("Users").document(userID);
                                 Map<String, Object> user = new HashMap<>();
-                                user.put("Email", userEmail);
-                                user.put("First Name", firstName);
-                                user.put("Last Name", lastName);
-                                user.put("Phone Number", phoneNumber);
-                                user.put("Course", course);
+                               //form filled fields
+                                user.put("emailAddress", userEmail);
+                                user.put("firstName", firstName);
+                                user.put("lastName", lastName);
+                                user.put("phoneNumber", phoneNumber);
+                                user.put("uniID", uniID);
+
+
+                                //non-form fields
+                                user.put("isSuspended", false);
+                                user.put("maxAllowed", 5);
+                                user.put("borrowAmount", 0);
+                                user.put("borrowedDocs", new ArrayList<Map>());
+                                user.put("borrowHistory", new ArrayList<Map>());
+
                                 documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {

@@ -114,14 +114,14 @@
         app:layout_constraintTop_toBottomOf="@+id/pleasefilldetails" />
 
     <EditText
-        android:id="@+id/courseTf"
+        android:id="@+id/uniIDTf"
         android:layout_width="205dp"
         android:layout_height="38dp"
         android:layout_marginTop="16dp"
         android:background="#FFFFFF"
         android:ems="100"
         android:fontFamily="sans-serif-light"
-        android:hint="Course"
+        android:hint="Student or Staff ID"
         android:paddingLeft="5sp"
         android:paddingRight="5sp"
         android:text=""
