@@ -259,6 +259,7 @@ public class UserRegister extends AppCompatActivity {
                                 user.put("lastName", lastName);
                                 user.put("phoneNumber", phoneNumber);
                                 user.put("uniID", uniID);
+                                user.put("isLecturuer", false);
 
 
                                 //non-form fields
