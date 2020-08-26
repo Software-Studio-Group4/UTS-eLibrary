@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Dashboard"></activity>
+        <activity android:name=".ProfilePage"></activity>
+        <activity android:name=".Dashboard" />
         <activity android:name=".UserLogin" />
         <activity android:name=".UserRegister" />
         <activity android:name=".UserRegister$RegisterFinishPge" />
