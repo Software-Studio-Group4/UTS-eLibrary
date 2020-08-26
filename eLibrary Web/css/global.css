@@ -1,0 +1,113 @@
+/*
+*contains root colours, and header styling
+*/
+
+:root {
+    --background-blue: rgb(103, 120, 196); 
+    --main-yellow: rgba(255,188,100,1);
+    --main-blue: rgba(97,120,225,1);
+    --darker-blue: rgba(68,74,129,1);
+    --accent-red:  rgba(191,16,16,1);
+}
+body{
+    background: var(--background-blue);
+}
+.Header{
+	position: fixed;
+	width: 100vw;
+	height: 84.33px;
+	left: 0px;
+	top: 0px;
+    overflow: hidden;
+    background: white;
+    filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.161));
+}
+#headerbtns {
+	position: absolute; 
+	overflow: hidden;
+	width: 315px; 
+	height: 100%; 
+	right: 45px;
+}
+#headerLogo{
+    position: absolute;
+    height: 95%;
+    top: 5%;
+    width: auto;
+    left: 40px;
+    cursor: pointer;
+}
+#headerLogo:hover{
+    top: 6%;
+    transition: 0.3s;
+}
+.headerbtn {
+	height: 70%;
+	width: 150px; 
+	position: absolute;
+	text-align: center;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 25px;
+	cursor: pointer;
+	background: white;
+	border-style:solid;
+	border-width: 0.05%; 
+	border-radius: 40px; 
+	filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.161));
+	outline: none;
+}
+.headerbtn:hover{
+    transition: 0.6s;
+    color: #fff;
+}
+
+#registerbtn{
+    border-color: var(--main-yellow);
+	color: var(--main-yellow);
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 1;
+	margin: auto;
+}
+
+#loginbtn{
+	border-color: var(--main-blue);
+	color: var(--main-blue);
+	top:0;
+	bottom: 0;
+	left: 1;
+	right: 0;
+	margin: auto;
+	
+}
+#registerbtn:hover{
+	color: #fff;
+	border-color: var(--main-yellow);
+	background: var(--main-yellow);
+}
+
+#loginbtn:hover{
+	color: #fff;
+	border-color: var(--main-blue);
+	background: var(--main-blue);
+}
+
+.dashedAccentsvg{
+    transform: matrix(1,0,0,1,0,0);
+    width: 1500px;
+    height: 4vh;
+}
+.dashedAccentpath{
+    fill: transparent;
+	stroke: var(--accent-red);
+	stroke-width: 5px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-dasharray: 3 20;
+	stroke-dashoffset: 0;
+	stroke-miterlimit: 5;
+    shape-rendering: auto;
+}
