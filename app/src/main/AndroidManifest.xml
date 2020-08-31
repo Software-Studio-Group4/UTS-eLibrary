@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BookDetails"></activity>
+        <activity android:name=".AdminDashboard"></activity>
+        <activity android:name=".AdminLogin" />
+        <activity android:name=".BookDetails" />
         <activity android:name=".ProfilePage" />
         <activity android:name=".Dashboard" />
         <activity android:name=".UserLogin" />
