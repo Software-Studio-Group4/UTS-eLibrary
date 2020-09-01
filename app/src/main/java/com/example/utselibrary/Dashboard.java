@@ -7,9 +7,13 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import maes.tech.intentanim.CustomIntent;
+
 public class Dashboard extends AppCompatActivity {
 
-    Button profileBtn,bookBtn;
+    Button profileBtn, bookBtn, logoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +21,15 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard2);
         profileBtn = findViewById(R.id.profileBtn);
         bookBtn = findViewById(R.id.bookBtn);
+        logoutBtn = findViewById(R.id.logoutBtn);
+    }
 
+    protected void onStart() {
+        super.onStart();
+    }
+
+    protected void onResume() {
+        super.onResume();
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,5 +43,32 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), BookDetails.class));
             }
         });
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                CustomIntent.customType(Dashboard.this, "right-to-left");
+                finish();
+            }
+        });
     }
+
+    protected void onPause() {
+        super.onPause();
+    }
+
+    protected void onStop() {
+        super.onStop();
+    }
+
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
 }
