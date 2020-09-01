@@ -35,5 +35,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent (getApplicationContext(), UserLogin.class));
             }
         });
+        adminBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), AdminLogin.class));
+            }
+        });
+    }
+    public void backBtnPressed (View view) {
+        finish();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 }
