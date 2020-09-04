@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:132112122626:android:f61ffbe5fe2f8292b6f81b",
         "android_client_info": {
-          "package_name": "com.example.myapplication"
+          "package_name": "com.example.utselibrary"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "132112122626-bohqs8du8523r9dilstgf27r61djm9rb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.myapplication",
+            "package_name": "com.example.utselibrary",
             "certificate_hash": "4880bc21da7413a7e55e2d3208aa6e25de0b4498"
           }
         },
@@ -51,6 +51,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "132112122626-6agfp3ocru91m4vouskt379sdl80qlav.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.utselibrary",
+            "certificate_hash": "4880bc21da7413a7e55e2d3208aa6e25de0b4498"
+          }
+        },
         {
           "client_id": "132112122626-q66vbgm2mpl277imem5ju464gugijl2g.apps.googleusercontent.com",
           "client_type": 1,

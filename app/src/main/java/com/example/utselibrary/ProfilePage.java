@@ -36,6 +36,7 @@ public class ProfilePage extends AppCompatActivity {
         uniIdTf = findViewById(R.id.uniIdTf);
         totalFinesTf = findViewById(R.id.totalFinesTf);
         backBtn = findViewById(R.id.backBtn);
+        changeDetailsBtn = findViewById(R.id.changeDetBtn);
 
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
@@ -68,6 +69,13 @@ public class ProfilePage extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Dashboard.class));
             }
         });
+        changeDetailsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ChangeDetails.class));
+            }
+        });
+
     }
     public void logout(View view) {
         FirebaseAuth.getInstance().signOut();
