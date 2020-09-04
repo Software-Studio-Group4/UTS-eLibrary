@@ -37,6 +37,7 @@ public class ProfilePage extends AppCompatActivity {
         totalFinesTf = findViewById(R.id.totalFinesTf);
         backBtn = findViewById(R.id.backBtn);
         changeDetailsBtn = findViewById(R.id.changeDetBtn);
+        changePassBtn = findViewById(R.id.changePassBtn);
 
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
@@ -73,6 +74,13 @@ public class ProfilePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), ChangeDetails.class));
+            }
+        });
+
+        changePassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ChangePassword.class));
             }
         });
 
