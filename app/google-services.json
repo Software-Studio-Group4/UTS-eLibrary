@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "132112122626",
+    "firebase_url": "https://uts-elibrary.firebaseio.com",
+    "project_id": "uts-elibrary",
+    "storage_bucket": "uts-elibrary.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132112122626:android:f61ffbe5fe2f8292b6f81b",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132112122626-bohqs8du8523r9dilstgf27r61djm9rb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "4880bc21da7413a7e55e2d3208aa6e25de0b4498"
+          }
+        },
+        {
+          "client_id": "132112122626-ln514e800qo5cpl896tnh334os9n0i7v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8H-uIVYYYrx8RhsxN4IxUKlmTop0Pbf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132112122626-ln514e800qo5cpl896tnh334os9n0i7v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132112122626:android:3f36b37f3c8d520cb6f81b",
+        "android_client_info": {
+          "package_name": "com.example.utselibrary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132112122626-q66vbgm2mpl277imem5ju464gugijl2g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.utselibrary",
+            "certificate_hash": "0cdc86d3ee54d3c40f7608100424c86bff41006a"
+          }
+        },
+        {
+          "client_id": "132112122626-kh4g32ucd2a5p5v1mlratuubsa3fq5l9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.utselibrary",
+            "certificate_hash": "e9d53ef7dd7ba696b264398287a558b1633afc82"
+          }
+        },
+        {
+          "client_id": "132112122626-ln514e800qo5cpl896tnh334os9n0i7v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8H-uIVYYYrx8RhsxN4IxUKlmTop0Pbf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132112122626-ln514e800qo5cpl896tnh334os9n0i7v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
