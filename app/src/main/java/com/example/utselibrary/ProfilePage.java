@@ -80,7 +80,7 @@ public class ProfilePage extends AppCompatActivity {
         changePassBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ChangePassword.class));
+            //    startActivity(new Intent(getApplicationContext(), ChangePassword.class));
             }
         });
 

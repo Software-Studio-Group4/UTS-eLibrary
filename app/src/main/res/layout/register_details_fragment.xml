@@ -59,7 +59,7 @@
         android:autofillHints=""
         android:backgroundTint="#575757"
         android:ems="10"
-        android:hint="Last name"
+        android:hint="Surname"
         android:inputType="textPersonName"
         android:text=""
         android:textColor="#575757"

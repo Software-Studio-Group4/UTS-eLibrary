@@ -33,7 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
         Fragment EmailPassFragment = new RegisterEmailPassFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.add(R.id.flFragment, EmailPassFragment);
+        fragmentTransaction
+                .setCustomAnimations(R.anim.left_to_right, R.anim.exit_right_to_left)
+                .add(R.id.flFragment, EmailPassFragment);
         fragmentTransaction.commit();
     }
 

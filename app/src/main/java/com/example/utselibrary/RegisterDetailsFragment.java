@@ -125,6 +125,10 @@ public class RegisterDetailsFragment extends Fragment {
         final String password = EmailPassBundle.getString("password");
         final boolean isLecturer = EmailPassBundle.getBoolean("isLecturer");
 
+        if (isLecturer) {
+            uniIDTf.setHint("Staff ID");
+        }
+
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

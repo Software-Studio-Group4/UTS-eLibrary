@@ -2,13 +2,18 @@ package com.example.utselibrary;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,13 +32,9 @@ import maes.tech.intentanim.CustomIntent;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText emailTf, passwordTf;
-    Button loginBtn;
-    TextView registerText, forgotPassText;
-    ProgressBar progressBar;
+    TextView registerText;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +46,16 @@ public class MainActivity extends AppCompatActivity {
         fStore.setFirestoreSettings(settings);
 
         // Get views
-        emailTf = findViewById(R.id.emailTf);
-        passwordTf = findViewById(R.id.passwordTf);
-        forgotPassText = findViewById(R.id.forgotPassText);
-        loginBtn = findViewById(R.id.loginBtn);
         registerText = findViewById(R.id.registerText);
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
+
+        // Fragment initialized
+        Fragment LoginFragment = new LoginFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction
+                .setCustomAnimations(R.anim.bottom_to_top, R.anim.exit_bottom_to_top)
+                .add(R.id.flFragment, LoginFragment);
+        fragmentTransaction.commit();
     }
 
     protected void onStart() {
@@ -60,64 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = emailTf.getText().toString().trim();
-                String password = passwordTf.getText().toString().trim();
-
-                if (TextUtils.isEmpty(email)) {
-                    emailTf.setError("Enter your SWUT email");
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    passwordTf.setError("Enter your password");
-                    return;
-                }
-
-                loginBtn.setVisibility(View.INVISIBLE);
-                progressBar.setVisibility(View.VISIBLE);
-
-                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            userID = fAuth.getCurrentUser().getUid();
-                            DocumentReference adminRef = fStore.collection("Admin").document(userID);
-                            adminRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    if (documentSnapshot.exists()) {
-                                        startActivity(new Intent(getApplicationContext(), AdminDashboard.class));
-                                        CustomIntent.customType(MainActivity.this, "left-to-right");
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        loginBtn.setVisibility(View.VISIBLE);
-                                        finish();
-                                    } else {
-                                        startActivity(new Intent(getApplicationContext(), Dashboard.class));
-                                        CustomIntent.customType(MainActivity.this, "left-to-right");
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        loginBtn.setVisibility(View.VISIBLE);
-                                    }
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(MainActivity.this, "Database Error", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                    loginBtn.setVisibility(View.VISIBLE);
-                                }
-                            });
-
-                        } else {
-                            Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.INVISIBLE);
-                            loginBtn.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-            }
-        });
 
         registerText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     protected void onPause() {
