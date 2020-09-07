@@ -52,9 +52,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment LoginFragment = new LoginFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction
-               // .setCustomAnimations(R.anim.bottom_to_top, R.anim.exit_bottom_to_top)
-                .add(R.id.flFragment, LoginFragment);
+        fragmentTransaction.add(R.id.flFragment, LoginFragment);
         fragmentTransaction.commit();
     }
 
