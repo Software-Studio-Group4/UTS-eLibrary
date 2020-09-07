@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="400dp"
     android:layout_height="450dp"
-    android:background="@drawable/forgotpass_fbg"
+    android:background="@drawable/homepage_fbg"
     tools:context=".ForgotPassFragment">
 
 
