@@ -103,8 +103,10 @@ public class RegisterEmailPassFragment extends Fragment {
                     return;
                 }
 
+               /*
+               UNCOMMENT TO ENABLE
                 // Checks if email contains university email handler
-                if (email.contains("@student.swut.edu.au") || email.contains("@staff.swut.edu.au")) {
+               if (email.contains("@student.swut.edu.au") || email.contains("@staff.swut.edu.au")) {
                     if (email.contains("@staff.swut.edu.au")) {
                         isLecturer = true;
                     } else {
@@ -114,6 +116,7 @@ public class RegisterEmailPassFragment extends Fragment {
                     emailTf.setError("Please enter your SWUT email");
                     return;
                 }
+                */
 
                 if (TextUtils.isEmpty(password)) {
                     passwordTf.setError("Please choose a strong password");
