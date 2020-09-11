@@ -16,6 +16,7 @@
         <activity android:name=".ProfilePage" />
         <activity android:name=".Dashboard" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".SearchBook" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

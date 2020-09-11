@@ -13,7 +13,7 @@ import maes.tech.intentanim.CustomIntent;
 
 public class Dashboard extends AppCompatActivity {
 
-    Button profileBtn, bookBtn, logoutBtn;
+    Button profileBtn, bookBtn, logoutBtn, searchBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,8 @@ public class Dashboard extends AppCompatActivity {
         profileBtn = findViewById(R.id.profileBtn);
         bookBtn = findViewById(R.id.bookBtn);
         logoutBtn = findViewById(R.id.logoutBtn);
+        searchBtn = findViewById(R.id.searchBook);
+
     }
 
     protected void onStart() {
@@ -51,6 +53,12 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 CustomIntent.customType(Dashboard.this, "right-to-left");
                 finish();
+            }
+        });
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SearchBook.class));
             }
         });
     }
