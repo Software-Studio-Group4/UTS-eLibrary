@@ -30,6 +30,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import maes.tech.intentanim.CustomIntent;
 
+/**********************************************************************************************
+ * Parent activity for homepage
+ * manipulates the activity where login and forgot password fragments are contained
+ ************************************************************************************************/
+
 public class MainActivity extends AppCompatActivity {
 
     TextView registerText;
@@ -71,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     protected void onPause() {

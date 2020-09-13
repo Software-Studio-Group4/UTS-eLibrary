@@ -76,12 +76,12 @@ public class ForgotPassFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // Get parent views
         registerText = getActivity().findViewById(R.id.registerText);
-        registerText.setVisibility(View.INVISIBLE);
+
         // Get fragment views
         resetBtn = getView().findViewById(R.id.resetBtn);
         closeBtn = getView().findViewById(R.id.closeBtn);
         emailTf = getView().findViewById(R.id.emailTf);
-        progressBar =getView().findViewById(R.id.progressBar);
+        progressBar = getView().findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
         fAuth = FirebaseAuth.getInstance();
@@ -128,7 +128,7 @@ public class ForgotPassFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
                 fragmentTransaction
-                        .setCustomAnimations(R.anim.bottom_to_top, R.anim.exit_bottom_to_top)
+                        .setCustomAnimations(R.anim.bottom_to_up, R.anim.exit_bottom_to_top)
                         .replace(R.id.flFragment, LoginFragment);
                 fragmentTransaction.commit();
                 onStop();

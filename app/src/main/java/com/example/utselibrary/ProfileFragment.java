@@ -10,13 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import javax.annotation.Nullable;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class RegisterCompleteFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
-    Button nextBtn;
+    Button logoutBtn;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -24,12 +26,10 @@ public class RegisterCompleteFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public RegisterCompleteFragment() {
-        // Required empty public constructor
-    }
+    public ProfileFragment() { }
 
-    public static RegisterCompleteFragment newInstance(String param1, String param2) {
-        RegisterCompleteFragment fragment = new RegisterCompleteFragment();
+    public static ProfileFragment newInstance(String param1, String param2) {
+        ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -50,23 +50,25 @@ public class RegisterCompleteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.register_complete_fragment, container, false);
+        return inflater.inflate(R.layout.profile_fragment, container, false);
     }
 
     /**********************************************************************************************
-     * Register Complete Fragment
-     * manipulates the fragment where user is notified about registration completion
+     * User Profile Fragment
+     * manipulates the fragment where the users profile is displayed
      ************************************************************************************************/
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        // Parent Activity views
-        nextBtn = getActivity().findViewById(R.id.nextBtn);
+        // Add code here for functionality
+        // Get views
+        logoutBtn = getView().findViewById(R.id.logoutBtn);
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MainActivity.class));
-                CustomIntent.customType(getActivity(), "fadein-to-fadeout");
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getContext(), MainActivity.class));
+                CustomIntent.customType(getContext(), "right-to-left");
                 getActivity().finish();
             }
         });

@@ -86,6 +86,7 @@ public class LoginFragment extends Fragment {
         // Get parent views
         registerText = getActivity().findViewById(R.id.registerText);
         registerText.setVisibility(View.VISIBLE);
+
         // Get fragment views
         loginBtn = getView().findViewById(R.id.loginBtn);
         emailTf = getView().findViewById(R.id.emailTf);
@@ -97,6 +98,7 @@ public class LoginFragment extends Fragment {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
+        // Initialize fragment manager
         final Fragment ForgotPassFragment = new ForgotPassFragment();
         final FragmentManager fm = getFragmentManager();
 
@@ -118,6 +120,7 @@ public class LoginFragment extends Fragment {
                 loginBtn.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
 
+                // Firebase sign in
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -132,13 +135,13 @@ public class LoginFragment extends Fragment {
                                         CustomIntent.customType(getActivity(), "left-to-right");
                                         progressBar.setVisibility(View.INVISIBLE);
                                         loginBtn.setVisibility(View.VISIBLE);
-                                        onStop();
+                                        getActivity().finish();
                                     } else {
-                                        startActivity(new Intent(getActivity(), Dashboard.class));
+                                        startActivity(new Intent(getActivity(), UserDashboard.class));
                                         CustomIntent.customType(getActivity(), "left-to-right");
                                         progressBar.setVisibility(View.INVISIBLE);
                                         loginBtn.setVisibility(View.VISIBLE);
-                                        onStop();
+                                        getActivity().finish();
                                     }
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -166,10 +169,9 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
                 fragmentTransaction
-                        .setCustomAnimations(R.anim.bottom_to_top, R.anim.exit_bottom_to_top)
+                        .setCustomAnimations(R.anim.bottom_to_up, R.anim.exit_bottom_to_top)
                         .replace(R.id.flFragment, ForgotPassFragment);
                 fragmentTransaction.commit();
-                onStop();
             }
         });
 
