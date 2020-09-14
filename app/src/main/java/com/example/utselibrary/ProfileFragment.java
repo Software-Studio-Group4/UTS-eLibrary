@@ -1,16 +1,28 @@
 package com.example.utselibrary;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import javax.annotation.Nullable;
 
@@ -18,7 +30,12 @@ import maes.tech.intentanim.CustomIntent;
 
 public class ProfileFragment extends Fragment {
 
-    Button logoutBtn;
+    TextView userNameTf, emailTf, mobileNumTf, logoutText;
+    ImageView logoutIcon, logoutCtn;
+    FirebaseAuth fAuth = FirebaseAuth.getInstance();
+    FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    String userID = fAuth.getCurrentUser().getUid();
+    DocumentReference userDocRef = fStore.collection("Users").document(userID);
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -26,7 +43,8 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ProfileFragment() { }
+    public ProfileFragment() {
+    }
 
     public static ProfileFragment newInstance(String param1, String param2) {
         ProfileFragment fragment = new ProfileFragment();
@@ -61,16 +79,77 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // Add code here for functionality
         // Get views
-        logoutBtn = getView().findViewById(R.id.logoutBtn);
+        userNameTf = getView().findViewById(R.id.userNameTf);
+        emailTf = getView().findViewById(R.id.emailTf);
+        mobileNumTf = getView().findViewById(R.id.mobileNumTf);
+        logoutText = getView().findViewById(R.id.logoutText);
+        logoutCtn = getView().findViewById(R.id.logoutCtn);
+        logoutIcon = getView().findViewById(R.id.logoutIcon);
 
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
+        userDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    String firstName = documentSnapshot.getString("firstName");
+                    String lastName = documentSnapshot.getString("lastName");
+                    String emailAddress = documentSnapshot.getString("emailAddress");
+                    String mobileNum = documentSnapshot.getString("phoneNumber");
+                    String uniID = documentSnapshot.getString("uniID");
+
+                    String userName = firstName + " " + lastName + " ";
+                    userNameTf.setText(userName + "(" + uniID + ")");
+                    emailTf.setText(emailAddress);
+                    mobileNumTf.setText(mobileNum);
+                } else {
+                    Toast.makeText(getContext(), "Error: Details cannot be displayed", Toast.LENGTH_LONG).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Error: Details cannot be displayed", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        logoutText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getContext(), MainActivity.class));
-                CustomIntent.customType(getContext(), "right-to-left");
+                CustomIntent.customType(getContext(), "fadein-to-fadeout");
                 getActivity().finish();
             }
         });
+
+        logoutCtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getContext(), MainActivity.class));
+                CustomIntent.customType(getContext(), "fadein-to-fadeout");
+                getActivity().finish();
+            }
+        });
+
+        logoutIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getContext(), MainActivity.class));
+                CustomIntent.customType(getContext(), "fadein-to-fadeout");
+                getActivity().finish();
+            }
+        });
+    }
+
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    public void onResume() {
+        super.onResume();
     }
 }
