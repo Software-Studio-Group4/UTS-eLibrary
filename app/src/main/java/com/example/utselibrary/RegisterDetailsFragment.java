@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -142,6 +144,7 @@ public class RegisterDetailsFragment extends Fragment {
 
                 if (TextUtils.isEmpty(firstName)) {
                     firstNameTf.setError("Please enter your first name");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(firstNameTf);
                     progressBar.setVisibility(View.INVISIBLE);
                     nextBtn.setVisibility(View.VISIBLE);
                     return;
@@ -149,6 +152,7 @@ public class RegisterDetailsFragment extends Fragment {
 
                 if (TextUtils.isEmpty(lastName)) {
                     lastNameTf.setError("Please enter your last name");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(lastNameTf);
                     progressBar.setVisibility(View.INVISIBLE);
                     nextBtn.setVisibility(View.VISIBLE);
                     return;
@@ -156,6 +160,7 @@ public class RegisterDetailsFragment extends Fragment {
 
                 if (TextUtils.isEmpty(uniID)) {
                     uniIDTf.setError("Please enter your university ID");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(uniIDTf);
                     progressBar.setVisibility(View.INVISIBLE);
                     nextBtn.setVisibility(View.VISIBLE);
                     return;
@@ -163,6 +168,7 @@ public class RegisterDetailsFragment extends Fragment {
 
                 if (TextUtils.isEmpty(mobileNumber)) {
                     mobileNumTf.setError("Please enter your mobile number");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(mobileNumTf);
                     progressBar.setVisibility(View.INVISIBLE);
                     nextBtn.setVisibility(View.VISIBLE);
                     return;

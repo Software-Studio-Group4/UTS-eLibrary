@@ -19,6 +19,11 @@ public class Documents {
     @PropertyName("publicationDate") public Timestamp publicationDate;
     @PropertyName("currentBorrowed") public int currentBorrowed;
     @PropertyName("maxBorrowable") public int maxBorrowable;
+
+    public Documents() {
+        // Empty constructor
+    }
+
     public Documents(String title, String ISBN, String documentType, String genre, String internalID, String publishLocation, String publisher, String releaseEdition, ArrayList<Authors> authors, ArrayList<String> borrowers, Timestamp publicationDate, int currentBorrowed, int maxBorrowable) {
         this.title = title;
         this.ISBN = ISBN;

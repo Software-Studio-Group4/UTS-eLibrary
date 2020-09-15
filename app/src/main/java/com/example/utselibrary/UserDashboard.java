@@ -1,6 +1,5 @@
 package com.example.utselibrary;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,8 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import maes.tech.intentanim.CustomIntent;
 
 /**********************************************************************************************
  * Parent Activity for User Dashboard
@@ -35,7 +32,7 @@ public class UserDashboard extends AppCompatActivity {
         Fragment LibraryFragment = new LibraryFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.add(R.id.flFragment, LibraryFragment).addToBackStack(null);
+        fragmentTransaction.add(R.id.flFragment, LibraryFragment);
         fragmentTransaction.commit();
     }
 
@@ -62,7 +59,7 @@ public class UserDashboard extends AppCompatActivity {
                 libraryBtn.setBackgroundResource(R.drawable.library_button);
                 searchBtn.setBackgroundResource(R.drawable.search_button_pressed);
                 profileBtn.setBackgroundResource(R.drawable.profile_button);
-                loadFragment((new SearchFragment()));
+                loadFragment((new BrowseFragment()));
             }
         });
 
@@ -94,7 +91,7 @@ public class UserDashboard extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction
-                .replace(R.id.flFragment, fragment).addToBackStack(null);
+                .replace(R.id.flFragment, fragment);
         fragmentTransaction.commit();
     }
 }

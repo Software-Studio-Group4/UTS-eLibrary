@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -93,13 +95,15 @@ public class ForgotPassFragment extends Fragment {
 
                 if (TextUtils.isEmpty(email)) {
                     emailTf.setError("PLease enter your SWUT email");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(emailTf);
                     return;
                 }
 
                 if (email.contains("@student.swut.edu.au") || email.contains("@staff.swut.edu.au")) {
-                    ;
+
                 } else {
                     emailTf.setError("Please enter your SWUT email");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(emailTf);
                     return;
                 }
 

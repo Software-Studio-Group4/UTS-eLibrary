@@ -23,6 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,7 +44,7 @@ public class LoginFragment extends Fragment {
 
     Button loginBtn;
     EditText emailTf, passwordTf;
-    TextView forgotPassTV, registerText;
+    TextView forgotPassTV;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -151,10 +153,12 @@ public class LoginFragment extends Fragment {
 
                 if (TextUtils.isEmpty(email)) {
                     emailTf.setError("Enter your SWUT email");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(emailTf);
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
                     passwordTf.setError("Enter your password");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(passwordTf);
                     return;
                 }
 

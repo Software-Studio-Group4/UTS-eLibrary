@@ -41,6 +41,7 @@
         android:layout_width="362dp"
         android:layout_height="154dp"
         android:clickable="true"
+        android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:src="@drawable/profile_page_details_container"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,24 +49,23 @@
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.124"
-        tools:ignore="MissingConstraints"
-        android:focusable="true" />
+        app:layout_constraintVertical_bias="0.102"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/finesCtn"
         android:layout_width="362dp"
         android:layout_height="110dp"
-        android:layout_marginTop="192dp"
+        android:layout_marginTop="176dp"
         android:clickable="true"
+        android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:src="@drawable/profile_page_fines_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        android:focusable="true" />
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/nextBtnFines"
@@ -212,12 +212,12 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="22dp"
         android:clickable="true"
+        android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:text="Change your password"
+        android:text="Change password"
         android:textColor="#444A81"
         app:layout_constraintStart_toStartOf="@+id/changePassCtn"
-        app:layout_constraintTop_toTopOf="@+id/changePassCtn"
-        android:focusable="true" />
+        app:layout_constraintTop_toTopOf="@+id/changePassCtn" />
 
     <TextView
         android:id="@+id/logoutText"

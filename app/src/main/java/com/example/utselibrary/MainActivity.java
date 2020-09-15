@@ -14,10 +14,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     TextView registerText;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+    ImageView bookIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Get views
         registerText = findViewById(R.id.registerText);
+        bookIcon = findViewById(R.id.bookIcon);
 
         // Fragment initialized
         Fragment LoginFragment = new LoginFragment();
@@ -74,6 +79,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
                 CustomIntent.customType(MainActivity.this, "fadein-to-fadeout");
                 finish();
+            }
+        });
+
+        bookIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                YoYo.with(Techniques.Tada).duration(700).playOn(bookIcon);
             }
         });
     }

@@ -30,7 +30,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    implementation 'com.google.firebase:firebase-auth:19.3.2'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
     implementation 'com.google.firebase:firebase-firestore:21.6.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.material:material:1.2.1'
@@ -42,4 +42,5 @@ dependencies {
     implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
     implementation 'com.firebaseui:firebase-ui-database:6.3.0'
     implementation 'com.firebaseui:firebase-ui-firestore:6.3.0'
+    implementation 'com.daimajia.androidanimations:library:2.4@aar'
 }

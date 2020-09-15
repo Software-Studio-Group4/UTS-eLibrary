@@ -1,11 +1,16 @@
 package com.example.utselibrary.Model;
 
 public class Authors {
-    public String firstName, surname;
+    public String firstName, surname, fullName;
 
-    public Authors(String firstName, String surname) {
+    public Authors() {
+        // Empty constructor
+    }
+
+    public Authors(String firstName, String surname, String fullName) {
         this.firstName = firstName;
         this.surname = surname;
+        this.fullName = fullName;
     }
 
     public String getFirstName() {
@@ -23,4 +28,6 @@ public class Authors {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+
 }

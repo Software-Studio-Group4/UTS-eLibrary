@@ -13,13 +13,12 @@ import maes.tech.intentanim.CustomIntent;
 
 public class Dashboard extends AppCompatActivity {
 
-    Button profileBtn, bookBtn, logoutBtn, searchBtn;
+    Button bookBtn, logoutBtn, searchBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard2);
-        profileBtn = findViewById(R.id.profileBtn);
         bookBtn = findViewById(R.id.bookBtn);
         logoutBtn = findViewById(R.id.logoutBtn);
         searchBtn = findViewById(R.id.searchBook);
@@ -32,12 +31,6 @@ public class Dashboard extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ProfilePage.class));
-            }
-        });
 
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
