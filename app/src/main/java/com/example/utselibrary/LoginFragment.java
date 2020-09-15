@@ -1,6 +1,8 @@
 package com.example.utselibrary;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,11 +10,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.SharedMemory;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,6 +29,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +47,9 @@ public class LoginFragment extends Fragment {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
+
+    private String email;
+    private String password;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -83,9 +92,6 @@ public class LoginFragment extends Fragment {
      ************************************************************************************************/
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        // Get parent views
-        registerText = getActivity().findViewById(R.id.registerText);
-        registerText.setVisibility(View.VISIBLE);
 
         // Get fragment views
         loginBtn = getView().findViewById(R.id.loginBtn);
@@ -102,11 +108,46 @@ public class LoginFragment extends Fragment {
         final Fragment ForgotPassFragment = new ForgotPassFragment();
         final FragmentManager fm = getFragmentManager();
 
+        // Auto sign in user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            loginBtn.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+            Toast.makeText(getContext(), "Signing in, please wait", Toast.LENGTH_SHORT).show();
+            userID = fAuth.getCurrentUser().getUid();
+            DocumentReference adminRef = fStore.collection("Admin").document(userID);
+            adminRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        startActivity(new Intent(getActivity(), AdminDashboard.class));
+                        CustomIntent.customType(getActivity(), "left-to-right");
+                        progressBar.setVisibility(View.INVISIBLE);
+                        loginBtn.setVisibility(View.VISIBLE);
+                        getActivity().finish();
+                    } else {
+                        startActivity(new Intent(getActivity(), UserDashboard.class));
+                        CustomIntent.customType(getActivity(), "left-to-right");
+                        progressBar.setVisibility(View.INVISIBLE);
+                        loginBtn.setVisibility(View.VISIBLE);
+                        getActivity().finish();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Database Error", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    loginBtn.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailTf.getText().toString().trim();
-                String password = passwordTf.getText().toString().trim();
+                email = emailTf.getText().toString().trim();
+                password = passwordTf.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     emailTf.setError("Enter your SWUT email");

@@ -1,7 +1,9 @@
 package com.example.utselibrary;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -77,7 +79,6 @@ public class ProfileFragment extends Fragment {
      ************************************************************************************************/
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        // Add code here for functionality
         // Get views
         userNameTf = getView().findViewById(R.id.userNameTf);
         emailTf = getView().findViewById(R.id.emailTf);
@@ -144,12 +145,4 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    public void onPause() {
-        super.onPause();
-
-    }
-
-    public void onResume() {
-        super.onResume();
-    }
 }
