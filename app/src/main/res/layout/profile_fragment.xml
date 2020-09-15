@@ -19,7 +19,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:focusable="true" />
 
     <ImageView
         android:id="@+id/logoutCtn"
@@ -32,7 +33,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:focusable="true" />
 
     <ImageView
         android:id="@+id/userDetailsCtn"
@@ -47,7 +49,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.124"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:focusable="true" />
 
     <ImageView
         android:id="@+id/finesCtn"
@@ -61,7 +64,8 @@
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:focusable="true" />
 
     <ImageView
         android:id="@+id/nextBtnFines"
@@ -69,7 +73,9 @@
         android:layout_height="21dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
+        android:layout_marginBottom="5dp"
         android:clickable="true"
+        android:focusable="true"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/right_back_btn_blue"
         app:layout_constraintBottom_toBottomOf="@+id/finesCtn"
@@ -91,7 +97,8 @@
         app:layout_constraintEnd_toEndOf="@+id/userDetailsCtn"
         app:layout_constraintTop_toBottomOf="@+id/userDetailsCtn"
         app:layout_constraintVertical_bias="0.515"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/userNameTf"
@@ -194,7 +201,8 @@
         app:layout_constraintEnd_toEndOf="@+id/logoutCtn"
         app:layout_constraintTop_toBottomOf="@+id/changePassCtn"
         app:layout_constraintVertical_bias="0.333"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/changePassText"
@@ -208,7 +216,8 @@
         android:text="Change your password"
         android:textColor="#444A81"
         app:layout_constraintStart_toStartOf="@+id/changePassCtn"
-        app:layout_constraintTop_toTopOf="@+id/changePassCtn" />
+        app:layout_constraintTop_toTopOf="@+id/changePassCtn"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/logoutText"
@@ -222,7 +231,8 @@
         android:text="Log out"
         android:textColor="#444A81"
         app:layout_constraintBottom_toBottomOf="@+id/logoutCtn"
-        app:layout_constraintStart_toStartOf="@+id/logoutCtn" />
+        app:layout_constraintStart_toStartOf="@+id/logoutCtn"
+        android:focusable="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
