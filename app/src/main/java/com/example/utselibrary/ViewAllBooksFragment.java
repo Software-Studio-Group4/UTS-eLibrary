@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.utselibrary.Model.DocumentModel;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,6 +103,7 @@ public class ViewAllBooksFragment extends Fragment {
             protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull DocumentModel model) {
                 holder.bookTitleText.setText(model.getTitle());
                 holder.authorNameText.setText("By " + model.getPrimaryAuthor());
+                Picasso.get().load(model.getCoverImageUrl()).into(holder.coverImage);
             }
 
             @NonNull
@@ -110,23 +113,22 @@ public class ViewAllBooksFragment extends Fragment {
                 return new DocumentsViewHolder(view);
             }
         };
-
         viewAllBooksList.setHasFixedSize(true);
         viewAllBooksList.setLayoutManager(new LinearLayoutManager(getContext()));
         viewAllBooksList.setAdapter(adapter);
     }
 
     private class DocumentsViewHolder extends RecyclerView.ViewHolder {
-
         TextView bookTitleText, authorNameText;
+        ImageView coverImage;
 
         public DocumentsViewHolder(@NonNull View itemView) {
             super(itemView);
 
             bookTitleText = itemView.findViewById(R.id.bookTitleText);
             authorNameText = itemView.findViewById(R.id.authorNameText);
+            coverImage = itemView.findViewById(R.id.coverImage);
         }
-
     }
 
     @Override

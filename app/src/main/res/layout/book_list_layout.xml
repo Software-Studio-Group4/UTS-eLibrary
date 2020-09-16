@@ -9,16 +9,16 @@
 
     <TextView
         android:id="@+id/bookTitleText"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginLeft="28dp"
-        android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-medium"
         android:text="Book Title"
         android:textColor="#444A81"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/authorNameText"
+        app:layout_constraintEnd_toStartOf="@+id/coverImage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,10 +27,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="5dp"
         android:text="Author Name"
         android:textColor="#444A81"
         android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/bookTitleText"
         app:layout_constraintTop_toBottomOf="@+id/bookTitleText" />
+
+    <ImageView
+        android:id="@+id/coverImage"
+        android:layout_width="109dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.483"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

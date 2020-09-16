@@ -11,14 +11,16 @@ public class DocumentModel {
 
     private String title;
     private String primaryAuthor;
+    private String coverImageUrl;
 
     public DocumentModel() {
         // Empty constructor
     }
 
-    public DocumentModel(String title, String primaryAuthor) {
+    public DocumentModel(String title, String primaryAuthor, String coverImageUrl) {
         this.title = title;
         this.primaryAuthor = primaryAuthor;
+        this.coverImageUrl = coverImageUrl;
     }
 
     public String getTitle() {
@@ -31,6 +33,10 @@ public class DocumentModel {
 
     public String getPrimaryAuthor() {
         return primaryAuthor;
+    }
+
+    public String getCoverImageUrl() {
+        return coverImageUrl;
     }
 
 }
