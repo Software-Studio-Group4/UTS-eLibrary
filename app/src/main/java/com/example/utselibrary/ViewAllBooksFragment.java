@@ -1,5 +1,6 @@
 package com.example.utselibrary;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -95,11 +96,11 @@ public class ViewAllBooksFragment extends Fragment {
                 .setQuery(documentRef, DocumentModel.class).build();
 
         adapter = new FirestoreRecyclerAdapter<DocumentModel, DocumentsViewHolder>(options) {
+            @SuppressLint("SetTextI18n")
             @Override
             protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull DocumentModel model) {
                 holder.bookTitleText.setText(model.getTitle());
-                System.out.println(model.getPrimaryAuthor());
-                holder.authorNameText.setText(model.getPrimaryAuthor());
+                holder.authorNameText.setText("By " + model.getPrimaryAuthor());
             }
 
             @NonNull
