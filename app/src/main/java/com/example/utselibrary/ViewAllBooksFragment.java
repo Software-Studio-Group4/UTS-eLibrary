@@ -13,13 +13,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.utselibrary.Model.DocumentModel;
 import com.example.utselibrary.Model.Documents;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -74,34 +88,34 @@ public class ViewAllBooksFragment extends Fragment {
         viewAllBooksList = getView().findViewById(R.id.viewAllBooksList);
         fStore = FirebaseFirestore.getInstance();
 
-        // Query
-        Query documentQuery = fStore.collection("Documents");
+        // Collection
+        CollectionReference documentRef = fStore.collection("Documents");
 
-        //
-        FirestoreRecyclerOptions<Documents> options = new FirestoreRecyclerOptions.Builder<Documents>()
-                .setQuery(documentQuery, Documents.class).build();
+        FirestoreRecyclerOptions<DocumentModel> options = new FirestoreRecyclerOptions.Builder<DocumentModel>()
+                .setQuery(documentRef, DocumentModel.class).build();
 
-         adapter = new FirestoreRecyclerAdapter<Documents, DocumentsViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<DocumentModel, DocumentsViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull DocumentModel model) {
+                holder.bookTitleText.setText(model.getTitle());
+                System.out.println(model.getPrimaryAuthor());
+                holder.authorNameText.setText(model.getPrimaryAuthor());
+            }
+
             @NonNull
             @Override
             public DocumentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_list_layout, parent, false);
                 return new DocumentsViewHolder(view);
             }
-
-            @Override
-            protected void onBindViewHolder(@NonNull DocumentsViewHolder holder, int position, @NonNull Documents model) {
-                holder.bookTitleText.setText(model.getTitle());
-                holder.authorNameText.setText((CharSequence) model.getAuthors());
-            }
         };
 
-         viewAllBooksList.setHasFixedSize(true);
-         viewAllBooksList.setLayoutManager(new LinearLayoutManager(getContext()));
-         viewAllBooksList.setAdapter(adapter);
+        viewAllBooksList.setHasFixedSize(true);
+        viewAllBooksList.setLayoutManager(new LinearLayoutManager(getContext()));
+        viewAllBooksList.setAdapter(adapter);
     }
 
-    private class DocumentsViewHolder extends RecyclerView.ViewHolder{
+    private class DocumentsViewHolder extends RecyclerView.ViewHolder {
 
         TextView bookTitleText, authorNameText;
 

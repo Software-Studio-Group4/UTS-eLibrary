@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.utselibrary.Model.Authors;
 import com.example.utselibrary.Model.Documents;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.rpc.context.AttributeContext;
 
 import javax.annotation.Nullable;
 

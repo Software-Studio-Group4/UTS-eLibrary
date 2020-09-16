@@ -1,6 +1,7 @@
 package com.example.utselibrary.Model;
 
-public class Authors {
+ public class Authors {
+
     public String firstName, surname, fullName;
 
     public Authors() {
