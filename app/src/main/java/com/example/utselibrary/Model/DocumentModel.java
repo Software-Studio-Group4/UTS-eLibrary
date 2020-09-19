@@ -13,14 +13,36 @@ public class DocumentModel {
     private String primaryAuthor;
     private String coverImageUrl;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    private String genre;
+
     public DocumentModel() {
         // Empty constructor
     }
 
-    public DocumentModel(String title, String primaryAuthor, String coverImageUrl) {
+    public DocumentModel(String title, String primaryAuthor, String coverImageUrl, String id, String genre) {
         this.title = title;
         this.primaryAuthor = primaryAuthor;
         this.coverImageUrl = coverImageUrl;
+        this.id = id;
+        this.genre = genre;
     }
 
     public String getTitle() {

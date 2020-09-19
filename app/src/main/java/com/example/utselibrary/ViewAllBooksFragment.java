@@ -8,21 +8,27 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.utselibrary.Model.DocumentModel;
 import com.example.utselibrary.Model.Documents;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,7 +50,10 @@ public class ViewAllBooksFragment extends Fragment {
 
     RecyclerView viewAllBooksList;
     FirebaseFirestore fStore;
-    FirestoreRecyclerAdapter adapter;
+    DatabaseReference ref;
+    FirebaseRecyclerAdapter<Documents, DocumentsViewHolder> adapter;
+    FirebaseRecyclerOptions<Documents> options;
+    EditText searchTf;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -87,24 +96,32 @@ public class ViewAllBooksFragment extends Fragment {
      ************************************************************************************************/
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        searchTf = getActivity().findViewById(R.id.searchTf);
         // Get views
         viewAllBooksList = getView().findViewById(R.id.viewAllBooksList);
         fStore = FirebaseFirestore.getInstance();
+        setRecyclerView();
+
+    }
+
+    private void setRecyclerView() {
 
         // Collection
-        CollectionReference documentRef = fStore.collection("Documents");
+        ref = FirebaseDatabase.getInstance().getReference().child("documents");
 
-        FirestoreRecyclerOptions<DocumentModel> options = new FirestoreRecyclerOptions.Builder<DocumentModel>()
-                .setQuery(documentRef, DocumentModel.class).build();
+        options = new FirebaseRecyclerOptions.Builder<Documents>().setQuery(ref,Documents.class).build();
 
-        adapter = new FirestoreRecyclerAdapter<DocumentModel, DocumentsViewHolder>(options) {
-            @SuppressLint("SetTextI18n")
+        adapter = new FirebaseRecyclerAdapter<Documents, DocumentsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull DocumentModel model) {
+
+            @SuppressLint("SetTextI18n")
+            protected void onBindViewHolder(@NonNull DocumentsViewHolder holder, int position, @NonNull Documents model) {
                 holder.bookTitleText.setText(model.getTitle());
                 holder.authorNameText.setText("By " + model.getPrimaryAuthor());
-                Picasso.get().load(model.getCoverImageUrl()).into(holder.coverImage);
+                Picasso.get().load(model.getImageUrl()).into(holder.coverImage);
             }
+
+
 
             @NonNull
             @Override
@@ -117,7 +134,6 @@ public class ViewAllBooksFragment extends Fragment {
         viewAllBooksList.setLayoutManager(new LinearLayoutManager(getContext()));
         viewAllBooksList.setAdapter(adapter);
     }
-
     private class DocumentsViewHolder extends RecyclerView.ViewHolder {
         TextView bookTitleText, authorNameText;
         ImageView coverImage;

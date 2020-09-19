@@ -59,7 +59,7 @@ public class UserDashboard extends AppCompatActivity {
                 libraryBtn.setBackgroundResource(R.drawable.library_button);
                 searchBtn.setBackgroundResource(R.drawable.search_button_pressed);
                 profileBtn.setBackgroundResource(R.drawable.profile_button);
-                loadFragment((new BrowseFragment()));
+                loadFragment((new ViewAllBooksFragment()));
             }
         });
 

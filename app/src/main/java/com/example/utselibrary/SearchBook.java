@@ -1,12 +1,14 @@
 package com.example.utselibrary;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +46,7 @@ public class SearchBook extends AppCompatActivity {
         resultList = findViewById(R.id.resultRecyclerView);
         backBtn = findViewById(R.id.backBtn);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,true);
+        resultList.setLayoutManager(linearLayoutManager);
         setRecyclerView();
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -58,11 +61,13 @@ public class SearchBook extends AppCompatActivity {
     private void setRecyclerView(){
         Query query = documentRef.orderBy("title", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Documents> options = new FirestoreRecyclerOptions.Builder<Documents>().setQuery(query, Documents.class).build();
+
         searchAdapter = new FirestoreRecyclerAdapter<Documents, SearchBookViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull SearchBookViewHolder holder, int position, @NonNull Documents model) {
-                holder.setTitle((model.getTitle()));
             }
+
+
             @NonNull
             @Override
             public SearchBookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -70,11 +75,10 @@ public class SearchBook extends AppCompatActivity {
                 return new SearchBookViewHolder(view);
             }
         };
-        resultList.setLayoutManager(linearLayoutManager);
         resultList.setAdapter(searchAdapter);
     }
 
-    private class SearchBookViewHolder extends RecyclerView.ViewHolder {
+    public static class SearchBookViewHolder extends RecyclerView.ViewHolder {
         private View view;
 
         SearchBookViewHolder(View itemView) {
