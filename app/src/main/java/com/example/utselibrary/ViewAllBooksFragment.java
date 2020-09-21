@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +22,11 @@ import android.widget.TextView;
 import com.example.utselibrary.Model.DocumentModel;
 import com.example.utselibrary.Model.Documents;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -49,11 +47,11 @@ import javax.annotation.Nullable;
 public class ViewAllBooksFragment extends Fragment {
 
     RecyclerView viewAllBooksList;
-    FirebaseFirestore fStore;
-    DatabaseReference ref;
-    FirebaseRecyclerAdapter<Documents, DocumentsViewHolder> adapter;
-    FirebaseRecyclerOptions<Documents> options;
+    FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    FirestoreRecyclerAdapter adapter;
     EditText searchTf;
+    private static String TAG = "fbSearch";
+    CollectionReference documentRef = fStore.collection("Documents");
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -96,32 +94,25 @@ public class ViewAllBooksFragment extends Fragment {
      ************************************************************************************************/
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        searchTf = getActivity().findViewById(R.id.searchTf);
         // Get views
         viewAllBooksList = getView().findViewById(R.id.viewAllBooksList);
-        fStore = FirebaseFirestore.getInstance();
-        setRecyclerView();
 
-    }
-
-    private void setRecyclerView() {
+        searchTf = getView().findViewById(R.id.searchTf);
 
         // Collection
-        ref = FirebaseDatabase.getInstance().getReference().child("documents");
+        Query query = documentRef.orderBy("title", Query.Direction.ASCENDING);
 
-        options = new FirebaseRecyclerOptions.Builder<Documents>().setQuery(ref,Documents.class).build();
+        FirestoreRecyclerOptions<DocumentModel> options = new FirestoreRecyclerOptions.Builder<DocumentModel>()
+                .setQuery(query, DocumentModel.class).build();
 
-        adapter = new FirebaseRecyclerAdapter<Documents, DocumentsViewHolder>(options) {
-            @Override
-
+        adapter = new FirestoreRecyclerAdapter<DocumentModel, DocumentsViewHolder>(options) {
             @SuppressLint("SetTextI18n")
-            protected void onBindViewHolder(@NonNull DocumentsViewHolder holder, int position, @NonNull Documents model) {
+            @Override
+            protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull DocumentModel model) {
                 holder.bookTitleText.setText(model.getTitle());
                 holder.authorNameText.setText("By " + model.getPrimaryAuthor());
-                Picasso.get().load(model.getImageUrl()).into(holder.coverImage);
+                Picasso.get().load(model.getCoverImageUrl()).into(holder.coverImage);
             }
-
-
 
             @NonNull
             @Override
@@ -133,7 +124,35 @@ public class ViewAllBooksFragment extends Fragment {
         viewAllBooksList.setHasFixedSize(true);
         viewAllBooksList.setLayoutManager(new LinearLayoutManager(getContext()));
         viewAllBooksList.setAdapter(adapter);
+
+        searchTf.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.d(TAG, "Search has changed to: " + s.toString());
+                Query query;
+                if(s.toString().isEmpty()){
+                    query = documentRef.orderBy("title", Query.Direction.ASCENDING);
+                }
+                else{
+                query = documentRef.whereEqualTo("title", s.toString());
+                }
+                FirestoreRecyclerOptions<DocumentModel> options = new FirestoreRecyclerOptions.Builder<DocumentModel>()
+                        .setQuery(query, DocumentModel.class).build();
+                adapter.updateOptions(options);
+            }
+        });
     }
+
     private class DocumentsViewHolder extends RecyclerView.ViewHolder {
         TextView bookTitleText, authorNameText;
         ImageView coverImage;
