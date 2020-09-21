@@ -27,11 +27,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class AddBook extends AppCompatActivity {
@@ -43,6 +47,7 @@ public class AddBook extends AppCompatActivity {
     FirebaseStorage storage;
     StorageReference storageReference;
     String imageUrl;
+    FirebaseFirestore fStore;
 
     DatabaseReference documentRef;
 
@@ -76,19 +81,34 @@ public class AddBook extends AppCompatActivity {
     }
 
     private void addBook() {
+        fStore = FirebaseFirestore.getInstance();
         String title = titleTf.getText().toString().trim();
         String author = authorTf.getText().toString().trim();
         String genre = genreSpinner.getSelectedItem().toString();
         String publisher = publisherTf.getText().toString().trim();
         String image = imageUrl;
 
-        String id = documentRef.push().getKey();
+        Map<String, String> documentMap = new HashMap<>();
 
-        Documents doc = new Documents(title, author, id, genre, publisher, image);
+        documentMap.put("title", title);
+        documentMap.put("author", author);
+        documentMap.put("genre", genre);
+        documentMap.put("publisher", publisher);
+        documentMap.put("coverImageUrl", image);
 
-        documentRef.child(id).setValue(doc);
+        fStore.collection("Documents").add(documentMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(AddBook.this, "Document added", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                String error = e.getMessage();
 
-        Toast.makeText(this, "Document Added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddBook.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         if (TextUtils.isEmpty(title)) {
             titleTf.setError("Please enter title");
