@@ -3,52 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="100dp"
+    android:background="@drawable/profile_page_details_container"
+    android:padding="8dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/doctorItem"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/bookTitle"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Book Title"
+        android:textColor="#444A81"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/authorName"
+        app:layout_constraintEnd_toStartOf="@+id/coverImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="390dp"
-            android:layout_height="64dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="10dp">
-
-            <TextView
-                android:id="@+id/bookTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:background="#00C66C6C"
-                android:fontFamily="sans-serif-medium"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:paddingLeft="7sp"
-                android:paddingTop="8sp"
-                android:paddingBottom="15sp"
-                android:text="TEST TEXT"
-                android:textAllCaps="false"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#185586"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.052"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.457" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <TextView
+        android:id="@+id/authorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="5dp"
+        android:text="Author Name"
+        android:textColor="#444A81"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/bookTitle"
+        app:layout_constraintTop_toBottomOf="@+id/bookTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

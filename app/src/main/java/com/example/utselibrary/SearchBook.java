@@ -87,8 +87,8 @@ public class SearchBook extends AppCompatActivity {
         }
         @SuppressLint("SetTextI18n")
         void setTitle(String title) {
-            TextView textView = view.findViewById(R.id.bookTextView);
-            textView.setText("Title: " + title);
+            //TextView textView = view.findViewById(R.id.bookTextView);
+            //textView.setText("Title: " + title);
 
 
     }

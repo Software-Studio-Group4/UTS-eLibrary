@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.algolia.search.saas.Client;
+import com.algolia.search.saas.Index;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.utselibrary.Model.DocumentModel;
@@ -34,7 +36,13 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -75,12 +83,16 @@ public class AddBook extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addBook();
+                try {
+                    addBook();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
-    private void addBook() {
+    private void addBook() throws JSONException {
         fStore = FirebaseFirestore.getInstance();
         String title = titleTf.getText().toString().trim();
         String author = authorTf.getText().toString().trim();
@@ -120,7 +132,18 @@ public class AddBook extends AppCompatActivity {
             authorTf.setError("Please enter author");
             YoYo.with(Techniques.Shake).duration(700).playOn(authorTf);
     }
+        Client client = new Client("9L80XXFOLT", "a01b448ff9270562e195ef32110d829a");
+        Index index = client.getIndex("Documents");
 
+        List<JSONObject> array = new ArrayList<JSONObject>();
+
+        array.add(
+                new JSONObject().put("title", title).put("author", author).put("genre", genre).put("publisher", publisher).put("coverImageUrl", image)
+        );
+
+        index.addObjectsAsync(new JSONArray(array), null);
+
+        uploadImage();
     }
 
     private void chooseImage() {
@@ -136,7 +159,6 @@ public class AddBook extends AppCompatActivity {
         if(requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null){
             imageUri = data.getData();
             bookImage.setImageURI(imageUri);
-            uploadImage();
         }
     }
 

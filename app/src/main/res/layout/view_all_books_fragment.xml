@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dashboard_fragment_bg"
-    tools:context=".ViewAllBooksFragment">
-
-
+    android:orientation="vertical">
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -19,26 +15,17 @@
         android:textColor="#444A81"
         android:textSize="18sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/viewAllBooksList"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="24dp"
-    android:layout_below="@id/searchTf"/>
-
     <EditText
         android:id="@+id/searchTf"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search"
+        android:hint="Search..."
         android:textColor="#373B5C"
-        android:textColorHint="#373B5C"
-        android:layout_below="@id/textView3"
-        tools:ignore="MissingConstraints" />
+        android:textColorHint="#373B5C" />
+    <ListView
+        android:id="@+id/bookList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
-
-
-
-
-</RelativeLayout>
+</LinearLayout>
