@@ -35,7 +35,7 @@ import maes.tech.intentanim.CustomIntent;
 public class ProfileFragment extends Fragment {
 
     TextView userNameTf, emailTf, mobileNumTf, logoutText;
-    ImageView logoutIcon, logoutCtn;
+    ImageView logoutIcon, logoutCtn, userDetailsCtn, userIcon, nextBtn, finesIcon, finesCtn, nextFinesBtn;
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     String userID = fAuth.getCurrentUser().getUid();
@@ -85,6 +85,12 @@ public class ProfileFragment extends Fragment {
         userNameTf = getView().findViewById(R.id.userNameTf);
         emailTf = getView().findViewById(R.id.emailTf);
         mobileNumTf = getView().findViewById(R.id.mobileNumTf);
+        userDetailsCtn = getView().findViewById(R.id.userDetailsCtn);
+        userIcon = getView().findViewById(R.id.userIcon);
+        nextBtn = getView().findViewById(R.id.nextBtn);
+        finesCtn = getView().findViewById(R.id.finesCtn);
+        finesIcon = getView().findViewById(R.id.finesIcon);
+        nextFinesBtn = getView().findViewById(R.id.nextBtnFines);
         logoutText = getView().findViewById(R.id.logoutText);
         logoutCtn = getView().findViewById(R.id.logoutCtn);
         logoutIcon = getView().findViewById(R.id.logoutIcon);
@@ -115,6 +121,52 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        userDetailsCtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ProfilePage.class));
+                CustomIntent.customType(getContext(), "fadein-to-fadeout");
+            }
+        });
+
+        userIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ProfilePage.class));
+                CustomIntent.customType(getContext(), "fadein-to-fadeout");
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ProfilePage.class));
+                CustomIntent.customType(getContext(), "fadein-to-fadeout");
+            }
+        });
+
+        /*
+        finesIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        finesCtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        nextFinesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        */
 
         logoutText.setOnClickListener(new View.OnClickListener() {
             @Override

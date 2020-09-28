@@ -67,9 +67,10 @@ public class ProfilePage extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                startActivity(new Intent(getApplicationContext(), ProfileFragment.class));
             }
         });
+
         changeDetailsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,11 +84,5 @@ public class ProfilePage extends AppCompatActivity {
             //    startActivity(new Intent(getApplicationContext(), ChangePassword.class));
             }
         });
-
-    }
-    public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        finish();
     }
 }
