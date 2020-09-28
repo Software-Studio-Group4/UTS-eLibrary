@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".BookRequest"></activity>
+        <activity android:name=".AdminViewRequests"></activity>
+        <activity android:name=".BookRequest" />
         <activity android:name=".AddBook" />
         <activity android:name=".ChangeDetails" />
         <activity android:name=".BookDetails" />
