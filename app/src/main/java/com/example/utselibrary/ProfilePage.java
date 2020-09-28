@@ -49,6 +49,7 @@ public class ProfilePage extends AppCompatActivity {
                     String mo = documentSnapshot.getString("phoneNumber");
                     String unId = documentSnapshot.getString("uniID");
 
+
                     firstNameTf.setText(fiName); // Display first name
                     lastNameTf.setText(laName); // Display last name
                     mobileNoTf.setText(mo); // Display mobile number

@@ -2,6 +2,7 @@ package com.example.utselibrary;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -70,6 +71,7 @@ public class ViewAllBooksFragment extends Fragment {
     EditText searchTf;
     private static String TAG = "fbSearch";
     CollectionReference documentRef = fStore.collection("Documents");
+    String pos;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -138,8 +140,11 @@ public class ViewAllBooksFragment extends Fragment {
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               String pos = bookIdList.get(i);
+               pos = bookIdList.get(i);
                 Toast.makeText(getActivity().getApplicationContext(),   "clicked: " + pos, Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(getActivity().getApplicationContext(), BookDetails.class);
+                intent1.putExtra("pos", pos);
+                startActivity(intent1);
             }
         });
        // viewAllBooksList = getView().findViewById(R.id.viewAllBooksList);
