@@ -113,9 +113,11 @@ public class ViewAllBooksFragment extends Fragment {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // Get views
+        final List <String> bookIdList = new ArrayList<>();
 
         searchTf = getView().findViewById(R.id.searchTf);
         bookList = getView().findViewById(R.id.bookList);
+
         documentRef.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -124,6 +126,7 @@ public class ViewAllBooksFragment extends Fragment {
                             List<String> list = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 list.add(document.getString("title"));
+                                bookIdList.add(document.getId());
                             }
                             ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, list);
                             bookList.setAdapter(arrayAdapter);
@@ -135,7 +138,8 @@ public class ViewAllBooksFragment extends Fragment {
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity().getApplicationContext(), "clicked", Toast.LENGTH_SHORT).show();
+               String pos = bookIdList.get(i);
+                Toast.makeText(getActivity().getApplicationContext(),   "clicked: " + pos, Toast.LENGTH_SHORT).show();
             }
         });
        // viewAllBooksList = getView().findViewById(R.id.viewAllBooksList);
@@ -200,7 +204,7 @@ public class ViewAllBooksFragment extends Fragment {
                 Client client = new Client("9L80XXFOLT", "a01b448ff9270562e195ef32110d829a");
                 Index index = client.getIndex("Documents");
                 com.algolia.search.saas.Query q = new com.algolia.search.saas.Query(s.toString())
-                        .setAttributesToRetrieve("title")
+                        .setAttributesToRetrieve("title", "id")
                         .setHitsPerPage(50);
                 index.searchAsync(q, new CompletionHandler() {
                     @Override
@@ -208,10 +212,13 @@ public class ViewAllBooksFragment extends Fragment {
                         try {
                             JSONArray hits = content.getJSONArray("hits");
                             List<String> list = new ArrayList<>();
+                           bookIdList.clear();
                             for(int i = 0; i < hits.length(); i++){
                                 JSONObject jsonObject = hits.getJSONObject(i);
                                 String title = jsonObject.getString("title");
+                                String id = jsonObject.getString("id");
                                 list.add(title);
+                               bookIdList.add(id);
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, list);
                             bookList.setAdapter(arrayAdapter);

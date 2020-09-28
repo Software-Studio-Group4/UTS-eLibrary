@@ -94,13 +94,13 @@ public class AddBook extends AppCompatActivity {
 
     private void addBook() throws JSONException {
         fStore = FirebaseFirestore.getInstance();
-        String title = titleTf.getText().toString().trim();
-        String author = authorTf.getText().toString().trim();
-        String genre = genreSpinner.getSelectedItem().toString();
-        String publisher = publisherTf.getText().toString().trim();
-        String image = imageUrl;
+        final String title = titleTf.getText().toString().trim();
+        final String author = authorTf.getText().toString().trim();
+        final String genre = genreSpinner.getSelectedItem().toString();
+        final String publisher = publisherTf.getText().toString().trim();
+        final String image = imageUrl;
 
-        Map<String, String> documentMap = new HashMap<>();
+        final Map<String, String> documentMap = new HashMap<>();
 
         documentMap.put("title", title);
         documentMap.put("author", author);
@@ -108,9 +108,25 @@ public class AddBook extends AppCompatActivity {
         documentMap.put("publisher", publisher);
         documentMap.put("coverImageUrl", image);
 
+
         fStore.collection("Documents").add(documentMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
+                String id = documentReference.getId();
+                Client client = new Client("9L80XXFOLT", "a01b448ff9270562e195ef32110d829a");
+                Index index = client.getIndex("Documents");
+
+                List<JSONObject> array = new ArrayList<JSONObject>();
+
+                try {
+                    array.add(
+                            new JSONObject().put("title", title).put("author", author).put("genre", genre).put("publisher", publisher).put("coverImageUrl", image).put("id", id)
+                    );
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                index.addObjectsAsync(new JSONArray(array), null);
                 Toast.makeText(AddBook.this, "Document added", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -132,18 +148,9 @@ public class AddBook extends AppCompatActivity {
             authorTf.setError("Please enter author");
             YoYo.with(Techniques.Shake).duration(700).playOn(authorTf);
     }
-        Client client = new Client("9L80XXFOLT", "a01b448ff9270562e195ef32110d829a");
-        Index index = client.getIndex("Documents");
 
-        List<JSONObject> array = new ArrayList<JSONObject>();
 
-        array.add(
-                new JSONObject().put("title", title).put("author", author).put("genre", genre).put("publisher", publisher).put("coverImageUrl", image)
-        );
 
-        index.addObjectsAsync(new JSONArray(array), null);
-
-        uploadImage();
     }
 
     private void chooseImage() {
@@ -151,6 +158,7 @@ public class AddBook extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, 1);
+
     }
 
     @Override
@@ -159,6 +167,7 @@ public class AddBook extends AppCompatActivity {
         if(requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null){
             imageUri = data.getData();
             bookImage.setImageURI(imageUri);
+            uploadImage();
         }
     }
 
