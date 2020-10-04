@@ -48,15 +48,6 @@ public class SearchBook extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,true);
         resultList.setLayoutManager(linearLayoutManager);
         setRecyclerView();
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Dashboard.class));
-            }
-        });
-
-
 }
     private void setRecyclerView(){
         Query query = documentRef.orderBy("title", Query.Direction.DESCENDING);

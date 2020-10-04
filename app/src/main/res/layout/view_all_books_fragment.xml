@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dashboard_fragment_bg"
+    android:background="@drawable/dashboard_fragment_paper_bg"
     android:orientation="vertical">
     <TextView
         android:id="@+id/textView3"
@@ -20,8 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Search..."
+        android:singleLine="true"
         android:textColor="#373B5C"
         android:textColorHint="#373B5C" />
+
     <ListView
         android:id="@+id/bookList"
         android:layout_width="match_parent"

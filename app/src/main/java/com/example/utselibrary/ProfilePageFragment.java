@@ -1,26 +1,19 @@
 package com.example.utselibrary;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,10 +25,10 @@ import javax.annotation.Nullable;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class ProfileFragment extends Fragment {
+public class ProfilePageFragment extends Fragment {
 
-    TextView userNameTf, emailTf, mobileNumTf, logoutText;
-    ImageView logoutIcon, logoutCtn;
+    TextView userNameTf, emailTf, mobileNumTf;
+    Button logoutBtn, finesBtn;
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     String userID = fAuth.getCurrentUser().getUid();
@@ -47,11 +40,11 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ProfileFragment() {
+    public ProfilePageFragment() {
     }
 
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
+    public static ProfilePageFragment newInstance(String param1, String param2) {
+        ProfilePageFragment fragment = new ProfilePageFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,7 +65,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.profile_fragment, container, false);
+        return inflater.inflate(R.layout.profile_page_fragment, container, false);
     }
 
     /**********************************************************************************************
@@ -85,9 +78,8 @@ public class ProfileFragment extends Fragment {
         userNameTf = getView().findViewById(R.id.userNameTf);
         emailTf = getView().findViewById(R.id.emailTf);
         mobileNumTf = getView().findViewById(R.id.mobileNumTf);
-        logoutText = getView().findViewById(R.id.logoutText);
-        logoutCtn = getView().findViewById(R.id.logoutCtn);
-        logoutIcon = getView().findViewById(R.id.logoutIcon);
+        logoutBtn = getView().findViewById(R.id.logoutBtn);
+        finesBtn = getView().findViewById(R.id.finesBtn);
 
         userDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
@@ -115,8 +107,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
-        logoutText.setOnClickListener(new View.OnClickListener() {
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
@@ -126,25 +117,11 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        logoutCtn.setOnClickListener(new View.OnClickListener() {
+        finesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getContext(), MainActivity.class));
-                CustomIntent.customType(getContext(), "fadein-to-fadeout");
-                getActivity().finish();
+                Toast.makeText(getContext(), "Fines page does not exist yet", Toast.LENGTH_LONG).show();
             }
         });
-
-        logoutIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getContext(), MainActivity.class));
-                CustomIntent.customType(getContext(), "fadein-to-fadeout");
-                getActivity().finish();
-            }
-        });
-
     }
 }

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dashboard_fragment_bg"
-    tools:context=".LibraryFragment">
+    android:background="@drawable/dashboard_fragment_paper_bg"
+    tools:context=".MyLibraryFragment">
 
     <TextView
         android:id="@+id/textView2"

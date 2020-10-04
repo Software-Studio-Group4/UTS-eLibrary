@@ -29,7 +29,7 @@ public class UserDashboard extends AppCompatActivity {
         profileBtn = findViewById(R.id.profileBtn);
 
         // Fragment initialized
-        Fragment LibraryFragment = new LibraryFragment();
+        Fragment LibraryFragment = new MyLibraryFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.flFragment, LibraryFragment);
@@ -49,7 +49,7 @@ public class UserDashboard extends AppCompatActivity {
                 libraryBtn.setBackgroundResource(R.drawable.library_button_pressed);
                 searchBtn.setBackgroundResource(R.drawable.search_button);
                 profileBtn.setBackgroundResource(R.drawable.profile_button);
-                loadFragment((new LibraryFragment()));
+                loadFragment((new MyLibraryFragment()));
             }
         });
 
@@ -69,7 +69,7 @@ public class UserDashboard extends AppCompatActivity {
                 libraryBtn.setBackgroundResource(R.drawable.library_button);
                 searchBtn.setBackgroundResource(R.drawable.search_button);
                 profileBtn.setBackgroundResource(R.drawable.profile_button_pressed);
-                loadFragment((new ProfileFragment()));
+                loadFragment((new ProfilePageFragment()));
             }
         });
     }

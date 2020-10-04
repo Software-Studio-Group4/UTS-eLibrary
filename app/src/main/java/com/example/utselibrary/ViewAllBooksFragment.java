@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -120,31 +122,47 @@ public class ViewAllBooksFragment extends Fragment {
         searchTf = getView().findViewById(R.id.searchTf);
         bookList = getView().findViewById(R.id.bookList);
 
+        final Fragment BookDetailsFragment = new BookDetailsFragment();
+        final FragmentManager fm = getFragmentManager();
+
         documentRef.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<String> list = new ArrayList<>();
+                            List<String> titleList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                list.add(document.getString("title"));
+                                titleList.add(document.getString("title"));
                                 bookIdList.add(document.getId());
                             }
-                            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, list);
+                            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titleList);
                             bookList.setAdapter(arrayAdapter);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               pos = bookIdList.get(i);
+                pos = bookIdList.get(i);
+                Bundle bookID = new Bundle();
+                bookID.putString("id", pos);
+                BookDetailsFragment.setArguments(bookID);
+
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction
+                        .setCustomAnimations(R.anim.right_to_left, R.anim.exit_right_to_left, R.anim. left_to_right, R.anim.exit_left_to_right)
+                        .add(R.id.flFragment, BookDetailsFragment).addToBackStack(null);
+                fragmentTransaction.commit();
+
+              /* pos = bookIdList.get(i);
                 Toast.makeText(getActivity().getApplicationContext(),   "clicked: " + pos, Toast.LENGTH_SHORT).show();
                 Intent intent1 = new Intent(getActivity().getApplicationContext(), BookDetails.class);
                 intent1.putExtra("pos", pos);
-                startActivity(intent1);
+                startActivity(intent1); */
+
             }
         });
        // viewAllBooksList = getView().findViewById(R.id.viewAllBooksList);
@@ -206,6 +224,7 @@ public class ViewAllBooksFragment extends Fragment {
                         .setQuery(query, DocumentModel.class).build();
                 adapter.updateOptions(options);
                 */
+
                 Client client = new Client("9L80XXFOLT", "a01b448ff9270562e195ef32110d829a");
                 Index index = client.getIndex("Documents");
                 com.algolia.search.saas.Query q = new com.algolia.search.saas.Query(s.toString())

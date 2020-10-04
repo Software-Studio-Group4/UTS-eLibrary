@@ -97,18 +97,9 @@ public class ChangeDetails extends AppCompatActivity {
                                 }
                             });
                 }
-                startActivity(new Intent(getApplicationContext(), Dashboard.class));
-
-
             }
 
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ProfilePage.class));
-            }
-        });
     }
 }

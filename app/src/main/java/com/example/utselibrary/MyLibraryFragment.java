@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import javax.annotation.Nullable;
 
-public class LibraryFragment extends Fragment {
+public class MyLibraryFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -18,10 +18,10 @@ public class LibraryFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public LibraryFragment() { }
+    public MyLibraryFragment() { }
 
-    public static LibraryFragment newInstance(String param1, String param2) {
-        LibraryFragment fragment = new LibraryFragment();
+    public static MyLibraryFragment newInstance(String param1, String param2) {
+        MyLibraryFragment fragment = new MyLibraryFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
