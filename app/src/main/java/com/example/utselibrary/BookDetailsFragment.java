@@ -133,10 +133,6 @@ public class BookDetailsFragment extends Fragment {
                             Toast.makeText(getContext(), "You can't borrow any more books", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        else if(user.getBorrowedDocs().contains(id)){
-                            Toast.makeText(getContext(), "You already borrowed this book", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
 
                         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -148,6 +144,10 @@ public class BookDetailsFragment extends Fragment {
                                     Documents document = documentSnapshot.toObject(Documents.class);
                                     if(document.getBorrowers().size() >= document.getBorrowLimit()){
                                         Toast.makeText(getContext(), "This book has reached its borrow limit", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    else if(document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())){
+                                        Toast.makeText(getContext(), "You already borrowed this book", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                     else{
