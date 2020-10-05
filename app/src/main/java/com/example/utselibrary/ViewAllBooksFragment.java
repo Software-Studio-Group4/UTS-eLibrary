@@ -40,8 +40,10 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -64,6 +66,8 @@ import java.util.Objects;
 
 import javax.annotation.Nullable;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class ViewAllBooksFragment extends Fragment {
 
     RecyclerView viewAllBooksList;
@@ -74,6 +78,11 @@ public class ViewAllBooksFragment extends Fragment {
     private static String TAG = "fbSearch";
     CollectionReference documentRef = fStore.collection("Documents");
     String pos;
+
+    FirebaseAuth fAuth = FirebaseAuth.getInstance();
+    String userID = fAuth.getCurrentUser().getUid();;
+    DocumentReference adminRef = fStore.collection("Admin").document(userID);
+
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -124,6 +133,7 @@ public class ViewAllBooksFragment extends Fragment {
 
         final Fragment BookDetailsFragment = new BookDetailsFragment();
         final FragmentManager fm = getFragmentManager();
+        final Fragment AdminBookDetailsFragment = new AdminBookDetailsFragment();
 
         documentRef.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -147,15 +157,37 @@ public class ViewAllBooksFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 pos = bookIdList.get(i);
-                Bundle bookID = new Bundle();
+                final Bundle bookID = new Bundle();
                 bookID.putString("id", pos);
-                BookDetailsFragment.setArguments(bookID);
 
-                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                fragmentTransaction
-                        .setCustomAnimations(R.anim.right_to_left, R.anim.exit_right_to_left, R.anim. left_to_right, R.anim.exit_left_to_right)
-                        .add(R.id.flFragment, BookDetailsFragment).addToBackStack(null);
-                fragmentTransaction.commit();
+                adminRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            Toast.makeText(getActivity().getApplicationContext(),   "Admin clicked: " + pos, Toast.LENGTH_SHORT).show();
+                            AdminBookDetailsFragment.setArguments(bookID);
+                            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                            fragmentTransaction
+                                    .setCustomAnimations(R.anim.right_to_left, R.anim.exit_right_to_left, R.anim.left_to_right, R.anim.exit_left_to_right)
+                                    .add(R.id.flFragment, AdminBookDetailsFragment).addToBackStack(null);
+                            fragmentTransaction.commit();
+                        } else {
+                            BookDetailsFragment.setArguments(bookID);
+                            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                            fragmentTransaction
+                                    .setCustomAnimations(R.anim.right_to_left, R.anim.exit_right_to_left, R.anim.left_to_right, R.anim.exit_left_to_right)
+                                    .add(R.id.flFragment, BookDetailsFragment).addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Database Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
 
               /* pos = bookIdList.get(i);
                 Toast.makeText(getActivity().getApplicationContext(),   "clicked: " + pos, Toast.LENGTH_SHORT).show();
