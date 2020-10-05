@@ -21,9 +21,9 @@ public class User {
     String phoneNumber;
     String uniID;
 
-    //empty constructor
-    public User(){
 
+    public User() {
+//empty constructor
     }
 
 
@@ -43,7 +43,7 @@ public class User {
         this.borrowHistory = borrowHistory;
     }
 
-    public  List<BorrowedDocument> getBorrowedDocs() {
+    public List<BorrowedDocument> getBorrowedDocs() {
         return borrowedDocs;
     }
 

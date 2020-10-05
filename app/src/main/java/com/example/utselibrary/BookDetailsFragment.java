@@ -101,8 +101,8 @@ public class BookDetailsFragment extends Fragment {
         // Get bookID
         Bundle bookID = this.getArguments();
         final String id = bookID.getString("id");
-
         final DocumentReference documentReference = cRef.document(id);
+
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -128,7 +128,7 @@ public class BookDetailsFragment extends Fragment {
                 userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        final User user= documentSnapshot.toObject(User.class);
+                        final User user = documentSnapshot.toObject(User.class);
                         if(user.getBorrowedDocs().size() >= user.getMaxAllowed()){
                             Toast.makeText(getContext(), "You can't borrow any more books", Toast.LENGTH_SHORT).show();
                             return;
