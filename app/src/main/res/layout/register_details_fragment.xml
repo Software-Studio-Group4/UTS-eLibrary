@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="460dp"
     android:layout_height="400dp"
-    android:background="@drawable/fragment_bg"
+    android:background="@drawable/registration_fbg"
     tools:context=".RegisterEmailPassFragment">
 
     <EditText
@@ -59,7 +59,7 @@
         android:autofillHints=""
         android:backgroundTint="#575757"
         android:ems="10"
-        android:hint="Last name"
+        android:hint="Surname"
         android:inputType="textPersonName"
         android:text=""
         android:textColor="#575757"

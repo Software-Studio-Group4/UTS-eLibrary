@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import org.w3c.dom.Text;
 
 import java.util.regex.Matcher;
@@ -90,6 +93,7 @@ public class RegisterEmailPassFragment extends Fragment {
 
                 if (TextUtils.isEmpty(email)) {
                     emailTf.setError("Enter your SWUT email");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(emailTf);
                     return;
                 }
 
@@ -103,8 +107,10 @@ public class RegisterEmailPassFragment extends Fragment {
                     return;
                 }
 
+               /*
+               UNCOMMENT TO ENABLE
                 // Checks if email contains university email handler
-                if (email.contains("@student.swut.edu.au") || email.contains("@staff.swut.edu.au")) {
+               if (email.contains("@student.swut.edu.au") || email.contains("@staff.swut.edu.au")) {
                     if (email.contains("@staff.swut.edu.au")) {
                         isLecturer = true;
                     } else {
@@ -114,14 +120,17 @@ public class RegisterEmailPassFragment extends Fragment {
                     emailTf.setError("Please enter your SWUT email");
                     return;
                 }
+                */
 
                 if (TextUtils.isEmpty(password)) {
                     passwordTf.setError("Please choose a strong password");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(passwordTf);
                     return;
                 }
 
                 if (TextUtils.isEmpty(confirmPass)) {
                     confirmPassTf.setError("Please enter your password again");
+                    YoYo.with(Techniques.Shake).duration(700).playOn(confirmPassTf);
                     return;
                 }
 

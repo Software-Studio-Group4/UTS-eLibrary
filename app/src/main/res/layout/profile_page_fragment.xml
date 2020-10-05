@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dashboard_fragment_paper_bg"
+    tools:context=".ProfilePageFragment">
+
+
+    <ImageView
+        android:id="@+id/userProfileCtn"
+        android:layout_width="427dp"
+        android:layout_height="320dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/user_profile_ctn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/finesNextBtn"
+        android:layout_width="12dp"
+        android:layout_height="21dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="84dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/right_back_btn_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/userProfileCtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/finesIcon"
+        android:layout_width="50dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/fines_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lineImage"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/lineImage"
+        android:layout_width="350dp"
+        android:layout_height="15dp"
+        android:src="@drawable/line"
+        app:layout_constraintBottom_toTopOf="@+id/userProfileCtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userProfileCtn"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <ImageView
+        android:id="@+id/userIcon"
+        android:layout_width="26dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/user_pressed"
+        app:layout_constraintBottom_toTopOf="@+id/lineImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/userProfileCtn"
+        app:layout_constraintVertical_bias="0.248"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/userNameTf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#444A81"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/userIcon"
+        app:layout_constraintTop_toTopOf="@+id/userProfileCtn"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/emailTf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="#636363"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/userNameTf"
+        app:layout_constraintTop_toBottomOf="@+id/userNameTf"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/mobileNumTf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#636363"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/emailTf"
+        app:layout_constraintTop_toBottomOf="@+id/emailTf"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/finesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Fines"
+        android:textColor="#444A81"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/finesIcon"
+        app:layout_constraintTop_toBottomOf="@+id/lineImage"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/fineTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:text="Total: $0.00"
+        android:textColor="#636363"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/finesText"
+        app:layout_constraintTop_toBottomOf="@+id/finesText" />
+
+    <ImageView
+        android:id="@+id/logoutPassCtn"
+        android:layout_width="424dp"
+        android:layout_height="136dp"
+        android:src="@drawable/logout_changepass_ctn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.548"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/changePassText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="34dp"
+        android:fontFamily="sans-serif"
+        android:text="Change your password"
+        android:textColor="#444A81"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/logoutPassCtn"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/logoutText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="36dp"
+        android:fontFamily="sans-serif"
+        android:text="Log out"
+        android:textColor="#444A81"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/logoutPassCtn"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/lineImage2"
+        android:layout_width="350dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/line"
+        app:layout_constraintBottom_toBottomOf="@+id/logoutPassCtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/logoutPassCtn"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/changePassIcon"
+        android:layout_width="33dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:src="@drawable/change_password_icon"
+        app:layout_constraintEnd_toEndOf="@+id/logoutPassCtn"
+        app:layout_constraintTop_toTopOf="@+id/logoutPassCtn"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/logoutIcon"
+        android:layout_width="19dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:src="@drawable/logout_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/logoutPassCtn"
+        app:layout_constraintEnd_toEndOf="@+id/logoutPassCtn"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="363dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="26dp"
+        android:background="@android:color/transparent"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toBottomOf="@+id/logoutPassCtn"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/finesBtn"
+        android:layout_width="373dp"
+        android:layout_height="119dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="30dp"
+        android:background="@android:color/transparent"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toBottomOf="@+id/userProfileCtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

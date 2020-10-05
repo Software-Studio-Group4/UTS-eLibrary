@@ -67,7 +67,7 @@ public class RegisterCompleteFragment extends Fragment {
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 CustomIntent.customType(getActivity(), "fadein-to-fadeout");
-                onStop();
+                getActivity().finish();
             }
         });
     }

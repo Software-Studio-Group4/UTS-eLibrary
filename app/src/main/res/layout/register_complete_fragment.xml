@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="460dp"
     android:layout_height="400dp"
-    android:background="@drawable/fragment_bg"
+    android:background="@drawable/registration_fbg"
     tools:context=".RegisterCompleteFragment">
 
 
