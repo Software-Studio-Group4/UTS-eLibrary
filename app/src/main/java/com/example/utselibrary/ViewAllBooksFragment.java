@@ -59,6 +59,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -128,6 +130,9 @@ public class ViewAllBooksFragment extends Fragment {
         // Get views
         final List <String> bookIdList = new ArrayList<>();
 
+        Client client = new Client("9L80XXFOLT", "a01b448ff9270562e195ef32110d829a");
+        final Index index = client.getIndex("Documents");
+
         searchTf = getView().findViewById(R.id.searchTf);
         bookList = getView().findViewById(R.id.bookList);
 
@@ -160,11 +165,14 @@ public class ViewAllBooksFragment extends Fragment {
                 final Bundle bookID = new Bundle();
                 bookID.putString("id", pos);
 
+                final String[] algoliaID = new String[1];
+
                 adminRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             Toast.makeText(getActivity().getApplicationContext(),   "Admin clicked: " + pos, Toast.LENGTH_SHORT).show();
+
                             AdminBookDetailsFragment.setArguments(bookID);
                             FragmentTransaction fragmentTransaction = fm.beginTransaction();
                             fragmentTransaction
@@ -257,8 +265,7 @@ public class ViewAllBooksFragment extends Fragment {
                 adapter.updateOptions(options);
                 */
 
-                Client client = new Client("9L80XXFOLT", "a01b448ff9270562e195ef32110d829a");
-                Index index = client.getIndex("Documents");
+
                 com.algolia.search.saas.Query q = new com.algolia.search.saas.Query(s.toString())
                         .setAttributesToRetrieve("title", "id")
                         .setHitsPerPage(50);
@@ -275,6 +282,8 @@ public class ViewAllBooksFragment extends Fragment {
                                 String id = jsonObject.getString("id");
                                 list.add(title);
                                bookIdList.add(id);
+
+
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, list);
                             bookList.setAdapter(arrayAdapter);
