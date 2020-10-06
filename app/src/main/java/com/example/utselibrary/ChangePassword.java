@@ -129,7 +129,7 @@ public class ChangePassword extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ProfilePage.class));
+                startActivity(new Intent(getApplicationContext(), ProfilePageFragment.class));
             }
         });
 }
