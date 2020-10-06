@@ -2,6 +2,7 @@
     <string name="app_name">SWUT eLibrary</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="book_volume">Book Volume</string>
 
     <array name="genre">
         <item>Fantasy</item>
