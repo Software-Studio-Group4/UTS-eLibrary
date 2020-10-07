@@ -3,6 +3,7 @@ package com.example.utselibrary;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -44,8 +46,6 @@ public class BookRequest extends AppCompatActivity {
         pubTf = findViewById(R.id.pubTf);
         genreTf = findViewById(R.id.genreTf);
         requestBtn = findViewById(R.id.requestBtn);
-
-
 
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +81,6 @@ public class BookRequest extends AppCompatActivity {
             YoYo.with(Techniques.Shake).duration(700).playOn(genreTf);
         } else {
 
-            FirebaseAuth fAuth = FirebaseAuth.getInstance();
             FirebaseFirestore fStore = FirebaseFirestore.getInstance();
             DocumentReference bookRef = fStore.collection("BookRequests").document();
 
