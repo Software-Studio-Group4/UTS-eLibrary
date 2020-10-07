@@ -16,6 +16,7 @@
         <activity android:name=".AddBook" />
         <activity android:name=".ChangeDetails" />
         <activity android:name=".BookDetails" />
+        <activity android:name=".BookRequest" />
         <activity android:name=".UserDashboard" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".SearchBook" />

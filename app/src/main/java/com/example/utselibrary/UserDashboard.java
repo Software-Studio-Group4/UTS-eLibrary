@@ -1,5 +1,6 @@
 package com.example.utselibrary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class UserDashboard extends AppCompatActivity {
 
-    Button libraryBtn, searchBtn, profileBtn;
+    Button libraryBtn, searchBtn, profileBtn, bookRequestBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class UserDashboard extends AppCompatActivity {
         libraryBtn = findViewById(R.id.libraryBtn);
         searchBtn = findViewById(R.id.searchBtn);
         profileBtn = findViewById(R.id.profileBtn);
+        bookRequestBtn = findViewById(R.id.bookRequestBtn);
 
         // Fragment initialized
         Fragment LibraryFragment = new MyLibraryFragment();
@@ -42,6 +44,13 @@ public class UserDashboard extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
+
+        bookRequestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), BookRequest.class));
+            }
+        });
 
         libraryBtn.setOnClickListener(new View.OnClickListener() {
             @Override

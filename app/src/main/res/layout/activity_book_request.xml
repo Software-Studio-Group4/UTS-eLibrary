@@ -24,14 +24,12 @@
         android:id="@+id/requestBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="115dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="32dp"
         android:text="Request"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/volTf" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/titleTf"
@@ -44,8 +42,8 @@
         android:layout_marginRight="101dp"
         android:layout_marginBottom="23dp"
         android:ems="10"
+        android:hint="Title"
         android:inputType="textPersonName"
-        android:text="Title"
         app:layout_constraintBottom_toTopOf="@+id/authorTf"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,31 +55,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="98dp"
         android:layout_marginLeft="98dp"
+        android:layout_marginTop="23dp"
         android:layout_marginEnd="103dp"
         android:layout_marginRight="103dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="41dp"
         android:ems="10"
+        android:hint="Author"
         android:inputType="textPersonName"
-        android:text="Author"
-        app:layout_constraintBottom_toTopOf="@+id/typeTf"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/typeTf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="97dp"
-        android:layout_marginLeft="97dp"
-        android:layout_marginEnd="104dp"
-        android:layout_marginRight="104dp"
-        android:layout_marginBottom="20dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Type"
         app:layout_constraintBottom_toTopOf="@+id/genreTf"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTf" />
 
     <EditText
         android:id="@+id/genreTf"
@@ -93,11 +77,12 @@
         android:layout_marginRight="104dp"
         android:layout_marginBottom="18dp"
         android:ems="10"
+        android:hint="Genre"
         android:inputType="textPersonName"
-        android:text="Genre"
         app:layout_constraintBottom_toTopOf="@+id/pubTf"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authorTf" />
 
     <EditText
         android:id="@+id/pubTf"
@@ -105,62 +90,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="98dp"
         android:layout_marginLeft="98dp"
+        android:layout_marginTop="23dp"
         android:layout_marginEnd="103dp"
         android:layout_marginRight="103dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="24dp"
         android:ems="10"
+        android:hint="Publisher"
         android:inputType="textPersonName"
-        android:text="Publisher"
-        app:layout_constraintBottom_toTopOf="@+id/dateTf"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/dateTf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="98dp"
-        android:layout_marginLeft="98dp"
-        android:layout_marginEnd="103dp"
-        android:layout_marginRight="103dp"
-        android:layout_marginBottom="22dp"
-        android:ems="10"
-        android:hint="Date"
-        android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/locTf"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/locTf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="97dp"
-        android:layout_marginLeft="97dp"
-        android:layout_marginEnd="104dp"
-        android:layout_marginRight="104dp"
-        android:layout_marginBottom="15dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Publish Location"
-        app:layout_constraintBottom_toTopOf="@+id/volTf"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/volTf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="97dp"
-        android:layout_marginLeft="97dp"
-        android:layout_marginEnd="104dp"
-        android:layout_marginRight="104dp"
-        android:layout_marginBottom="115dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Volume"
         app:layout_constraintBottom_toTopOf="@+id/backBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genreTf" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -95,6 +95,24 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints" >
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/bookRequestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="4dp"
+        android:text="Request"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/searchBtn"
+        app:layout_constraintStart_toEndOf="@+id/libraryBtn"
+        app:layout_constraintTop_toBottomOf="@+id/flFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

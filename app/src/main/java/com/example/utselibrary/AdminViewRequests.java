@@ -18,7 +18,7 @@ public class AdminViewRequests extends AppCompatActivity {
     private RecyclerView bookReqRV;
 
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    CollectionReference documentRef = database.collection("Book Requests");
+    CollectionReference bookRef = database.collection("BookRequests");
     private FirestoreRecyclerAdapter<Documents, SearchBook.SearchBookViewHolder> searchAdapter;
     LinearLayoutManager linearLayoutManager;
 
