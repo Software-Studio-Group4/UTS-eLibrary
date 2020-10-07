@@ -110,6 +110,7 @@
         android:layout_marginRight="12dp"
         android:layout_marginBottom="4dp"
         android:text="Request"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/searchBtn"
         app:layout_constraintStart_toEndOf="@+id/libraryBtn"

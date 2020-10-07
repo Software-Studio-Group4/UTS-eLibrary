@@ -1,14 +1,24 @@
 package com.example.utselibrary;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**********************************************************************************************
  * Parent Activity for User Dashboard
@@ -18,6 +28,10 @@ import androidx.fragment.app.FragmentTransaction;
 public class UserDashboard extends AppCompatActivity {
 
     Button libraryBtn, searchBtn, profileBtn, bookRequestBtn;
+    FirebaseAuth fAuth = FirebaseAuth.getInstance();
+    FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    String userID = fAuth.getCurrentUser().getUid();
+    DocumentReference userDocRef = fStore.collection("Users").document(userID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +50,33 @@ public class UserDashboard extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.flFragment, LibraryFragment);
         fragmentTransaction.commit();
+
+        userDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    Boolean isLecturer = documentSnapshot.getBoolean("isLecturer");
+                    if (isLecturer == true){
+                        bookRequestBtn.setVisibility(View.VISIBLE);
+                        bookRequestBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(getApplicationContext(), BookRequest.class));
+                            }
+                        });
+                    }
+
+                } else {
+                    Toast.makeText(UserDashboard.this, "Error", Toast.LENGTH_LONG).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(UserDashboard.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     protected void onStart() {
@@ -44,7 +85,7 @@ public class UserDashboard extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-
+/*
         bookRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +93,7 @@ public class UserDashboard extends AppCompatActivity {
             }
         });
 
+        */
         libraryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

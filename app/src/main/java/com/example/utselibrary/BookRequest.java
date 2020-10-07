@@ -46,11 +46,18 @@ public class BookRequest extends AppCompatActivity {
         pubTf = findViewById(R.id.pubTf);
         genreTf = findViewById(R.id.genreTf);
         requestBtn = findViewById(R.id.requestBtn);
+        backBtn = findViewById(R.id.backBtn);
 
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requestBook();
+            }
+        });
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), UserDashboard.class));
             }
         });
 
