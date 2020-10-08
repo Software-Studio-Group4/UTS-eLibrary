@@ -11,7 +11,7 @@ public class Documents {
     private String genre;
     private String id;
     private String publisher;
-    private String imageUrl;
+    private String coverImageUrl;
     private int borrowLimit;
     private List<String> borrowers = new ArrayList<String>();
 
@@ -19,13 +19,13 @@ public class Documents {
         // Empty constructor
     }
 
-    public Documents(String title, String primaryAuthor, String id, String genre, String publisher, String imageUrl, int borrowLimit, String[] borrowers) {
+    public Documents(String title, String primaryAuthor, String id, String genre, String publisher, String coverImageUrl, int borrowLimit, String[] borrowers) {
         this.title = title;
         this.primaryAuthor = primaryAuthor;
         this.id = id;
         this.genre = genre;
         this.publisher = publisher;
-        this.imageUrl = imageUrl;
+        this.coverImageUrl = coverImageUrl;
         this.borrowLimit = borrowLimit;
         for(int i = 0; i < borrowers.length; i++) {
             this.borrowers.add(borrowers[i]);
@@ -72,12 +72,12 @@ public class Documents {
         this.publisher = publisher;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getCoverImageUrl() {
+        return coverImageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setCoverImageUrl(String imageUrl) {
+        this.coverImageUrl = imageUrl;
     }
 
     public int getBorrowLimit() {

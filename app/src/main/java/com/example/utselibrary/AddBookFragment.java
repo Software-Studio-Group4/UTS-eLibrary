@@ -26,7 +26,6 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -48,16 +47,10 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddBookFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddBookFragment extends Fragment {
 
-    EditText titleTf, authorTf, publisherTf, idTf;
+    EditText titleTf, authorTf, publisherTf, bookIDTf, publishedYearTf, borrowLimitTf, genreTf;
     Button addButton;
-    Spinner genreSpinner;
     ImageView bookImage;
     Uri imageUri;
     FirebaseStorage storage;
@@ -67,11 +60,9 @@ public class AddBookFragment extends Fragment {
 
     DatabaseReference documentRef;
 
-    
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -79,15 +70,6 @@ public class AddBookFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddBookFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static AddBookFragment newInstance(String param1, String param2) {
         AddBookFragment fragment = new AddBookFragment();
         Bundle args = new Bundle();
@@ -112,13 +94,22 @@ public class AddBookFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_book, container, false);
     }
+
+    /**********************************************************************************************
+     * Add book fragment
+     * manipulates the fragment where admin adds book to database
+     ************************************************************************************************/
+
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        // Get views
         titleTf = getView().findViewById(R.id.bookTitleTf);
         authorTf = getView().findViewById(R.id.authorTf);
         publisherTf = getView().findViewById(R.id.publisherTf);
-        idTf = getView().findViewById(R.id.idTf);
+        bookIDTf = getView().findViewById(R.id.bookIDTf);
+        publishedYearTf = getView().findViewById(R.id.publishedYearTf);
+        borrowLimitTf = getView().findViewById(R.id.borrowLimitTf);
+        genreTf = getView().findViewById(R.id.genreTf);
         addButton = getView().findViewById(R.id.addBtn);
-        genreSpinner = getView().findViewById(R.id.genreSpinner);
         bookImage = getView().findViewById(R.id.bookImage);
         documentRef = FirebaseDatabase.getInstance().getReference("documents");
         storage = FirebaseStorage.getInstance();
@@ -142,24 +133,30 @@ public class AddBookFragment extends Fragment {
             }
         });
     }
+
     private void addBook() throws JSONException {
         fStore = FirebaseFirestore.getInstance();
         final String title = titleTf.getText().toString().trim();
         final String author = authorTf.getText().toString().trim();
-        final String genre = genreSpinner.getSelectedItem().toString();
+        final String genre = genreTf.getText().toString().trim();
         final String publisher = publisherTf.getText().toString().trim();
-        final String algoliaId = idTf.getText().toString().trim();
+        final String algoliaId = bookIDTf.getText().toString().trim();
+        final String publishedYear = publishedYearTf.getText().toString().trim();
+        final String borrowLimitString = borrowLimitTf.getText().toString().trim();
         final String image = imageUrl;
+        final int borrowLimit = Integer.parseInt(borrowLimitString);
+        ArrayList<String> borrowers = new ArrayList<String>();
 
-        final Map<String, String> documentMap = new HashMap<>();
-
+        final Map<String, Object> documentMap = new HashMap<>();
         documentMap.put("title", title);
         documentMap.put("author", author);
         documentMap.put("genre", genre);
         documentMap.put("publisher", publisher);
+        documentMap.put("publishedYear", publishedYear);
         documentMap.put("coverImageUrl", image);
         documentMap.put("objectID", algoliaId);
-
+        documentMap.put("borrowLimit", borrowLimit);
+        documentMap.put("borrowers", borrowers);
 
         fStore.collection("Documents").add(documentMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -172,7 +169,16 @@ public class AddBookFragment extends Fragment {
 
                 try {
                     array.add(
-                            new JSONObject().put("objectID", algoliaId).put("title", title).put("author", author).put("genre", genre).put("publisher", publisher).put("coverImageUrl", image).put("id", id)
+                            new JSONObject()
+                                    .put("objectID", algoliaId)
+                                    .put("title", title)
+                                    .put("author", author)
+                                    .put("genre", genre)
+                                    .put("publisher", publisher)
+                                    .put("publishedYear", publishedYear)
+                                    .put("borrowLimit", borrowLimit)
+                                    .put("coverImageUrl", image)
+                                    .put("id", id)
                     );
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -202,7 +208,6 @@ public class AddBookFragment extends Fragment {
         }
 
 
-
     }
 
     private void chooseImage() {
@@ -216,7 +221,7 @@ public class AddBookFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             bookImage.setImageURI(imageUri);
             uploadImage();
@@ -260,7 +265,7 @@ public class AddBookFragment extends Fragment {
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 double progressPercentage = (100.00 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                pd.setMessage("Progress: " + (int) progressPercentage + "%" );
+                pd.setMessage("Progress: " + (int) progressPercentage + "%");
             }
         });
     }

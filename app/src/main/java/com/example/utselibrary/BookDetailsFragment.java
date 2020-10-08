@@ -96,7 +96,6 @@ public class BookDetailsFragment extends Fragment {
         bookCover = getView().findViewById(R.id.bookCover);
 
         final FragmentManager fm = getFragmentManager();
-        final Fragment ViewAllBooksFragment = new ViewAllBooksFragment();
 
         // Get bookID
         Bundle bookID = this.getArguments();
@@ -107,8 +106,13 @@ public class BookDetailsFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
-                    String title = documentSnapshot.getString("title");
-                    String bookCoverUrl = documentSnapshot.getString("coverImageUrl");
+                    Documents document = documentSnapshot.toObject(Documents.class);
+                    String title = document.getTitle();
+                    String bookCoverUrl = document.getCoverImageUrl();
+
+                    if (document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())) {
+                        borrowBtn.setVisibility(View.INVISIBLE);
+                    }
 
                     titleTf.setText(title);
                     Picasso.get().load(bookCoverUrl).into(bookCover);
@@ -123,7 +127,6 @@ public class BookDetailsFragment extends Fragment {
                 //check if the user has reached their max borrow allowance
                 //check if the user already borrowed this book
                 final DocumentReference userReference = fStore.collection("Users").document(FirebaseAuth.getInstance().getUid());
-
 
                 userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -146,15 +149,16 @@ public class BookDetailsFragment extends Fragment {
                                         Toast.makeText(getContext(), "This book has reached its borrow limit", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
-                                    else if(document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())){
+                                    else if (document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())){
                                         Toast.makeText(getContext(), "You already borrowed this book", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
-                                    else{
+                                    else {
                                         List<String> borrowers = document.getBorrowers();
                                         if(borrowers.size() > 0 && borrowers.get(0) == ""){
                                             borrowers.clear();
                                         }
+
                                         borrowers.add(FirebaseAuth.getInstance().getUid());
                                         List<BorrowedDocument> borrowedDocs = new ArrayList<BorrowedDocument>();
                                         List<BorrowedDocument> borrowHistory = new ArrayList<BorrowedDocument>();
@@ -166,21 +170,21 @@ public class BookDetailsFragment extends Fragment {
                                         borrowedDocs.add(newBorrow);
                                         borrowHistory.add(newBorrow);
 
+                                        int borrowAmount = user.getBorrowAmount();
+                                        borrowAmount++;
+
                                         documentReference.update("borrowers", borrowers);
+                                        userReference.update("borrowAmount", borrowAmount);
                                         userReference.update("borrowedDocs", borrowedDocs);
                                         userReference.update("borrowHistory", borrowHistory);
 
                                         Toast.makeText(getContext(), "Successfully borrowed" + titleTf.getText() , Toast.LENGTH_SHORT).show();
-
                                     }
                                 }
                             }
                         });
                     }
                 });
-
-
-
 
             }
         });

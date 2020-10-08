@@ -26,6 +26,10 @@ public class User {
 //empty constructor
     }
 
+    public User(int borrowAmount) {
+        this.borrowAmount = borrowAmount;
+    }
+
 
     public int getBorrowAmount() {
         return borrowAmount;

@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".RemoveBook"></activity>
-        <activity android:name=".AddBook" />
         <activity android:name=".ChangeDetails" />
         <activity android:name=".BookDetails" />
         <activity android:name=".BookRequest" />
