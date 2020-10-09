@@ -97,4 +97,20 @@ android:background="@drawable/user_dashboard_bg">
     app:layout_constraintTop_toTopOf="parent"
     tools:ignore="MissingConstraints" />
 
+    <Button
+        android:id="@+id/requestsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Requests"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/searchBtn"
+        app:layout_constraintStart_toEndOf="@+id/addBookBtn"
+        app:layout_constraintTop_toBottomOf="@+id/flFragment" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
