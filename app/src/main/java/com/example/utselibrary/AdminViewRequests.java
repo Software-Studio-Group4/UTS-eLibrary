@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.utselibrary.Model.BookRequest;
+//import com.example.utselibrary.Model.BookRequest;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,7 +42,7 @@ public class AdminViewRequests extends AppCompatActivity {
 
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     CollectionReference bookRef = fStore.collection("BookRequests");
-    private FirestoreRecyclerAdapter<BookRequest, RequestBookViewHolder> bookRequestAdapter;
+    //private FirestoreRecyclerAdapter<BookRequest, RequestBookViewHolder> bookRequestAdapter;
 
 
     @Override
@@ -52,12 +52,12 @@ public class AdminViewRequests extends AppCompatActivity {
         resultList = findViewById(R.id.requestRecyclerView);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         resultList.setLayoutManager(linearLayoutManager);
-        setRecyclerView();
+        //setRecyclerView();
 
 
     }
 
-    private void setRecyclerView() {
+    /*private void setRecyclerView() {
         Query query = bookRef.orderBy("title", Query.Direction.DESCENDING);
 
 
@@ -110,5 +110,5 @@ public class AdminViewRequests extends AppCompatActivity {
             pubName.setText(publisher);
         }
 
-    }
+    }*/
 }

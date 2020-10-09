@@ -74,14 +74,13 @@ android:background="@drawable/user_dashboard_bg">
     tools:ignore="MissingConstraints" />
 
 <Button
-    android:id="@+id/notificationBtn"
+    android:id="@+id/logoutBtn"
     android:layout_width="24dp"
     android:layout_height="29dp"
     android:layout_marginTop="24dp"
     android:layout_marginEnd="16dp"
     android:layout_marginRight="16dp"
-    android:background="@drawable/bell_button"
-    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:background="@drawable/logout_container"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     tools:ignore="MissingConstraints" />
