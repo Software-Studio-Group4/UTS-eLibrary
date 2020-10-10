@@ -79,7 +79,7 @@ public class ViewAllBooksFragment extends Fragment {
     String pos;
 
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
-    String userID = fAuth.getCurrentUser().getUid();;
+    String userID = fAuth.getCurrentUser().getUid();
     DocumentReference adminRef = fStore.collection("Admin").document(userID);
 
 

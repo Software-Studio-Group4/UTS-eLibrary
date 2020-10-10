@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.algolia.search.saas.Client;
@@ -49,7 +50,7 @@ import javax.annotation.Nullable;
 
 public class AddBookFragment extends Fragment {
 
-    EditText titleTf, authorTf, publisherTf, bookIDTf, publishedYearTf, borrowLimitTf, genreTf;
+    EditText titleTf, authorTf, publisherTf, documentIDTf, publishedYearTf, numOfCopiesTf, genreTf, descriptionTf;
     Button addButton;
     ImageView bookImage;
     Uri imageUri;
@@ -92,7 +93,7 @@ public class AddBookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_book, container, false);
+        return inflater.inflate(R.layout.add_book_fragment, container, false);
     }
 
     /**********************************************************************************************
@@ -105,12 +106,14 @@ public class AddBookFragment extends Fragment {
         titleTf = getView().findViewById(R.id.bookTitleTf);
         authorTf = getView().findViewById(R.id.authorTf);
         publisherTf = getView().findViewById(R.id.publisherTf);
-        bookIDTf = getView().findViewById(R.id.bookIDTf);
+        documentIDTf = getView().findViewById(R.id.documentIDTf);
         publishedYearTf = getView().findViewById(R.id.publishedYearTf);
-        borrowLimitTf = getView().findViewById(R.id.borrowLimitTf);
+        numOfCopiesTf = getView().findViewById(R.id.numOfCopiesTf);
         genreTf = getView().findViewById(R.id.genreTf);
+        descriptionTf = getView().findViewById(R.id.descriptionTf);
         addButton = getView().findViewById(R.id.addBtn);
         bookImage = getView().findViewById(R.id.bookImage);
+
         documentRef = FirebaseDatabase.getInstance().getReference("documents");
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -140,14 +143,66 @@ public class AddBookFragment extends Fragment {
         final String author = authorTf.getText().toString().trim();
         final String genre = genreTf.getText().toString().trim();
         final String publisher = publisherTf.getText().toString().trim();
-        final String algoliaId = bookIDTf.getText().toString().trim();
+        final String algoliaId = documentIDTf.getText().toString().trim();
         final String publishedYear = publishedYearTf.getText().toString().trim();
-        final String borrowLimitString = borrowLimitTf.getText().toString().trim();
+        final String borrowLimitString = numOfCopiesTf.getText().toString().trim();
+        final String description = descriptionTf.getText().toString().trim();
         final String image = imageUrl;
-        final int borrowLimit = Integer.parseInt(borrowLimitString);
         ArrayList<String> borrowers = new ArrayList<String>();
+        final int borrowLimit;
+
+        if (TextUtils.isEmpty(algoliaId)) {
+            documentIDTf.setError("Please enter document ID");
+            YoYo.with(Techniques.Shake).duration(700).playOn(documentIDTf);
+            return;
+        }
+
+        if (TextUtils.isEmpty(title)) {
+            titleTf.setError("Please enter document title");
+            YoYo.with(Techniques.Shake).duration(700).playOn(titleTf);
+            return;
+        }
+
+        if (TextUtils.isEmpty(author)) {
+            authorTf.setError("Please enter document author");
+            YoYo.with(Techniques.Shake).duration(700).playOn(authorTf);
+            return;
+        }
+
+        if (TextUtils.isEmpty(genre)) {
+            genreTf.setError("Please enter document genre");
+            YoYo.with(Techniques.Shake).duration(700).playOn(genreTf);
+            return;
+        }
+
+        if (TextUtils.isEmpty(publisher)) {
+            publisherTf.setError("Please enter document publisher");
+            YoYo.with(Techniques.Shake).duration(700).playOn(publisherTf);
+            return;
+        }
+
+        if (TextUtils.isEmpty(publishedYear)) {
+            publishedYearTf.setError("Please enter document publishing year");
+            YoYo.with(Techniques.Shake).duration(700).playOn(publishedYearTf);
+            return;
+        }
+
+        if (TextUtils.isEmpty(borrowLimitString)) {
+            numOfCopiesTf.setError("Please enter No. of document copies");
+            YoYo.with(Techniques.Shake).duration(700).playOn(genreTf);
+            return;
+        } else {
+            borrowLimit = Integer.parseInt(borrowLimitString);
+        }
+
+        if (TextUtils.isEmpty(description)) {
+            descriptionTf.setError("Please enter document description");
+            YoYo.with(Techniques.Shake).duration(700).playOn(descriptionTf);
+            return;
+        }
 
         final Map<String, Object> documentMap = new HashMap<>();
+        // Form-filled fields
         documentMap.put("title", title);
         documentMap.put("author", author);
         documentMap.put("genre", genre);
@@ -156,6 +211,9 @@ public class AddBookFragment extends Fragment {
         documentMap.put("coverImageUrl", image);
         documentMap.put("objectID", algoliaId);
         documentMap.put("borrowLimit", borrowLimit);
+        documentMap.put("description", description);
+
+        // Non form fields
         documentMap.put("borrowers", borrowers);
 
         fStore.collection("Documents").add(documentMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -186,6 +244,12 @@ public class AddBookFragment extends Fragment {
 
                 index.addObjectsAsync(new JSONArray(array), null);
                 Toast.makeText(getActivity().getApplicationContext(), "Document added", Toast.LENGTH_SHORT).show();
+                final Fragment AddBookFragment = new AddBookFragment();
+                final FragmentManager fm = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.replace(R.id.flFragment, AddBookFragment);
+                fragmentTransaction.commit();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -195,18 +259,6 @@ public class AddBookFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
             }
         });
-
-        if (TextUtils.isEmpty(title)) {
-            titleTf.setError("Please enter title");
-            YoYo.with(Techniques.Shake).duration(700).playOn(titleTf);
-        }
-
-
-        if (TextUtils.isEmpty(author)) {
-            authorTf.setError("Please enter author");
-            YoYo.with(Techniques.Shake).duration(700).playOn(authorTf);
-        }
-
 
     }
 

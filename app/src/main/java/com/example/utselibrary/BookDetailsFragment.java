@@ -1,5 +1,6 @@
 package com.example.utselibrary;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -40,7 +41,7 @@ import javax.annotation.Nullable;
 public class BookDetailsFragment extends Fragment {
 
     Button backBtn, borrowBtn, returnBtn;
-    TextView titleTf;
+    TextView titleTf, borrowText, returnText;
     ImageView bookCover;
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
@@ -94,6 +95,8 @@ public class BookDetailsFragment extends Fragment {
         returnBtn = getView().findViewById(R.id.returnBtn);
         titleTf = getView().findViewById(R.id.titleTf);
         bookCover = getView().findViewById(R.id.bookCover);
+        borrowText = getView().findViewById(R.id.borrowText);
+        returnText = getView().findViewById(R.id.returnText);
 
         final FragmentManager fm = getFragmentManager();
 
@@ -111,7 +114,9 @@ public class BookDetailsFragment extends Fragment {
                     String bookCoverUrl = document.getCoverImageUrl();
 
                     if (document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())) {
-                        borrowBtn.setVisibility(View.INVISIBLE);
+                        borrowText.setTextColor(Color.GRAY);
+                    } else {
+                        returnText.setTextColor(Color.GRAY);
                     }
 
                     titleTf.setText(title);
@@ -132,7 +137,7 @@ public class BookDetailsFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         final User user = documentSnapshot.toObject(User.class);
-                        if(user.getBorrowedDocs().size() >= user.getMaxAllowed()){
+                        if (user.getBorrowedDocs().size() >= user.getMaxAllowed()) {
                             Toast.makeText(getContext(), "You can't borrow any more books", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -145,17 +150,15 @@ public class BookDetailsFragment extends Fragment {
                                     //check to see if borrow limit has been reached first
                                     //if not, add the document to the user's borrowList and add the user's ID to the borrowers list in this document
                                     Documents document = documentSnapshot.toObject(Documents.class);
-                                    if(document.getBorrowers().size() >= document.getBorrowLimit()){
+                                    if (document.getBorrowers().size() >= document.getBorrowLimit()) {
                                         Toast.makeText(getContext(), "This book has reached its borrow limit", Toast.LENGTH_SHORT).show();
                                         return;
-                                    }
-                                    else if (document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())){
+                                    } else if (document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())) {
                                         Toast.makeText(getContext(), "You already borrowed this book", Toast.LENGTH_SHORT).show();
                                         return;
-                                    }
-                                    else {
+                                    } else {
                                         List<String> borrowers = document.getBorrowers();
-                                        if(borrowers.size() > 0 && borrowers.get(0) == ""){
+                                        if (borrowers.size() > 0 && borrowers.get(0) == "") {
                                             borrowers.clear();
                                         }
 
@@ -178,7 +181,7 @@ public class BookDetailsFragment extends Fragment {
                                         userReference.update("borrowedDocs", borrowedDocs);
                                         userReference.update("borrowHistory", borrowHistory);
 
-                                        Toast.makeText(getContext(), "Successfully borrowed" + titleTf.getText() , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "Successfully borrowed" + titleTf.getText(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }

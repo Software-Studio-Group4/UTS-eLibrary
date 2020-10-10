@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 
 import maes.tech.intentanim.CustomIntent;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class AdminDashboard extends AppCompatActivity {
 
-    Button addBookBtn, searchBtn, profileBtn,requestsBtn;
+    Button addBookBtn, searchBtn, manageBtn, requestsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,8 @@ public class AdminDashboard extends AppCompatActivity {
         // Get views
         addBookBtn = findViewById(R.id.addBookBtn);
         searchBtn = findViewById(R.id.searchBtn);
-        profileBtn = findViewById(R.id.profileBtn);
-        requestsBtn = findViewById(R.id.requestsBtn);
+        manageBtn = findViewById(R.id.manageBtn);
+        //  requestsBtn = findViewById(R.id.requestsBtn);
 
         // Fragment initialized
         Fragment LibraryFragment = new AddBookFragment();
@@ -57,9 +58,9 @@ public class AdminDashboard extends AppCompatActivity {
         addBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addBookBtn.setBackgroundResource(android.R.drawable.ic_input_add);
+                addBookBtn.setBackgroundResource(R.drawable.add_book_icon_blue);
                 searchBtn.setBackgroundResource(R.drawable.search_button);
-                profileBtn.setBackgroundResource(R.drawable.profile_button);
+                manageBtn.setBackgroundResource(R.drawable.manage_icon_grey);
                 loadFragment((new AddBookFragment()));
             }
         });
@@ -67,29 +68,22 @@ public class AdminDashboard extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addBookBtn.setBackgroundResource(R.drawable.library_button);
+                addBookBtn.setBackgroundResource(R.drawable.add_book_icon_grey);
                 searchBtn.setBackgroundResource(R.drawable.search_button_pressed);
-                profileBtn.setBackgroundResource(R.drawable.profile_button);
+                manageBtn.setBackgroundResource(R.drawable.manage_icon_grey);
                 loadFragment((new ViewAllBooksFragment()));
             }
         });
 
-        profileBtn.setOnClickListener(new View.OnClickListener() {
+        manageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addBookBtn.setBackgroundResource(R.drawable.library_button);
+                addBookBtn.setBackgroundResource(R.drawable.add_book_icon_grey);
                 searchBtn.setBackgroundResource(R.drawable.search_button);
-                profileBtn.setBackgroundResource(R.drawable.profile_button_pressed);
-                loadFragment((new ProfilePageFragment()));
+                manageBtn.setBackgroundResource(R.drawable.manage_icon_blue);
+                loadFragment((new ViewUsersFragment()));
             }
         });
-        requestsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), AdminViewRequests.class));
-            }
-        }
-        );
     }
 
     protected void onPause() {
@@ -113,28 +107,3 @@ public class AdminDashboard extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 }
-
-/*public class AdminDashboard extends AppCompatActivity {
-    Button addBookBtn;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_dashboard);
-        //addBookBtn = findViewById(R.id.addBookBtn);
-
-       // addBookBtn.setOnClickListener(new View.OnClickListener() {
-           // @Override
-           // public void onClick(View view) {
-               // startActivity(new Intent(getApplicationContext(), AddBook.class));
-            }
-        //});
-    //}
-
-    public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        CustomIntent.customType(AdminDashboard.this, "right-to-left");
-        finish();
-    }
-}*/
