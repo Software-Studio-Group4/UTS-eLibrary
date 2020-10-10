@@ -195,8 +195,36 @@ public class BookDetailsFragment extends Fragment {
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Page does not exist yet", Toast.LENGTH_SHORT).show();
-            }
+                final DocumentReference userReference = fStore.collection("Users").document(FirebaseAuth.getInstance().getUid());
+                userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            final User user= documentSnapshot.toObject(User.class);
+                            if(user.hasBook(id)){
+
+                                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @RequiresApi(api = Build.VERSION_CODES.O)
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        if (documentSnapshot.exists()) {
+                                            Documents document = documentSnapshot.toObject(Documents.class);
+                                                document.removeBorrower(FirebaseAuth.getInstance().getUid());
+                                                user.returnBook(id);
+
+                                                userReference.update("borrowedDocs", user.getBorrowedDocs());
+                                                documentReference.update("borrowers", document.getBorrowers());
+                                                Toast.makeText(getContext(), "You returned this book", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }
+                                else{
+                                    Toast.makeText(getContext(), "You haven't borrowed this book", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        });
+                    }
         });
 
         backBtn.setOnClickListener(new View.OnClickListener() {

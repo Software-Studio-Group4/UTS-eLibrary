@@ -2,6 +2,7 @@
 package com.example.utselibrary.Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Documents {
@@ -94,6 +95,16 @@ public class Documents {
 
     public void setBorrowers(List<String> borrowers) {
         this.borrowers = borrowers;
+    }
+
+    public void removeBorrower(String id){
+        Iterator itr = borrowers.iterator();
+        while(itr.hasNext()){
+            String user = (String) itr.next();
+            if(user.equals(id)){
+                itr.remove();
+            }
+        }
     }
 
 }
