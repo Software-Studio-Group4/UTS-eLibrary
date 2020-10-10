@@ -14,6 +14,7 @@ public class Documents {
     private String publisher;
     private String coverImageUrl;
     private String publishedYear;
+    private String description;
     private int borrowLimit;
     private List<String> borrowers = new ArrayList<String>();
 
@@ -21,7 +22,7 @@ public class Documents {
         // Empty constructor
     }
 
-    public Documents(String title, String author, String id, String genre, String publisher, String coverImageUrl, int borrowLimit, String publishedYear, String[] borrowers) {
+    public Documents(String title, String author, String id, String genre, String publisher, String coverImageUrl, String description, int borrowLimit, String publishedYear, String[] borrowers) {
         this.title = title;
         this.author = author;
         this.id = id;
@@ -30,6 +31,7 @@ public class Documents {
         this.coverImageUrl = coverImageUrl;
         this.borrowLimit = borrowLimit;
         this.publishedYear = publishedYear;
+        this.description = description;
         for(int i = 0; i < borrowers.length; i++) {
             this.borrowers.add(borrowers[i]);
         }
@@ -97,6 +99,14 @@ public class Documents {
 
     public void setPublishedYear(String publishedYear) {
         this.publishedYear = publishedYear;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getBorrowers() {

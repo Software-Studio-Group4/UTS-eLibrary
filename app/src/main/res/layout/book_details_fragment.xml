@@ -35,8 +35,8 @@
 
     <ImageView
         android:id="@+id/bookCover"
-        android:layout_width="187dp"
-        android:layout_height="279dp"
+        android:layout_width="190dp"
+        android:layout_height="318dp"
         android:layout_marginStart="28dp"
         android:layout_marginLeft="28dp"
         android:layout_marginTop="28dp"
@@ -49,14 +49,13 @@
         android:id="@+id/borrowReturnCtn"
         android:layout_width="150dp"
         android:layout_height="95dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:src="@drawable/borrow_return_ctn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.678"
         app:layout_constraintStart_toEndOf="@+id/bookCover"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bookCover"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -122,34 +121,50 @@
 
     <TextView
         android:id="@+id/authorText"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
-        android:text="Author:"
+        android:layout_marginTop="16dp"
         android:textColor="#636363"
+        app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
+        app:layout_constraintHorizontal_bias="0.086"
         app:layout_constraintStart_toEndOf="@+id/bookCover"
         app:layout_constraintTop_toBottomOf="@+id/borrowReturnCtn" />
 
     <TextView
         android:id="@+id/genreText"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Genre:"
         android:textColor="#636363"
+        app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/authorText"
         app:layout_constraintTop_toBottomOf="@+id/authorText" />
 
     <TextView
         android:id="@+id/publishedYearText"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Published:"
         android:textColor="#636363"
-        app:layout_constraintStart_toStartOf="@+id/genreText"
+        app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/authorText"
         app:layout_constraintTop_toBottomOf="@+id/genreText" />
+
+    <TextView
+        android:id="@+id/descriptionText"
+        android:layout_width="365dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Description"
+        android:textColor="#636363"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/bookCover"
+        app:layout_constraintTop_toBottomOf="@+id/bookCover" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

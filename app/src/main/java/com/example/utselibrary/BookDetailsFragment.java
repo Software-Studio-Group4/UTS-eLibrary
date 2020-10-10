@@ -35,7 +35,7 @@ import javax.annotation.Nullable;
 public class BookDetailsFragment extends Fragment {
 
     Button backBtn, borrowBtn, returnBtn;
-    TextView titleText, borrowText, returnText, authorText, genreText, publishedYearText;
+    TextView titleText, borrowText, returnText, authorText, genreText, publishedYearText, descriptionText;
     ImageView bookCover;
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
@@ -94,6 +94,7 @@ public class BookDetailsFragment extends Fragment {
         authorText = getView().findViewById(R.id.authorText);
         genreText = getView().findViewById(R.id.genreText);
         publishedYearText = getView().findViewById(R.id.publishedYearText);
+        descriptionText = getView().findViewById(R.id.descriptionText);
 
         final FragmentManager fm = getFragmentManager();
 
@@ -114,12 +115,15 @@ public class BookDetailsFragment extends Fragment {
                     String author = document.getAuthor();
                     String genre = document.getGenre();
                     String publishedYear = document.getPublishedYear();
+                    String description = document.getDescription();
+
 
                     // Set text views
                     titleText.setText(title);
                     authorText.setText("Author: " + author);
                     genreText.setText("Genre: " + genre);
                     publishedYearText.setText("Published: " + publishedYear);
+                    descriptionText.setText(description);
 
                     Picasso.get().load(bookCoverUrl).into(bookCover);
 
