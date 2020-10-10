@@ -9,20 +9,26 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algolia.search.saas.AbstractQuery;
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.Index;
-import com.algolia.search.saas.Query;
+import com.example.utselibrary.Model.Documents;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,7 +38,13 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -41,12 +53,14 @@ public class UserDetailsFragment extends Fragment {
     private static final String TAG = "Admin Book";
     Button backBtn, fineBtn, suspendBtn;
     TextView fullNameTf, borrowAmountTf;
+    ListView borrowedDocsList;
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     CollectionReference cRef = fStore.collection("Users");
     Client client = new Client("9L80XXFOLT", "a01b448ff9270562e195ef32110d829a");
     Index index = client.getIndex("Documents");
-
+    CollectionReference documentRef = fStore.collection("Documents");
+    DocumentReference borrowedDocumentRef = fStore.collection("Users").document("borrowedDocs");
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -95,6 +109,7 @@ public class UserDetailsFragment extends Fragment {
         suspendBtn = getView().findViewById(R.id.suspendBtn);
         fullNameTf = getView().findViewById(R.id.fullNameTf);
         borrowAmountTf = getView().findViewById(R.id.borrowAmountTf);
+        borrowedDocsList = getView().findViewById(R.id.borrowedDocslist);
 
         final FragmentManager fm = getFragmentManager();
         final Fragment ViewAllBooksFragment = new ViewAllBooksFragment();
@@ -116,10 +131,11 @@ public class UserDetailsFragment extends Fragment {
                     String objectID = documentSnapshot.getString("objectID");
                     double borrowAmount = documentSnapshot.getDouble("borrowAmount");
                     fullNameTf.setText(fullName);
-                    borrowAmountTf.setText("" + borrowAmount);
+                    borrowAmountTf.setText("Books Currently Borrowed: " + borrowAmount);
                 }
             }
         });
+        // Collection
 
         fineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,5 +159,17 @@ public class UserDetailsFragment extends Fragment {
             }
         });
 
+    }
+    private class DocumentsViewHolder extends RecyclerView.ViewHolder {
+        TextView bookTitleText, authorNameText;
+        ImageView coverImage;
+
+        public DocumentsViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            bookTitleText = itemView.findViewById(R.id.bookTitleText);
+            authorNameText = itemView.findViewById(R.id.authorNameText);
+            coverImage = itemView.findViewById(R.id.coverImage);
+        }
     }
 }

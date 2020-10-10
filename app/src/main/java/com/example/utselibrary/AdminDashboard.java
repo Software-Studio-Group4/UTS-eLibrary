@@ -38,7 +38,7 @@ public class AdminDashboard extends AppCompatActivity {
         addBookBtn = findViewById(R.id.addBookBtn);
         searchBtn = findViewById(R.id.searchBtn);
         manageBtn = findViewById(R.id.manageBtn);
-        //  requestsBtn = findViewById(R.id.requestsBtn);
+        requestsBtn = findViewById(R.id.requestsBtn);
 
         // Fragment initialized
         Fragment LibraryFragment = new AddBookFragment();
@@ -80,10 +80,19 @@ public class AdminDashboard extends AppCompatActivity {
             public void onClick(View v) {
                 addBookBtn.setBackgroundResource(R.drawable.add_book_icon_grey);
                 searchBtn.setBackgroundResource(R.drawable.search_button);
+
                 manageBtn.setBackgroundResource(R.drawable.manage_icon_blue);
                 loadFragment((new ViewUsersFragment()));
             }
         });
+
+        requestsBtn.setOnClickListener(new View.OnClickListener() {
+                                           @Override
+                                           public void onClick(View v) {
+                                               startActivity(new Intent(getApplicationContext(), AdminViewRequests.class));
+                                           }
+                                       }
+        );
     }
 
     protected void onPause() {
