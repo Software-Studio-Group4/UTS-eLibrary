@@ -76,8 +76,8 @@ public class AdminBookDetailsFragment extends Fragment {
     }
 
     /**********************************************************************************************
-     * Book details fragment
-     * manipulates the fragment where book details are displayed
+     * Admin Book details fragment
+     * manipulates the fragment where admin accesses book details
      ************************************************************************************************/
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

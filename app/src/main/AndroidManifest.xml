@@ -16,7 +16,6 @@
         <activity android:name=".BookRequest" />
         <activity android:name=".UserDashboard" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".SearchBook" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -76,6 +76,7 @@ public class ViewAllBooksFragment extends Fragment {
     EditText searchTf;
     private static String TAG = "fbSearch";
     CollectionReference documentRef = fStore.collection("Documents");
+    Query query = documentRef.orderBy("title", Query.Direction.ASCENDING);
     String pos;
 
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
@@ -137,7 +138,7 @@ public class ViewAllBooksFragment extends Fragment {
         final FragmentManager fm = getFragmentManager();
         final Fragment AdminBookDetailsFragment = new AdminBookDetailsFragment();
 
-        documentRef.get()
+        query.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
