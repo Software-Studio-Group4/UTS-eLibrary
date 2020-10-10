@@ -1,11 +1,13 @@
 package com.example.utselibrary.Model;
 
+import android.util.Log;
 import android.util.Pair;
 
 import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class User {
@@ -115,4 +117,27 @@ public class User {
         this.uniID = uniID;
     }
 
+
+    public boolean hasBook(String id){
+        for(BorrowedDocument borrowedDoc : borrowedDocs){
+            Log.d("DEBUGGER", "checking to for " + id  + " against " + borrowedDoc.getDocumentId());
+            if(borrowedDoc.getDocumentId().equals(id)){
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void returnBook(String id){
+        Iterator itr = borrowedDocs.iterator();
+        while(itr.hasNext()){
+            while(itr.hasNext()){
+                BorrowedDocument doc = (BorrowedDocument) itr.next();
+                if(doc.getDocumentId().equals(id)){
+                    itr.remove();
+                }
+            }
+        }
+    }
 }
