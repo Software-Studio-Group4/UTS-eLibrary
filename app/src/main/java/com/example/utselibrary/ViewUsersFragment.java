@@ -118,10 +118,7 @@ public class ViewUsersFragment extends Fragment {
         /*logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getContext(), MainActivity.class));
-                CustomIntent.customType(getContext(), "fadein-to-fadeout");
-                getActivity().finish();
+
             }
         });*/
 
