@@ -26,7 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class AdminDashboard extends AppCompatActivity {
 
-    Button addBookBtn, searchBtn, profileBtn;
+    Button addBookBtn, searchBtn, profileBtn,requestsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class AdminDashboard extends AppCompatActivity {
         addBookBtn = findViewById(R.id.addBookBtn);
         searchBtn = findViewById(R.id.searchBtn);
         profileBtn = findViewById(R.id.profileBtn);
+        requestsBtn = findViewById(R.id.requestsBtn);
 
         // Fragment initialized
         Fragment LibraryFragment = new AddBookFragment();
@@ -82,6 +83,13 @@ public class AdminDashboard extends AppCompatActivity {
                 loadFragment((new ProfilePageFragment()));
             }
         });
+        requestsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), AdminViewRequests.class));
+            }
+        }
+        );
     }
 
     protected void onPause() {
