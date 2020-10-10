@@ -94,7 +94,7 @@ public class MyLibraryFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull Documents model) {
                 holder.bookTitleText.setText(model.getTitle());
-                holder.authorNameText.setText("By " + model.getPrimaryAuthor());
+                holder.authorNameText.setText("By " + model.getAuthor());
                 Picasso.get().load(model.getCoverImageUrl()).into(holder.coverImage);
             }
 
@@ -121,7 +121,7 @@ public class MyLibraryFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull Documents model) {
                 holder.bookTitleText.setText(model.getTitle());
-                holder.authorNameText.setText("By " + model.getPrimaryAuthor());
+                holder.authorNameText.setText("By " + model.getAuthor());
                 Picasso.get().load(model.getCoverImageUrl()).into(holder.coverImage);
             }
 

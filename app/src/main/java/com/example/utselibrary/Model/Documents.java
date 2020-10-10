@@ -8,11 +8,12 @@ import java.util.List;
 public class Documents {
 
     private String title;
-    private String primaryAuthor;
+    private String author;
     private String genre;
     private String id;
     private String publisher;
     private String coverImageUrl;
+    private String publishedYear;
     private int borrowLimit;
     private List<String> borrowers = new ArrayList<String>();
 
@@ -20,14 +21,15 @@ public class Documents {
         // Empty constructor
     }
 
-    public Documents(String title, String primaryAuthor, String id, String genre, String publisher, String coverImageUrl, int borrowLimit, String[] borrowers) {
+    public Documents(String title, String author, String id, String genre, String publisher, String coverImageUrl, int borrowLimit, String publishedYear, String[] borrowers) {
         this.title = title;
-        this.primaryAuthor = primaryAuthor;
+        this.author = author;
         this.id = id;
         this.genre = genre;
         this.publisher = publisher;
         this.coverImageUrl = coverImageUrl;
         this.borrowLimit = borrowLimit;
+        this.publishedYear = publishedYear;
         for(int i = 0; i < borrowers.length; i++) {
             this.borrowers.add(borrowers[i]);
         }
@@ -41,12 +43,12 @@ public class Documents {
         this.title = title;
     }
 
-    public String getPrimaryAuthor() {
-        return primaryAuthor;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setPrimaryAuthor(String primaryAuthor) {
-        this.primaryAuthor = primaryAuthor;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getGenre() {
@@ -87,6 +89,14 @@ public class Documents {
 
     public void setBorrowLimit(int borrowLimit) {
         this.borrowLimit = borrowLimit;
+    }
+
+    public String getPublishedYear() {
+        return publishedYear;
+    }
+
+    public void setPublishedYear(String publishedYear) {
+        this.publishedYear = publishedYear;
     }
 
     public List<String> getBorrowers() {

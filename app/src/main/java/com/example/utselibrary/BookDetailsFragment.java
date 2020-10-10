@@ -7,9 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,6 @@ import com.example.utselibrary.Model.BorrowedDocument;
 import com.example.utselibrary.Model.Documents;
 import com.example.utselibrary.Model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,10 +27,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
-import java.security.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -41,7 +35,7 @@ import javax.annotation.Nullable;
 public class BookDetailsFragment extends Fragment {
 
     Button backBtn, borrowBtn, returnBtn;
-    TextView titleTf, borrowText, returnText;
+    TextView titleText, borrowText, returnText, authorText, genreText, publishedYearText;
     ImageView bookCover;
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
@@ -93,10 +87,13 @@ public class BookDetailsFragment extends Fragment {
         backBtn = getView().findViewById(R.id.backBtn);
         borrowBtn = getView().findViewById(R.id.borrowBtn);
         returnBtn = getView().findViewById(R.id.returnBtn);
-        titleTf = getView().findViewById(R.id.titleTf);
+        titleText = getView().findViewById(R.id.titleText);
         bookCover = getView().findViewById(R.id.bookCover);
         borrowText = getView().findViewById(R.id.borrowText);
         returnText = getView().findViewById(R.id.returnText);
+        authorText = getView().findViewById(R.id.authorText);
+        genreText = getView().findViewById(R.id.genreText);
+        publishedYearText = getView().findViewById(R.id.publishedYearText);
 
         final FragmentManager fm = getFragmentManager();
 
@@ -110,8 +107,21 @@ public class BookDetailsFragment extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     Documents document = documentSnapshot.toObject(Documents.class);
+
+                    // Get fields from Firebase
                     String title = document.getTitle();
                     String bookCoverUrl = document.getCoverImageUrl();
+                    String author = document.getAuthor();
+                    String genre = document.getGenre();
+                    String publishedYear = document.getPublishedYear();
+
+                    // Set text views
+                    titleText.setText(title);
+                    authorText.setText("Author: " + author);
+                    genreText.setText("Genre: " + genre);
+                    publishedYearText.setText("Published: " + publishedYear);
+
+                    Picasso.get().load(bookCoverUrl).into(bookCover);
 
                     if (document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())) {
                         borrowText.setTextColor(Color.GRAY);
@@ -119,8 +129,6 @@ public class BookDetailsFragment extends Fragment {
                         returnText.setTextColor(Color.GRAY);
                     }
 
-                    titleTf.setText(title);
-                    Picasso.get().load(bookCoverUrl).into(bookCover);
                 }
             }
         });
@@ -181,7 +189,7 @@ public class BookDetailsFragment extends Fragment {
                                         userReference.update("borrowedDocs", borrowedDocs);
                                         userReference.update("borrowHistory", borrowHistory);
 
-                                        Toast.makeText(getContext(), "Successfully borrowed" + titleTf.getText(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "Successfully borrowed" + titleText.getText(), Toast.LENGTH_SHORT).show();
                                         borrowText.setTextColor(Color.GRAY);
                                         returnText.setTextColor(Color.parseColor("#444A81"));
                                     }

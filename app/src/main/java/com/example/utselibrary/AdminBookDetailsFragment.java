@@ -1,13 +1,10 @@
 package com.example.utselibrary;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,14 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algolia.search.saas.AbstractQuery;
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.Index;
-import com.algolia.search.saas.Query;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -93,7 +86,7 @@ public class AdminBookDetailsFragment extends Fragment {
         backBtn = getView().findViewById(R.id.backBtn);
         updateBtn = getView().findViewById(R.id.updateBtn);
         removeBtn = getView().findViewById(R.id.removeBtn);
-        titleTf = getView().findViewById(R.id.titleTf);
+        titleTf = getView().findViewById(R.id.titleText);
         bookCover = getView().findViewById(R.id.bookCover);
 
         final FragmentManager fm = getFragmentManager();

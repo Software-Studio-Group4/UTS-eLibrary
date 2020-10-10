@@ -21,19 +21,15 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/titleTf"
+        android:id="@+id/titleText"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="347dp"
-        android:layout_marginRight="347dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="52dp"
         android:textColor="#444A81"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/backBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +41,7 @@
         android:layout_marginLeft="28dp"
         android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTf"
+        app:layout_constraintTop_toBottomOf="@+id/titleText"
         tools:ignore="MissingConstraints"
         tools:src="@tools:sample/avatars" />
 
@@ -54,10 +50,12 @@
         android:layout_width="150dp"
         android:layout_height="95dp"
         android:layout_marginTop="108dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:src="@drawable/borrow_return_ctn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.962"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.678"
+        app:layout_constraintStart_toEndOf="@+id/bookCover"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
@@ -121,5 +119,37 @@
         app:layout_constraintStart_toStartOf="@+id/borrowReturnCtn"
         app:layout_constraintTop_toTopOf="@+id/borrowReturnCtn"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/authorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="20dp"
+        android:text="Author:"
+        android:textColor="#636363"
+        app:layout_constraintStart_toEndOf="@+id/bookCover"
+        app:layout_constraintTop_toBottomOf="@+id/borrowReturnCtn" />
+
+    <TextView
+        android:id="@+id/genreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Genre:"
+        android:textColor="#636363"
+        app:layout_constraintStart_toStartOf="@+id/authorText"
+        app:layout_constraintTop_toBottomOf="@+id/authorText" />
+
+    <TextView
+        android:id="@+id/publishedYearText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Published:"
+        android:textColor="#636363"
+        app:layout_constraintStart_toStartOf="@+id/genreText"
+        app:layout_constraintTop_toBottomOf="@+id/genreText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
