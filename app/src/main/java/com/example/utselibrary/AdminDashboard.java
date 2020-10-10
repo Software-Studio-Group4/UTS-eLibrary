@@ -26,7 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class AdminDashboard extends AppCompatActivity {
 
-    Button addBookBtn, searchBtn, profileBtn,requestsBtn;
+    Button addBookBtn, searchBtn, profileBtn,requestsBtn, logoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class AdminDashboard extends AppCompatActivity {
         searchBtn = findViewById(R.id.searchBtn);
         profileBtn = findViewById(R.id.profileBtn);
         requestsBtn = findViewById(R.id.requestsBtn);
+        logoutBtn = findViewById(R.id.logoutBtn);
 
         // Fragment initialized
         Fragment LibraryFragment = new AddBookFragment();
@@ -80,7 +81,7 @@ public class AdminDashboard extends AppCompatActivity {
                 addBookBtn.setBackgroundResource(R.drawable.library_button);
                 searchBtn.setBackgroundResource(R.drawable.search_button);
                 profileBtn.setBackgroundResource(R.drawable.profile_button_pressed);
-                loadFragment((new ProfilePageFragment()));
+                loadFragment((new ViewUsersFragment()));
             }
         });
         requestsBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +91,16 @@ public class AdminDashboard extends AppCompatActivity {
             }
         }
         );
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                CustomIntent.customType(AdminDashboard.this, "fadein-to-fadeout");
+                finish();
+            }
+        });
+
     }
 
     protected void onPause() {
