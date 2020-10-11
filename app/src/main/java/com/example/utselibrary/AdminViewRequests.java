@@ -36,7 +36,7 @@ import java.util.List;
 import maes.tech.intentanim.CustomIntent;
 
 public class AdminViewRequests extends AppCompatActivity {
-    Button rejectBtn, reviewBtn, acceptBtn;
+    Button rejectBtn, acceptBtn, backBtn;
     RecyclerView resultList;
     LinearLayoutManager linearLayoutManager;
 
@@ -51,6 +51,7 @@ public class AdminViewRequests extends AppCompatActivity {
         setContentView(R.layout.activity_admin_view_requests);
         resultList = findViewById(R.id.requestRecyclerView);
         resultList.setLayoutManager(new LinearLayoutManager(this));
+        backBtn = findViewById(R.id.backBtn);
         Query query = bookRef.orderBy("title", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<BookRequestModel> options = new FirestoreRecyclerOptions.Builder<BookRequestModel>().setQuery(query, BookRequestModel.class).build();
 
@@ -69,7 +70,15 @@ public class AdminViewRequests extends AppCompatActivity {
           }
         };
         resultList.setAdapter(bookRequestAdapter);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), AdminDashboard.class));
+            }
+        });
     }
+
 
     @Override
     protected void onStart(){
