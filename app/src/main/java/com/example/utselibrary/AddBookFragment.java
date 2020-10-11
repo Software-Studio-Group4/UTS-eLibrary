@@ -50,7 +50,7 @@ import javax.annotation.Nullable;
 
 public class AddBookFragment extends Fragment {
 
-    EditText titleTf, authorTf, publisherTf, documentIDTf, publishedYearTf, numOfCopiesTf, genreTf, descriptionTf;
+    EditText titleTf, authorTf, publisherTf, documentIDTf, publishedYearTf, numOfCopiesTf, genreTf, descriptionTf, ISBNTf;
     Button addButton;
     ImageView bookImage;
     Uri imageUri;
@@ -113,6 +113,7 @@ public class AddBookFragment extends Fragment {
         descriptionTf = getView().findViewById(R.id.descriptionTf);
         addButton = getView().findViewById(R.id.addBtn);
         bookImage = getView().findViewById(R.id.bookImage);
+        ISBNTf = getView().findViewById(R.id.ISBNTf);
 
         documentRef = FirebaseDatabase.getInstance().getReference("documents");
         storage = FirebaseStorage.getInstance();
@@ -148,6 +149,7 @@ public class AddBookFragment extends Fragment {
         final String borrowLimitString = numOfCopiesTf.getText().toString().trim();
         final String description = descriptionTf.getText().toString().trim();
         final String image = imageUrl;
+        final String ISBN = ISBNTf.getText().toString().trim();
         ArrayList<String> borrowers = new ArrayList<String>();
         final int borrowLimit;
 
@@ -159,6 +161,12 @@ public class AddBookFragment extends Fragment {
 
         if (TextUtils.isEmpty(title)) {
             titleTf.setError("Please enter document title");
+            YoYo.with(Techniques.Shake).duration(700).playOn(titleTf);
+            return;
+        }
+
+        if (TextUtils.isEmpty(ISBN)) {
+            titleTf.setError("Please enter ISBN");
             YoYo.with(Techniques.Shake).duration(700).playOn(titleTf);
             return;
         }
@@ -212,6 +220,7 @@ public class AddBookFragment extends Fragment {
         documentMap.put("objectID", algoliaId);
         documentMap.put("borrowLimit", borrowLimit);
         documentMap.put("description", description);
+        documentMap.put("ISBN", ISBN);
 
         // Non form fields
         documentMap.put("borrowers", borrowers);
@@ -237,6 +246,7 @@ public class AddBookFragment extends Fragment {
                                     .put("borrowLimit", borrowLimit)
                                     .put("coverImageUrl", image)
                                     .put("id", id)
+                                    .put("ISBN", ISBN)
                     );
                 } catch (JSONException e) {
                     e.printStackTrace();

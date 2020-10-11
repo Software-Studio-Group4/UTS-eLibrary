@@ -48,7 +48,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class UpdateBook extends AppCompatActivity {
-    EditText titleTf, authorTf, publisherTf, publishedYearTf, numOfCopiesTf, genreTf, descriptionTf;
+    EditText titleTf, authorTf, publisherTf, publishedYearTf, numOfCopiesTf, genreTf, descriptionTf, ISBNTf;
     Button addButton;
     TextView documentIDTf;
     ImageView bookImage;
@@ -80,6 +80,7 @@ public class UpdateBook extends AppCompatActivity {
         descriptionTf = findViewById(R.id.descriptionTf);
         addButton = findViewById(R.id.addBtn);
         bookImage = findViewById(R.id.bookImage);
+        ISBNTf = findViewById(R.id.ISBNTf);
 
         documentRef = FirebaseFirestore.getInstance().collection("Documents").document(id);
         storage = FirebaseStorage.getInstance();
@@ -96,7 +97,8 @@ public class UpdateBook extends AppCompatActivity {
                     long numofCopies = documentSnapshot.getLong("borrowLimit");
                     String desc = documentSnapshot.getString("description");
                     String genre = documentSnapshot.getString("genre");
-                    String bookImages = documentSnapshot.getString("coverImageUrl");
+                    imageUrl = documentSnapshot.getString("coverImageUrl");
+                    String ISBN = documentSnapshot.getString("ISBN");
                     documentIDTf.setText(docID);
                     titleTf.setText(title);
                     authorTf.setText(author);
@@ -105,7 +107,8 @@ public class UpdateBook extends AppCompatActivity {
                     numOfCopiesTf.setText("" + numofCopies);
                     descriptionTf.setText(desc);
                     genreTf.setText(genre);
-                    Picasso.get().load(bookImages).into(bookImage);
+                    ISBNTf.setText(ISBN);
+                    Picasso.get().load(imageUrl).into(bookImage);
                 }
             }
         });
@@ -142,6 +145,7 @@ public class UpdateBook extends AppCompatActivity {
         final String publishedYear = publishedYearTf.getText().toString().trim();
         final String borrowLimitString = numOfCopiesTf.getText().toString().trim();
         final String description = descriptionTf.getText().toString().trim();
+        final String ISBN = ISBNTf.getText().toString().trim();
         final String image = imageUrl;
         ArrayList<String> borrowers = new ArrayList<String>();
         final int borrowLimit;
@@ -154,6 +158,11 @@ public class UpdateBook extends AppCompatActivity {
 
         if (TextUtils.isEmpty(title)) {
             titleTf.setError("Please enter document title");
+            YoYo.with(Techniques.Shake).duration(700).playOn(titleTf);
+            return;
+        }
+        if (TextUtils.isEmpty(ISBN)) {
+            titleTf.setError("Please enter ISBN");
             YoYo.with(Techniques.Shake).duration(700).playOn(titleTf);
             return;
         }
@@ -207,6 +216,7 @@ public class UpdateBook extends AppCompatActivity {
         documentMap.put("objectID", algoliaId);
         documentMap.put("borrowLimit", borrowLimit);
         documentMap.put("description", description);
+        documentMap.put("ISBN", ISBN);
 
         documentRef.update(documentMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -254,6 +264,11 @@ public class UpdateBook extends AppCompatActivity {
                     );
                     index.partialUpdateObjectAsync(
                             new JSONObject().put("description", description),
+                            algoliaId,
+                            null
+                    );
+                    index.partialUpdateObjectAsync(
+                            new JSONObject().put("ISBN", ISBN),
                             algoliaId,
                             null
                     );

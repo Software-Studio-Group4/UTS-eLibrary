@@ -390,6 +390,45 @@
             app:layout_constraintEnd_toEndOf="@+id/addBookCtn"
             app:layout_constraintStart_toStartOf="@+id/addBookCtn"
             app:layout_constraintTop_toTopOf="@+id/addBookCtn" />
+        <ImageView
+            android:id="@+id/ISBNCtn"
+            android:layout_width="344dp"
+            android:layout_height="93dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/descriptionCtn"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/descriptionCtn"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionCtn"
+            app:srcCompat="@drawable/add_book_field_ctn"
+            tools:ignore="MissingConstraints"
+            tools:layout_conversion_absoluteHeight="0dp"
+            tools:layout_conversion_absoluteWidth="0dp" />
+
+        <EditText
+            android:id="@+id/ISBNTf"
+            android:layout_width="335dp"
+            android:layout_height="35dp"
+            android:autofillHints=""
+            android:background="@android:color/transparent"
+            android:backgroundTint="#575757"
+            android:ems="10"
+            android:maxLength="13"
+            android:inputType="textPersonName"
+            android:hint="ISNB"
+            android:textColor="#575757"
+            android:textColorHighlight="#575757"
+            android:textColorHint="@color/common_google_signin_btn_text_light_default"
+            android:textColorLink="#575757"
+            android:textCursorDrawable="@null"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/descriptionCtn"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/descriptionCtn"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionCtn"
+            app:srcCompat="@drawable/add_book_field_ctn"
+            tools:ignore="MissingConstraints"
+            tools:layout_conversion_absoluteHeight="0dp"
+            tools:layout_conversion_absoluteWidth="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
