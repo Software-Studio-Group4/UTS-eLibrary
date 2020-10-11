@@ -1,17 +1,24 @@
 package com.example.utselibrary;
 
+import android.app.Activity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.utselibrary.Model.Documents;
@@ -25,6 +32,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+
+import com.example.utselibrary.Model.Documents;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter_LifecycleAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.text.BreakIterator;
+import java.util.Collection;
 
 import javax.annotation.Nullable;
 
@@ -40,6 +62,14 @@ public class MyLibraryFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+
+    DocumentReference userRef = fStore.collection("Users").document(userID);
+    CollectionReference documentsRef = fStore.collection("Documents");
+    private RecyclerView myLibraryRecyclerView;
+    private FirestoreRecyclerAdapter<Documents, DocumentsViewHolder> documentsAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+
 
     public MyLibraryFragment() { }
 
@@ -74,39 +104,108 @@ public class MyLibraryFragment extends Fragment {
      ************************************************************************************************/
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        borrowedBooks = getView().findViewById(R.id.borrowedBooks);
+        //borrowedBooks = getView().findViewById(R.id.borrowedBooks);
 
-        setRecyclerView();
-        //documentRef.whereEqualTo("borrowers", userID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-          //  @Override
-          //  public void onComplete(@NonNull Task<QuerySnapshot> task) {
+        myLibraryRecyclerView = view.findViewById(R.id.myLibraryRv);
 
-          //  }
-       // });
+        myLibraryRecyclerView.setHasFixedSize(true);
+        layoutManager = new GridLayoutManager(getContext(), 3);
+        myLibraryRecyclerView.setLayoutManager(layoutManager);
+
+        Query booksQuery = documentsRef.whereArrayContains("borrowers", userID);
+        FirestoreRecyclerOptions<Documents> options = new FirestoreRecyclerOptions.Builder<Documents>().setQuery(booksQuery, Documents.class).build();
+
+
+        documentsAdapter = new FirestoreRecyclerAdapter<Documents, DocumentsViewHolder>(options){
+            @Override
+            protected void onBindViewHolder(@NonNull DocumentsViewHolder documentsViewHolder, int position, @NonNull Documents documentModel){
+                Log.d("TAG : ", "onBindViewHolder: found " + documentModel.getTitle());
+                // documentsViewHolder.setBookDetails(documentModel.getTitle(), documentModel.getAuthor(), getSnapshots().getSnapshot(position).getId());
+                documentsViewHolder.authorNameTv.setText("By " + documentModel.getAuthor());
+                documentsViewHolder.titleTv.setText(documentModel.getTitle());
+                Picasso.get().load(documentModel.getCoverImageUrl()).into(documentsViewHolder.coverImage);
+
+
+            }
+            @NonNull
+            @Override
+            public DocumentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_list_layout, parent, false);
+                return new DocumentsViewHolder(view);
+            }
+        };
+        myLibraryRecyclerView.setAdapter(documentsAdapter);
+
+        //setRecyclerView();
 
     }
 
-    private void setRecyclerView() {
-        Query query = documentRef.orderBy("title", Query.Direction.ASCENDING);
-
-        FirestoreRecyclerOptions<Documents> options = new FirestoreRecyclerOptions.Builder<Documents>()
-                .setQuery(query, Documents.class).build();
-
-        adapter = new DocumentAdapter(options);
-        borrowedBooks.setHasFixedSize(true);
-        borrowedBooks.setLayoutManager(new LinearLayoutManager(getContext()));
-        borrowedBooks.setAdapter(adapter);
-    }
+//    private void setRecyclerView() {
+//        Query query = documentRef.orderBy("title", Query.Direction.ASCENDING);
+//
+//        FirestoreRecyclerOptions<Documents> options = new FirestoreRecyclerOptions.Builder<Documents>()
+//                .setQuery(query, Documents.class).build();
+//
+//        adapter = new DocumentAdapter(options);
+//        borrowedBooks.setHasFixedSize(true);
+//        borrowedBooks.setLayoutManager(new LinearLayoutManager(getContext()));
+//        borrowedBooks.setAdapter(adapter);
+//    }
 
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
+        documentsAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
+        documentsAdapter.stopListening();
     }
+
+    /**********************************************************************************************
+     * Private Class for the recycler
+     ************************************************************************************************/
+    private class DocumentsViewHolder extends RecyclerView.ViewHolder{
+        private View view;
+        TextView titleTv, authorNameTv;
+        ImageView coverImage;
+
+
+        DocumentsViewHolder(View itemView){
+            super(itemView);
+            titleTv = itemView.findViewById(R.id.bookTitleText);
+            authorNameTv = itemView.findViewById(R.id.authorNameText);
+            coverImage = itemView.findViewById(R.id.coverImage);
+        }
+
+        void setBookDetails(String title, String authorName, final String bookID){
+            //set the text
+            TextView titleTv = view.findViewById(R.id.bookTitleText);
+            TextView authorNameTv = view.findViewById(R.id.authorNameText);
+            titleTv.setText(title);
+            authorNameTv.setText(authorName);
+
+            //set the onclick
+            ConstraintLayout bookItem = view.findViewById(R.id.bookItem);
+            final Bundle bundle = new Bundle();
+            bundle.putString("id", bookID);
+
+            bookItem.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    final Fragment BookDetailsFragment = new BookDetailsFragment();
+                    final FragmentManager fm = getFragmentManager();
+                    BookDetailsFragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    fragmentTransaction
+                            .setCustomAnimations(R.anim.right_to_left, R.anim.exit_right_to_left, R.anim.left_to_right, R.anim.exit_left_to_right)
+                            .add(R.id.flFragment, BookDetailsFragment).addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
+        }
+    }
+
 }
