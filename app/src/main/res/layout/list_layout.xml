@@ -8,6 +8,17 @@
     android:background="@drawable/profile_page_details_container"
     android:padding="8dp">
 
+    <ImageView
+        android:id="@+id/coverImage"
+        android:layout_width="109dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.483"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <TextView
         android:id="@+id/bookTitle"
         android:layout_width="250dp"

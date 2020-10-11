@@ -112,7 +112,7 @@ public class MyLibraryFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull DocumentsViewHolder documentsViewHolder, int position, @NonNull Documents documentModel){
                 Log.d("TAG : ", "onBindViewHolder: found " + documentModel.getTitle());
-                documentsViewHolder.setBookDetails(documentModel.getTitle(), documentModel.getTitle(), getSnapshots().getSnapshot(position).getId());
+                documentsViewHolder.setBookDetails(documentModel.getTitle(), documentModel.getAuthor(), documentModel.getCoverImageUrl(), getSnapshots().getSnapshot(position).getId());
             }
             @NonNull
             @Override
@@ -162,14 +162,17 @@ public class MyLibraryFragment extends Fragment {
             view = itemView;
         }
 
-        void setBookDetails(String title, String authorName, final String bookID){
+        void setBookDetails(String title, String authorName, String coverImageUrl, final String bookID){
            //set the text
            TextView titleTv = view.findViewById(R.id.bookTitle);
            TextView authorNameTv = view.findViewById(R.id.authorName);
+           ImageView coverImage = view.findViewById(R.id.coverImage);
            titleTv.setText(title);
            authorNameTv.setText(authorName);
+           Picasso.get().load(coverImageUrl).into(coverImage);
 
-           //set the onclick
+
+            //set the onclick
             ConstraintLayout bookItem = view.findViewById(R.id.bookItem);
             final Bundle bundle = new Bundle();
             bundle.putString("id", bookID);
