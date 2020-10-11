@@ -129,7 +129,7 @@ public class UserDetailsFragment extends Fragment {
                 if (documentSnapshot.exists()) {
                     String fullName = documentSnapshot.getString("fullName");
                     String objectID = documentSnapshot.getString("objectID");
-                    double borrowAmount = documentSnapshot.getDouble("borrowAmount");
+                    long borrowAmount = documentSnapshot.getLong("borrowAmount");
                     fullNameTf.setText(fullName);
                     borrowAmountTf.setText("Books Currently Borrowed: " + borrowAmount);
                 }

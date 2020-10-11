@@ -103,6 +103,8 @@ public class BookDetailsFragment extends Fragment {
         final String id = bookID.getString("id");
         final DocumentReference documentReference = cRef.document(id);
 
+
+
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {

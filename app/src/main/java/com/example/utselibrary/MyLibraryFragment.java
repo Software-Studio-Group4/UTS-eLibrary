@@ -30,12 +30,11 @@ import javax.annotation.Nullable;
 
 public class MyLibraryFragment extends Fragment {
     RecyclerView borrowedBooks;
-    FirestoreRecyclerAdapter adapter;
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     CollectionReference documentRef = fStore.collection("Documents");
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     String userID = fAuth.getCurrentUser().getUid();
-
+    private DocumentAdapter adapter;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -77,37 +76,14 @@ public class MyLibraryFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         borrowedBooks = getView().findViewById(R.id.borrowedBooks);
 
-        //setRecyclerView();
+        setRecyclerView();
         //documentRef.whereEqualTo("borrowers", userID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
           //  @Override
           //  public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
           //  }
        // });
-        Query query = documentRef.orderBy("title", Query.Direction.ASCENDING);
 
-        FirestoreRecyclerOptions<Documents> options = new FirestoreRecyclerOptions.Builder<Documents>()
-                .setQuery(query, Documents.class).build();
-
-        adapter = new FirestoreRecyclerAdapter<Documents, DocumentsViewHolder>(options) {
-            @SuppressLint("SetTextI18n")
-            @Override
-            protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull Documents model) {
-                holder.bookTitleText.setText(model.getTitle());
-                holder.authorNameText.setText("By " + model.getAuthor());
-                Picasso.get().load(model.getCoverImageUrl()).into(holder.coverImage);
-            }
-
-            @NonNull
-            @Override
-            public DocumentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_list_layout, parent, false);
-                return new DocumentsViewHolder(view);
-            }
-        };
-        borrowedBooks.setHasFixedSize(true);
-        borrowedBooks.setLayoutManager(new LinearLayoutManager(getContext()));
-        borrowedBooks.setAdapter(adapter);
     }
 
     private void setRecyclerView() {
@@ -116,35 +92,21 @@ public class MyLibraryFragment extends Fragment {
         FirestoreRecyclerOptions<Documents> options = new FirestoreRecyclerOptions.Builder<Documents>()
                 .setQuery(query, Documents.class).build();
 
-        adapter = new FirestoreRecyclerAdapter<Documents, DocumentsViewHolder>(options) {
-            @SuppressLint("SetTextI18n")
-            @Override
-            protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull Documents model) {
-                holder.bookTitleText.setText(model.getTitle());
-                holder.authorNameText.setText("By " + model.getAuthor());
-                Picasso.get().load(model.getCoverImageUrl()).into(holder.coverImage);
-            }
-
-            @NonNull
-            @Override
-            public DocumentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_list_layout, parent, false);
-                return new DocumentsViewHolder(view);
-            }
-        };
-
+        adapter = new DocumentAdapter(options);
+        borrowedBooks.setHasFixedSize(true);
+        borrowedBooks.setLayoutManager(new LinearLayoutManager(getContext()));
+        borrowedBooks.setAdapter(adapter);
     }
 
-    private class DocumentsViewHolder extends RecyclerView.ViewHolder {
-        TextView bookTitleText, authorNameText;
-        ImageView coverImage;
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 
-        public DocumentsViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            bookTitleText = itemView.findViewById(R.id.bookTitleText);
-            authorNameText = itemView.findViewById(R.id.authorNameText);
-            coverImage = itemView.findViewById(R.id.coverImage);
-        }
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

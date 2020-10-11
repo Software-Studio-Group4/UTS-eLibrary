@@ -1,5 +1,6 @@
 package com.example.utselibrary;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -96,6 +97,8 @@ public class AdminBookDetailsFragment extends Fragment {
         Bundle bookID = this.getArguments();
         final String id = bookID.getString("id");
 
+
+
         final DocumentReference documentReference = cRef.document(id);
         //final DocumentReference objectID = fStore.collection("Documents").document("objectID");
         final String objectId;
@@ -116,6 +119,12 @@ public class AdminBookDetailsFragment extends Fragment {
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bId = new Bundle();
+                bId.putString("item1",id);
+                Intent i=new Intent(getContext(), UpdateBook.class);
+                i.putExtras(bId);
+                startActivity(i);
+
                 Toast.makeText(getContext(), "Page does not exist yet", Toast.LENGTH_SHORT).show();
             }
         });

@@ -138,7 +138,7 @@ public class ViewAllBooksFragment extends Fragment {
         final FragmentManager fm = getFragmentManager();
         final Fragment AdminBookDetailsFragment = new AdminBookDetailsFragment();
 
-        query.get()
+        documentRef.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -169,7 +169,6 @@ public class ViewAllBooksFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            Toast.makeText(getActivity().getApplicationContext(),   "Admin clicked: " + pos, Toast.LENGTH_SHORT).show();
 
                             AdminBookDetailsFragment.setArguments(bookID);
                             FragmentTransaction fragmentTransaction = fm.beginTransaction();
