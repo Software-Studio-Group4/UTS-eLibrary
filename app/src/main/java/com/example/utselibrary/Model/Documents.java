@@ -2,16 +2,19 @@
 package com.example.utselibrary.Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Documents {
 
     private String title;
-    private String primaryAuthor;
+    private String author;
     private String genre;
     private String id;
     private String publisher;
-    private String imageUrl;
+    private String coverImageUrl;
+    private String publishedYear;
+    private String description;
     private int borrowLimit;
     private List<String> borrowers = new ArrayList<String>();
 
@@ -19,14 +22,16 @@ public class Documents {
         // Empty constructor
     }
 
-    public Documents(String title, String primaryAuthor, String id, String genre, String publisher, String imageUrl, int borrowLimit, String[] borrowers) {
+    public Documents(String title, String author, String id, String genre, String publisher, String coverImageUrl, String description, int borrowLimit, String publishedYear, String[] borrowers) {
         this.title = title;
-        this.primaryAuthor = primaryAuthor;
+        this.author = author;
         this.id = id;
         this.genre = genre;
         this.publisher = publisher;
-        this.imageUrl = imageUrl;
+        this.coverImageUrl = coverImageUrl;
         this.borrowLimit = borrowLimit;
+        this.publishedYear = publishedYear;
+        this.description = description;
         for(int i = 0; i < borrowers.length; i++) {
             this.borrowers.add(borrowers[i]);
         }
@@ -40,12 +45,12 @@ public class Documents {
         this.title = title;
     }
 
-    public String getPrimaryAuthor() {
-        return primaryAuthor;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setPrimaryAuthor(String primaryAuthor) {
-        this.primaryAuthor = primaryAuthor;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getGenre() {
@@ -72,12 +77,12 @@ public class Documents {
         this.publisher = publisher;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getCoverImageUrl() {
+        return coverImageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setCoverImageUrl(String imageUrl) {
+        this.coverImageUrl = imageUrl;
     }
 
     public int getBorrowLimit() {
@@ -88,12 +93,38 @@ public class Documents {
         this.borrowLimit = borrowLimit;
     }
 
+    public String getPublishedYear() {
+        return publishedYear;
+    }
+
+    public void setPublishedYear(String publishedYear) {
+        this.publishedYear = publishedYear;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public List<String> getBorrowers() {
         return borrowers;
     }
 
     public void setBorrowers(List<String> borrowers) {
         this.borrowers = borrowers;
+    }
+
+    public void removeBorrower(String id){
+        Iterator itr = borrowers.iterator();
+        while(itr.hasNext()){
+            String user = (String) itr.next();
+            if(user.equals(id)){
+                itr.remove();
+            }
+        }
     }
 
 }

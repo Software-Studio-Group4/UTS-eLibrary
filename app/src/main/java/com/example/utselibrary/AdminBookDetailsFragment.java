@@ -1,13 +1,11 @@
 package com.example.utselibrary;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,14 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algolia.search.saas.AbstractQuery;
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.Index;
-import com.algolia.search.saas.Query;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -83,8 +77,8 @@ public class AdminBookDetailsFragment extends Fragment {
     }
 
     /**********************************************************************************************
-     * Book details fragment
-     * manipulates the fragment where book details are displayed
+     * Admin Book details fragment
+     * manipulates the fragment where admin accesses book details
      ************************************************************************************************/
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -93,7 +87,7 @@ public class AdminBookDetailsFragment extends Fragment {
         backBtn = getView().findViewById(R.id.backBtn);
         updateBtn = getView().findViewById(R.id.updateBtn);
         removeBtn = getView().findViewById(R.id.removeBtn);
-        titleTf = getView().findViewById(R.id.titleTf);
+        titleTf = getView().findViewById(R.id.titleText);
         bookCover = getView().findViewById(R.id.bookCover);
 
         final FragmentManager fm = getFragmentManager();
@@ -102,6 +96,8 @@ public class AdminBookDetailsFragment extends Fragment {
         // Get bookID
         Bundle bookID = this.getArguments();
         final String id = bookID.getString("id");
+
+
 
         final DocumentReference documentReference = cRef.document(id);
         //final DocumentReference objectID = fStore.collection("Documents").document("objectID");
@@ -123,6 +119,12 @@ public class AdminBookDetailsFragment extends Fragment {
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bId = new Bundle();
+                bId.putString("item1",id);
+                Intent i=new Intent(getContext(), UpdateBook.class);
+                i.putExtras(bId);
+                startActivity(i);
+
                 Toast.makeText(getContext(), "Page does not exist yet", Toast.LENGTH_SHORT).show();
             }
         });

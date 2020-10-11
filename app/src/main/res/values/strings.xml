@@ -3,11 +3,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="book_volume">Book Volume</string>
+    <string name="documentIDHint"><i>Document ID</i></string>
+    <string name="titleHint"><i>Title</i></string>
+    <string name="authorHint"><i>Author</i></string>
+    <string name="genreHint"><i>Genre</i></string>
+    <string name="publisherHint"><i>Publisher</i></string>
+    <string name="publishedYearHint"><i>Published Year</i></string>
+    <string name="numOfCopiesHint"><i>No. of Copies</i></string>
+    <string name="descriptionHint"><i>Description</i></string>
 
-    <array name="genre">
-        <item>Fantasy</item>
-        <item>Action</item>
-        <item>Textbook</item>
-        <item>Sci-Fi</item>
-    </array>
 </resources>

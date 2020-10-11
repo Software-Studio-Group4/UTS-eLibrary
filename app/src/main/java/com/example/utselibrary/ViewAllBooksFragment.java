@@ -34,9 +34,6 @@ import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
-import com.example.utselibrary.Model.DocumentModel;
-import com.example.utselibrary.Model.Documents;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -79,10 +76,11 @@ public class ViewAllBooksFragment extends Fragment {
     EditText searchTf;
     private static String TAG = "fbSearch";
     CollectionReference documentRef = fStore.collection("Documents");
+    Query query = documentRef.orderBy("title", Query.Direction.ASCENDING);
     String pos;
 
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
-    String userID = fAuth.getCurrentUser().getUid();;
+    String userID = fAuth.getCurrentUser().getUid();
     DocumentReference adminRef = fStore.collection("Admin").document(userID);
 
 
@@ -171,7 +169,6 @@ public class ViewAllBooksFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            Toast.makeText(getActivity().getApplicationContext(),   "Admin clicked: " + pos, Toast.LENGTH_SHORT).show();
 
                             AdminBookDetailsFragment.setArguments(bookID);
                             FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -224,7 +221,7 @@ public class ViewAllBooksFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull DocumentModel model) {
                 holder.bookTitleText.setText(model.getTitle());
-                holder.authorNameText.setText("By " + model.getPrimaryAuthor());
+                holder.authorNameText.setText("By " + model.getauthor());
                 Picasso.get().load(model.getCoverImageUrl()).into(holder.coverImage);
             }
 

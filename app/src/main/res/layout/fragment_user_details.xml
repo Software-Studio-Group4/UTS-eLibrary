@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dashboard_fragment_paper_bg"
-    tools:context=".AdminBookDetailsFragment">
+    tools:context=".BookDetailsFragment">
 
     <Button
         android:id="@+id/backBtn"
@@ -21,7 +21,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/titleText"
+        android:id="@+id/fullNameTf"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -37,38 +37,61 @@
         app:layout_constraintStart_toEndOf="@+id/backBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/bookCover"
-        android:layout_width="187dp"
-        android:layout_height="279dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleText"
-        tools:ignore="MissingConstraints"
-        tools:src="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/updateBtn"
+        android:id="@+id/suspendBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="400dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
-        android:text="Update"
+        android:text="Suspend"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/borrowAmountTf"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/removeBtn"
+        android:id="@+id/fineBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
-        android:text="Remove"
+        android:text="Fine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/suspendBtn"
+         />
+
+    <TextView
+    android:id="@+id/borrowAmountTf"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:text="Borrow Amount"
+    android:textColor="#444A81"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    app:layout_constraintTop_toBottomOf="@+id/fullNameTf"
+    tools:ignore="MissingConstraints"
+    tools:layout_editor_absoluteX="64dp" />
+
+    <TextView
+        android:id="@+id/borrowedDocs"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Currently Borrowed: "
+        android:textColor="#444A81"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/borrowAmountTf"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="64dp" />
+    <ListView
+        android:id="@+id/borrowedDocslist"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toBottomOf="@+id/borrowedDocs"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
