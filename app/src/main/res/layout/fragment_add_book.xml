@@ -78,13 +78,37 @@
         android:textSize="14sp"
         android:layout_below="@id/authorTf"
         tools:ignore="MissingConstraints" />
+    <EditText
+        android:id="@+id/idTf"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:autofillHints=""
+        android:backgroundTint="#575757"
+        android:ems="10"
+        android:hint="ID"
+        android:inputType="textPersonName"
+        android:maxLength="9"
+        android:text=""
+        android:textColor="#575757"
+        android:textColorHighlight="#575757"
+        android:textColorHint="@color/common_google_signin_btn_text_light_default"
+        android:textColorLink="#575757"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp"
+        android:layout_below="@id/publisherTf"
+        tools:ignore="MissingConstraints" />
 
     <Spinner
         android:id="@+id/genreSpinner"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/publisherTf"
+        android:layout_below="@id/idTf"
         android:layout_centerHorizontal="true"
+        android:textColor="#575757"
+        android:textColorHighlight="#575757"
+        android:textColorHint="@color/common_google_signin_btn_text_light_default"
+        android:textColorLink="#575757"
         android:entries="@array/genre" />
 
     <Button

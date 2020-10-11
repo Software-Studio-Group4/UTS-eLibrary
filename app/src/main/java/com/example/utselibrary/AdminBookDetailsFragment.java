@@ -1,11 +1,15 @@
 package com.example.utselibrary;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +18,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.algolia.search.saas.AbstractQuery;
+import com.algolia.search.saas.Client;
+import com.algolia.search.saas.Index;
+import com.algolia.search.saas.Query;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,12 +37,15 @@ import javax.annotation.Nullable;
 
 public class AdminBookDetailsFragment extends Fragment {
 
+    private static final String TAG = "Admin Book";
     Button backBtn, updateBtn, removeBtn;
     TextView titleTf;
     ImageView bookCover;
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     CollectionReference cRef = fStore.collection("Documents");
+    Client client = new Client("9L80XXFOLT", "a01b448ff9270562e195ef32110d829a");
+    Index index = client.getIndex("Documents");
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -90,13 +104,16 @@ public class AdminBookDetailsFragment extends Fragment {
         final String id = bookID.getString("id");
 
         final DocumentReference documentReference = cRef.document(id);
+        //final DocumentReference objectID = fStore.collection("Documents").document("objectID");
+        final String objectId;
+
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     String title = documentSnapshot.getString("title");
                     String bookCoverUrl = documentSnapshot.getString("coverImageUrl");
-
+                    String objectID = documentSnapshot.getString("objectID");
                     titleTf.setText(title);
                     Picasso.get().load(bookCoverUrl).into(bookCover);
                 }
@@ -113,7 +130,32 @@ public class AdminBookDetailsFragment extends Fragment {
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Page does not exist yet", Toast.LENGTH_SHORT).show();
+                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+
+                            final String objectID = documentSnapshot.getString("objectID");
+                            documentReference.delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            index.deleteObjectAsync(objectID, null);
+                                            fm.popBackStack();
+                                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error deleting document", e);
+                                        }
+                                    });
+                        }
+                    }
+                });
+
+                Toast.makeText(getContext(), "Book Deleted", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -127,3 +169,35 @@ public class AdminBookDetailsFragment extends Fragment {
 
     }
 }
+
+/*
+AlertDialog.Builder builder = new AlertDialog.Builder(getActivity().getApplicationContext());
+                builder.setMessage("Are you sure you want to remove this book?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        documentReference.delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Query query = new Query()
+                                                .setFilters(id)
+                                                .setAroundLatLng(new AbstractQuery.LatLng(40.71, -74.01));
+                                        index.deleteByAsync(query, null);
+                                        fm.popBackStack();
+                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error deleting document", e);
+                                    }
+                                });
+                        Toast.makeText(getContext(), "Page does not exist yet", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                        .setNegativeButton("Cancel", null);
+
+                AlertDialog alert = builder.create();
+                alert.show();
+ */

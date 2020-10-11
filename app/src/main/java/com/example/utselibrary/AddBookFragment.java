@@ -55,7 +55,7 @@ import javax.annotation.Nullable;
  */
 public class AddBookFragment extends Fragment {
 
-    EditText titleTf, authorTf, publisherTf;
+    EditText titleTf, authorTf, publisherTf, idTf;
     Button addButton;
     Spinner genreSpinner;
     ImageView bookImage;
@@ -116,6 +116,7 @@ public class AddBookFragment extends Fragment {
         titleTf = getView().findViewById(R.id.bookTitleTf);
         authorTf = getView().findViewById(R.id.authorTf);
         publisherTf = getView().findViewById(R.id.publisherTf);
+        idTf = getView().findViewById(R.id.idTf);
         addButton = getView().findViewById(R.id.addBtn);
         genreSpinner = getView().findViewById(R.id.genreSpinner);
         bookImage = getView().findViewById(R.id.bookImage);
@@ -147,6 +148,7 @@ public class AddBookFragment extends Fragment {
         final String author = authorTf.getText().toString().trim();
         final String genre = genreSpinner.getSelectedItem().toString();
         final String publisher = publisherTf.getText().toString().trim();
+        final String algoliaId = idTf.getText().toString().trim();
         final String image = imageUrl;
 
         final Map<String, String> documentMap = new HashMap<>();
@@ -156,6 +158,7 @@ public class AddBookFragment extends Fragment {
         documentMap.put("genre", genre);
         documentMap.put("publisher", publisher);
         documentMap.put("coverImageUrl", image);
+        documentMap.put("objectID", algoliaId);
 
 
         fStore.collection("Documents").add(documentMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -169,7 +172,7 @@ public class AddBookFragment extends Fragment {
 
                 try {
                     array.add(
-                            new JSONObject().put("title", title).put("author", author).put("genre", genre).put("publisher", publisher).put("coverImageUrl", image).put("id", id)
+                            new JSONObject().put("objectID", algoliaId).put("title", title).put("author", author).put("genre", genre).put("publisher", publisher).put("coverImageUrl", image).put("id", id)
                     );
                 } catch (JSONException e) {
                     e.printStackTrace();
