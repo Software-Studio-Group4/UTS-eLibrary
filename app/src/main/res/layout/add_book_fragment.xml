@@ -126,15 +126,39 @@
             tools:layout_conversion_absoluteWidth="0dp" />
 
         <ImageView
-            android:id="@+id/descriptionCtn"
-            android:layout_width="353dp"
-            android:layout_height="143dp"
-            android:layout_marginTop="16dp"
+            android:id="@+id/ISBNCtn"
+            android:layout_width="344dp"
+            android:layout_height="93dp"
             app:layout_constraintEnd_toEndOf="@+id/numOfCopiesCtn"
             app:layout_constraintStart_toStartOf="@+id/publishedYearCtn"
             app:layout_constraintTop_toBottomOf="@+id/publishedYearCtn"
+            app:srcCompat="@drawable/add_book_field_ctn"
+            tools:ignore="MissingConstraints"
+            tools:layout_conversion_absoluteHeight="0dp"
+            tools:layout_conversion_absoluteWidth="0dp" />
+
+        <ImageView
+            android:id="@+id/descriptionCtn"
+            android:layout_width="353dp"
+            android:layout_height="143dp"
+            app:layout_constraintEnd_toEndOf="@+id/numOfCopiesCtn"
+            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintStart_toStartOf="@+id/publishedYearCtn"
+            app:layout_constraintTop_toBottomOf="@+id/ISBNCtn"
             app:srcCompat="@drawable/description_ctn"
             tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/addBookCtn"
+            android:layout_width="170dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookImage"
+            app:srcCompat="@drawable/add_document_button" />
 
         <EditText
             android:id="@+id/documentIDTf"
@@ -253,8 +277,6 @@
             android:textCursorDrawable="@null"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/publisherCtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/genreTf"
             app:layout_constraintTop_toTopOf="@+id/publisherCtn"
             app:layout_constraintVertical_bias="0.444"
@@ -315,6 +337,31 @@
             tools:layout_conversion_absoluteWidth="0dp" />
 
         <EditText
+            android:id="@+id/ISBNTf"
+            android:layout_width="335dp"
+            android:layout_height="35dp"
+            android:autofillHints=""
+            android:background="@android:color/transparent"
+            android:backgroundTint="#575757"
+            android:ems="10"
+            android:hint="@string/ISNBHint"
+            android:inputType="textPersonName"
+            android:maxLength="13"
+            android:textColor="#575757"
+            android:textColorHighlight="#575757"
+            android:textColorHint="@color/common_google_signin_btn_text_light_default"
+            android:textColorLink="#575757"
+            android:textCursorDrawable="@null"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ISBNCtn"
+            app:layout_constraintStart_toStartOf="@+id/publishedYearTf"
+            app:layout_constraintTop_toTopOf="@+id/ISBNCtn"
+            app:srcCompat="@drawable/add_book_field_ctn"
+            tools:ignore="MissingConstraints"
+            tools:layout_conversion_absoluteHeight="0dp"
+            tools:layout_conversion_absoluteWidth="0dp" />
+
+        <EditText
             android:id="@+id/descriptionTf"
             android:layout_width="320dp"
             android:layout_height="119dp"
@@ -344,13 +391,15 @@
             android:id="@+id/addBtn"
             android:layout_width="135dp"
             android:layout_height="37dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/addBookCtn"
-            app:layout_constraintHorizontal_bias="0.417"
-            app:layout_constraintStart_toStartOf="@+id/addBookCtn"
-            app:layout_constraintTop_toTopOf="@+id/addBookCtn"
+            android:layout_marginTop="4dp"
             android:background="@android:color/transparent"
             android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/addBookCtn"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="@+id/addBookCtn"
+            app:layout_constraintTop_toTopOf="@+id/addBookCtn"
+            app:layout_constraintVertical_bias="0.529"
             tools:ignore="MissingConstraints"
             tools:layout_conversion_absoluteHeight="0dp"
             tools:layout_conversion_absoluteWidth="0dp" />
@@ -359,26 +408,15 @@
             android:id="@+id/bookImage"
             android:layout_width="76dp"
             android:layout_height="65dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="44dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.47"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descriptionCtn"
             app:srcCompat="@android:drawable/ic_menu_gallery"
             tools:ignore="MissingConstraints"
             tools:layout_conversion_absoluteHeight="0dp"
             tools:layout_conversion_absoluteWidth="0dp" />
-
-        <ImageView
-            android:id="@+id/addBookCtn"
-            android:layout_width="170dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookImage"
-            app:srcCompat="@drawable/add_document_button" />
 
         <TextView
             android:id="@+id/addDocumentText"
@@ -390,46 +428,6 @@
             app:layout_constraintEnd_toEndOf="@+id/addBookCtn"
             app:layout_constraintStart_toStartOf="@+id/addBookCtn"
             app:layout_constraintTop_toTopOf="@+id/addBookCtn" />
-
-        <ImageView
-            android:id="@+id/ISBNCtn"
-            android:layout_width="344dp"
-            android:layout_height="93dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/descriptionCtn"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/descriptionCtn"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionCtn"
-            app:srcCompat="@drawable/add_book_field_ctn"
-            tools:ignore="MissingConstraints"
-            tools:layout_conversion_absoluteHeight="0dp"
-            tools:layout_conversion_absoluteWidth="0dp" />
-
-        <EditText
-            android:id="@+id/ISBNTf"
-            android:layout_width="335dp"
-            android:layout_height="35dp"
-            android:autofillHints=""
-            android:background="@android:color/transparent"
-            android:backgroundTint="#575757"
-            android:ems="10"
-            android:maxLength="13"
-            android:inputType="textPersonName"
-            android:hint="ISNB"
-            android:textColor="#575757"
-            android:textColorHighlight="#575757"
-            android:textColorHint="@color/common_google_signin_btn_text_light_default"
-            android:textColorLink="#575757"
-            android:textCursorDrawable="@null"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/descriptionCtn"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/descriptionCtn"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionCtn"
-            app:srcCompat="@drawable/add_book_field_ctn"
-            tools:ignore="MissingConstraints"
-            tools:layout_conversion_absoluteHeight="0dp"
-            tools:layout_conversion_absoluteWidth="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

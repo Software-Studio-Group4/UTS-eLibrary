@@ -11,5 +11,7 @@
     <string name="publishedYearHint"><i>Published Year</i></string>
     <string name="numOfCopiesHint"><i>No. of Copies</i></string>
     <string name="descriptionHint"><i>Description</i></string>
+    <string name="ISNBHint"><i>ISNB</i></string>
+
 
 </resources>
