@@ -4,34 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/user_dashboard_bg">
-
-    <TextView
-        android:id="@+id/logoText"
-        android:layout_width="124dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif"
-        android:text="SWUT eLibrary"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toEndOf="@+id/SWUTLogo"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/SWUTLogo"
-        android:layout_width="78dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="6dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/swutlogo"
-        tools:ignore="MissingConstraints" />
+    android:background="@drawable/white_bg">
 
     <Button
         android:id="@+id/libraryBtn"
@@ -115,5 +88,41 @@
         app:layout_constraintEnd_toStartOf="@+id/searchBtn"
         app:layout_constraintStart_toEndOf="@+id/libraryBtn"
         app:layout_constraintTop_toBottomOf="@+id/flFragment" />
+
+    <ImageView
+        android:id="@+id/headerImage"
+        android:layout_width="400dp"
+        android:layout_height="97dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/header_image"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/logoText"
+        android:layout_width="124dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:text="SWUT eLibrary"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toEndOf="@+id/SWUTLogo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/SWUTLogo"
+        android:layout_width="78dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/swutlogo"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
