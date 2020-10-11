@@ -1,16 +1,16 @@
 package com.example.utselibrary.Model;
 
-public class BookRequest {
-    private static String title;
-    private static String primaryAuthor;
-    private static String genre;
-    private static String publisher;
+public class BookRequestModel {
+    private  String title;
+    private  String author;
+    private  String genre;
+    private  String publisher;
     private String id;
 
 
     private String imageUrl;
 
-    public static String getPublisher() {
+    public  String getPublisher() {
         return publisher;
     }
 
@@ -28,7 +28,7 @@ public class BookRequest {
 
 
 
-    public static String getGenre() {
+    public  String getGenre() {
         return genre;
     }
 
@@ -37,19 +37,19 @@ public class BookRequest {
     }
 
 
-    public BookRequest() {
+    public BookRequestModel() {
         // Empty constructor
     }
 
-    public BookRequest(String title, String primaryAuthor, String id, String genre, String publisher) {
+    public BookRequestModel(String title, String author, String id, String genre, String publisher) {
         this.title = title;
-        this.primaryAuthor = primaryAuthor;
+        this.author = author;
         this.id = id;
         this.genre = genre;
         this.publisher = publisher;
     }
 
-    public static String getTitle() {
+    public  String getTitle() {
         return title;
     }
 
@@ -57,11 +57,11 @@ public class BookRequest {
         this.title = title;
     }
 
-    public static String getPrimaryAuthor() {
-        return primaryAuthor;
+    public  String getAuthor() {
+        return author;
     }
 
-    public void setPrimaryAuthor(String primaryAuthor) {
-        this.primaryAuthor =  primaryAuthor;
+    public void setAuthor(String author) {
+        this.author =  author;
     }
 }

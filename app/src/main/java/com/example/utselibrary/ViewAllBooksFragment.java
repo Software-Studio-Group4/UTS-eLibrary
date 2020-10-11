@@ -221,7 +221,7 @@ public class ViewAllBooksFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final DocumentsViewHolder holder, int position, @NonNull DocumentModel model) {
                 holder.bookTitleText.setText(model.getTitle());
-                holder.authorNameText.setText("By " + model.getPrimaryAuthor());
+                holder.authorNameText.setText("By " + model.getauthor());
                 Picasso.get().load(model.getCoverImageUrl()).into(holder.coverImage);
             }
 

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,11 +20,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.example.utselibrary.Model.BookRequest;
+
+import com.example.utselibrary.Model.BookRequestModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -36,13 +36,13 @@ import java.util.List;
 import maes.tech.intentanim.CustomIntent;
 
 public class AdminViewRequests extends AppCompatActivity {
-    private Button rejectBtn, reviewBtn, acceptBtn;
-    private RecyclerView resultList;
+    Button rejectBtn, reviewBtn, acceptBtn;
+    RecyclerView resultList;
     LinearLayoutManager linearLayoutManager;
 
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     CollectionReference bookRef = fStore.collection("BookRequests");
-    //private FirestoreRecyclerAdapter<BookRequest, RequestBookViewHolder> bookRequestAdapter;
+    FirestoreRecyclerAdapter<BookRequestModel, RequestBookViewHolder> bookRequestAdapter;
 
 
     @Override
@@ -50,13 +50,61 @@ public class AdminViewRequests extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_view_requests);
         resultList = findViewById(R.id.requestRecyclerView);
-        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
-        resultList.setLayoutManager(linearLayoutManager);
-        //setRecyclerView();
+        resultList.setLayoutManager(new LinearLayoutManager(this));
+        Query query = bookRef.orderBy("title", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<BookRequestModel> options = new FirestoreRecyclerOptions.Builder<BookRequestModel>().setQuery(query, BookRequestModel.class).build();
 
+        bookRequestAdapter = new FirestoreRecyclerAdapter<BookRequestModel, RequestBookViewHolder>(options){
+          @Override
+          protected void onBindViewHolder(@NonNull RequestBookViewHolder requestBookViewHolder, int position, @NonNull BookRequestModel bookRequest){
+              requestBookViewHolder.setDetails(bookRequest.getTitle(), bookRequest.getAuthor());
+              Log.d("LOG", "onBindViewHolder: found book" + bookRequest.getTitle());
+          }
 
+          @NonNull
+            @Override
+            public RequestBookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+              View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_layout, parent, false);
+              return new RequestBookViewHolder(view);
+          }
+        };
+        resultList.setAdapter(bookRequestAdapter);
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        bookRequestAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (bookRequestAdapter != null) {
+            bookRequestAdapter.stopListening();
+        }
+    }
+/**********************************************************************************************
+ * Private Class for the recycler view
+ ************************************************************************************************/
+    private class RequestBookViewHolder extends RecyclerView.ViewHolder{
+        private View view;
+
+        RequestBookViewHolder(View itemView){
+            super(itemView);
+            view = itemView;
+        }
+
+        //set details
+    void setDetails(String title, String authorName){
+        TextView titleTv = view.findViewById(R.id.bookTitle);
+        TextView authorNameTv = view.findViewById(R.id.authorName);
+        titleTv.setText(title);
+        authorNameTv.setText(authorName);
+    }
+
+    }
     /*private void setRecyclerView() {
         Query query = bookRef.orderBy("title", Query.Direction.DESCENDING);
 
@@ -74,12 +122,12 @@ public class AdminViewRequests extends AppCompatActivity {
                         }
                     }
                 });
-        FirestoreRecyclerOptions<BookRequest> options = new FirestoreRecyclerOptions.Builder<BookRequest>().setQuery(query, BookRequest.class).build();
+        FirestoreRecyclerOptions<BookRequestModel> options = new FirestoreRecyclerOptions.Builder<BookRequestModel>().setQuery(query, BookRequestModel.class).build();
 
-        bookRequestAdapter = new FirestoreRecyclerAdapter<BookRequest, RequestBookViewHolder>(options) {
+        bookRequestAdapter = new FirestoreRecyclerAdapter<BookRequestModel, RequestBookViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull RequestBookViewHolder holder, int position, @NonNull BookRequest model) {
-                RequestBookViewHolder.setRequestName(BookRequest.getTitle(), BookRequest.getPrimaryAuthor(), BookRequest.getGenre(), BookRequest.getPublisher());
+            protected void onBindViewHolder(@NonNull RequestBookViewHolder holder, int position, @NonNull BookRequestModel model) {
+                RequestBookViewHolder.setRequestName(BookRequestModel.getTitle(), BookRequestModel.getauthor(), BookRequestModel.getGenre(), BookRequestModel.getPublisher());
             }
 
             @NonNull
