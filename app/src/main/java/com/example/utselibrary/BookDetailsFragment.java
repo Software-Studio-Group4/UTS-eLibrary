@@ -111,7 +111,7 @@ public class BookDetailsFragment extends Fragment {
                 if (documentSnapshot.exists()) {
                     Documents document = documentSnapshot.toObject(Documents.class);
 
-                    // Get fields from Firebase
+                    // Get fields from Firestore
                     String title = document.getTitle();
                     String bookCoverUrl = document.getCoverImageUrl();
                     String author = document.getAuthor();

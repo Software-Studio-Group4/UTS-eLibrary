@@ -166,7 +166,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:paddingBottom="10dp"
-            android:text="Description"
             android:textColor="#636363"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"

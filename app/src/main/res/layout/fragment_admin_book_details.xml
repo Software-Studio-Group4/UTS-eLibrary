@@ -1,11 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dashboard_fragment_paper_bg"
     tools:context=".AdminBookDetailsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".AdminDashboard"
+        tools:ignore="MissingConstraints">
+
+    <TextView
+        android:id="@+id/descriptionText"
+        android:layout_width="353dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="10dp"
+        android:textColor="#636363"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/bookCover"
+        app:layout_constraintTop_toBottomOf="@+id/bookCover" />
+
+    <TextView
+        android:id="@+id/publishedYearText"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#636363"
+        app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/authorText"
+        app:layout_constraintTop_toBottomOf="@+id/genreText" />
+
+    <TextView
+        android:id="@+id/genreText"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#636363"
+        app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/authorText"
+        app:layout_constraintTop_toBottomOf="@+id/authorText" />
+
+    <TextView
+        android:id="@+id/authorText"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"
+        android:textColor="#636363"
+        app:layout_constraintStart_toEndOf="@+id/bookCover"
+        app:layout_constraintTop_toBottomOf="@+id/removeBtn" />
 
     <Button
         android:id="@+id/backBtn"
@@ -27,20 +79,16 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="56dp"
-        android:layout_marginEnd="347dp"
-        android:layout_marginRight="347dp"
         android:textColor="#444A81"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/backBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/bookCover"
-        android:layout_width="187dp"
-        android:layout_height="279dp"
+        android:layout_width="190dp"
+        android:layout_height="318dp"
         android:layout_marginStart="28dp"
         android:layout_marginLeft="28dp"
         android:layout_marginTop="28dp"
@@ -53,12 +101,11 @@
         android:id="@+id/updateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
         android:text="Update"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/bookCover" />
 
     <Button
         android:id="@+id/removeBtn"
@@ -71,4 +118,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateBtn" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

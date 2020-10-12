@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.Index;
+import com.example.utselibrary.Model.Documents;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +34,7 @@ public class AdminBookDetailsFragment extends Fragment {
 
     private static final String TAG = "Admin Book";
     Button backBtn, updateBtn, removeBtn;
-    TextView titleTf;
+    TextView titleTf, authorText, genreText, publishedYearText, descriptionText;
     ImageView bookCover;
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
@@ -89,6 +90,10 @@ public class AdminBookDetailsFragment extends Fragment {
         removeBtn = getView().findViewById(R.id.removeBtn);
         titleTf = getView().findViewById(R.id.titleText);
         bookCover = getView().findViewById(R.id.bookCover);
+        authorText = getView().findViewById(R.id.authorText);
+        genreText = getView().findViewById(R.id.genreText);
+        publishedYearText = getView().findViewById(R.id.publishedYearText);
+        descriptionText = getView().findViewById(R.id.descriptionText);
 
         final FragmentManager fm = getFragmentManager();
         final Fragment ViewAllBooksFragment = new ViewAllBooksFragment();
@@ -107,10 +112,23 @@ public class AdminBookDetailsFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
-                    String title = documentSnapshot.getString("title");
-                    String bookCoverUrl = documentSnapshot.getString("coverImageUrl");
+                    Documents document = documentSnapshot.toObject(Documents.class);
+
+                    // Get fields from Firestore
+                    String title = document.getTitle();
+                    String bookCoverUrl = document.getCoverImageUrl();
                     String objectID = documentSnapshot.getString("objectID");
+                    String author = document.getAuthor();
+                    String genre = document.getGenre();
+                    String publishedYear = document.getPublishedYear();
+                    String description = document.getDescription();
+
+                    // Set text views
                     titleTf.setText(title);
+                    authorText.setText("Author: " + author);
+                    genreText.setText("Genre: " + genre);
+                    publishedYearText.setText("Published: " + publishedYear);
+                    descriptionText.setText(description);
                     Picasso.get().load(bookCoverUrl).into(bookCover);
                 }
             }
