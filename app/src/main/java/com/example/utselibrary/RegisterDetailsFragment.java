@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -208,6 +209,27 @@ public class RegisterDetailsFragment extends Fragment {
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
+                                    fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                            }
+                                        }
+                                    });
+
+                                    FirebaseUser user = fAuth.getCurrentUser();
+
+                                    user.sendEmailVerification()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                    }
+                                                }
+                                            });
+
+                                    FirebaseAuth.getInstance().signOut();
+
                                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
                                     fragmentTransaction
                                             .setCustomAnimations(R.anim.right_to_left, R.anim.exit_right_to_left)

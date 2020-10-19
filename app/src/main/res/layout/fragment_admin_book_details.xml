@@ -13,110 +13,121 @@
         tools:context=".AdminDashboard"
         tools:ignore="MissingConstraints">
 
-    <TextView
-        android:id="@+id/descriptionText"
-        android:layout_width="353dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingBottom="10dp"
-        android:textColor="#636363"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/bookCover"
-        app:layout_constraintTop_toBottomOf="@+id/bookCover" />
+        <TextView
+            android:id="@+id/numOfCopiesText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="#636363"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.076"
+            app:layout_constraintStart_toStartOf="@+id/authorText"
+            app:layout_constraintTop_toBottomOf="@+id/publishedYearText" />
 
-    <TextView
-        android:id="@+id/publishedYearText"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="#636363"
-        app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/authorText"
-        app:layout_constraintTop_toBottomOf="@+id/genreText" />
+        <TextView
+            android:id="@+id/descriptionText"
+            android:layout_width="353dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="10dp"
+            android:textColor="#636363"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/bookCover"
+            app:layout_constraintTop_toBottomOf="@+id/bookCover" />
 
-    <TextView
-        android:id="@+id/genreText"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="#636363"
-        app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/authorText"
-        app:layout_constraintTop_toBottomOf="@+id/authorText" />
+        <TextView
+            android:id="@+id/publishedYearText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#636363"
+            app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/authorText"
+            app:layout_constraintTop_toBottomOf="@+id/genreText" />
 
-    <TextView
-        android:id="@+id/authorText"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="16dp"
-        android:textColor="#636363"
-        app:layout_constraintStart_toEndOf="@+id/bookCover"
-        app:layout_constraintTop_toBottomOf="@+id/removeBtn" />
+        <TextView
+            android:id="@+id/genreText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#636363"
+            app:layout_constraintEnd_toEndOf="@+id/borrowReturnCtn"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/authorText"
+            app:layout_constraintTop_toBottomOf="@+id/authorText" />
 
-    <Button
-        android:id="@+id/backBtn"
-        android:layout_width="12dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="56dp"
-        android:background="@drawable/back_button_left"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/authorText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="16dp"
+            android:textColor="#636363"
+            app:layout_constraintStart_toEndOf="@+id/bookCover"
+            app:layout_constraintTop_toBottomOf="@+id/removeBtn" />
 
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="56dp"
-        android:textColor="#444A81"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/backBtn"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="12dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="56dp"
+            android:background="@drawable/back_button_left"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
-    <ImageView
-        android:id="@+id/bookCover"
-        android:layout_width="190dp"
-        android:layout_height="318dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleText"
-        tools:ignore="MissingConstraints"
-        tools:src="@tools:sample/avatars" />
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="56dp"
+            android:textColor="#444A81"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/backBtn"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/updateBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:text="Update"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bookCover" />
+        <ImageView
+            android:id="@+id/bookCover"
+            android:layout_width="190dp"
+            android:layout_height="318dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="28dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleText"
+            tools:ignore="MissingConstraints"
+            tools:src="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/removeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:text="Remove"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateBtn" />
+        <Button
+            android:id="@+id/updateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
+            android:text="Update"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bookCover" />
+
+        <Button
+            android:id="@+id/removeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
+            android:text="Remove"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/updateBtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

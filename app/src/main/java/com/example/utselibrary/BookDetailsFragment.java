@@ -102,9 +102,10 @@ public class BookDetailsFragment extends Fragment {
         Bundle bookID = this.getArguments();
         final String id = bookID.getString("id");
         final DocumentReference documentReference = cRef.document(id);
+        final DocumentReference userReference = fStore.collection("Users").document(FirebaseAuth.getInstance().getUid());
 
 
-
+        // Set page details
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -118,6 +119,7 @@ public class BookDetailsFragment extends Fragment {
                     String genre = document.getGenre();
                     String publishedYear = document.getPublishedYear();
                     String description = document.getDescription();
+                    int borrowLimit = document.getBorrowLimit();
 
 
                     // Set text views
@@ -129,76 +131,85 @@ public class BookDetailsFragment extends Fragment {
 
                     Picasso.get().load(bookCoverUrl).into(bookCover);
 
+                    // Check if document borrow limit has been reached
+                    if (borrowLimit == 0) {
+                        borrowText.setTextColor(Color.GRAY);
+                    }
+
+                    // Check if document is already borrowed
                     if (document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())) {
                         borrowText.setTextColor(Color.GRAY);
                     } else {
                         returnText.setTextColor(Color.GRAY);
                     }
-
                 }
             }
         });
 
-        borrowBtn.setOnClickListener(new View.OnClickListener() {
+        userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View v) {
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                final User user = documentSnapshot.toObject(User.class);
+                if (user.getBorrowedDocs().size() >= user.getMaxAllowed()) {
+                    borrowText.setTextColor(Color.GRAY);
+                }
 
-                //check if the user has reached their max borrow allowance
-                //check if the user already borrowed this book
-                final DocumentReference userReference = fStore.collection("Users").document(FirebaseAuth.getInstance().getUid());
-
-                userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                borrowBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        final User user = documentSnapshot.toObject(User.class);
-                        if (user.getBorrowedDocs().size() >= user.getMaxAllowed()) {
-                            Toast.makeText(getContext(), "You can't borrow any more books", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @RequiresApi(api = Build.VERSION_CODES.O)
+                    public void onClick(View v) {
+                        userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                if (documentSnapshot.exists()) {
-                                    //check to see if borrow limit has been reached first
-                                    //if not, add the document to the user's borrowList and add the user's ID to the borrowers list in this document
-                                    Documents document = documentSnapshot.toObject(Documents.class);
-                                    if (document.getBorrowers().size() >= document.getBorrowLimit()) {
-                                        Toast.makeText(getContext(), "This book has reached its borrow limit", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    } else if (document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())) {
-                                        Toast.makeText(getContext(), "You already borrowed this book", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    } else {
-                                        List<String> borrowers = document.getBorrowers();
-                                        if (borrowers.size() > 0 && borrowers.get(0) == "") {
-                                            borrowers.clear();
+                                final User user = documentSnapshot.toObject(User.class);
+                                if (user.getBorrowAmount() >= user.getMaxAllowed()) {
+                                    Toast.makeText(getContext(), "You can't borrow any more books", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @RequiresApi(api = Build.VERSION_CODES.O)
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if (documentSnapshot.exists()) {
+                                                //check to see if borrow limit has been reached first
+                                                //if not, add the document to the user's borrowList and add the user's ID to the borrowers list in this document
+                                                Documents document = documentSnapshot.toObject(Documents.class);
+                                                if (document.getBorrowers().size() >= document.getBorrowLimit()) {
+                                                    Toast.makeText(getContext(), "This book has reached its borrow limit", Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                } else if (document.getBorrowers().contains(FirebaseAuth.getInstance().getUid())) {
+                                                    Toast.makeText(getContext(), "You already borrowed this book", Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                } else {
+                                                    List<String> borrowers = document.getBorrowers();
+                                                    if (borrowers.size() > 0 && borrowers.get(0) == "") {
+                                                        borrowers.clear();
+                                                    }
+
+                                                    borrowers.add(FirebaseAuth.getInstance().getUid());
+                                                    List<BorrowedDocument> borrowedDocs = new ArrayList<BorrowedDocument>();
+                                                    List<BorrowedDocument> borrowHistory = new ArrayList<BorrowedDocument>();
+                                                    borrowedDocs.addAll(user.getBorrowedDocs());
+                                                    borrowHistory.addAll(user.getBorrowHistory());
+
+                                                    BorrowedDocument newBorrow = new BorrowedDocument(id);
+
+                                                    borrowedDocs.add(newBorrow);
+                                                    borrowHistory.add(newBorrow);
+
+                                                    int borrowAmount = user.getBorrowAmount();
+                                                    borrowAmount++;
+
+                                                    documentReference.update("borrowers", borrowers);
+                                                    userReference.update("borrowAmount", borrowAmount);
+                                                    userReference.update("borrowedDocs", borrowedDocs);
+                                                    userReference.update("borrowHistory", borrowHistory);
+
+                                                    Toast.makeText(getContext(), "Successfully borrowed" + titleText.getText(), Toast.LENGTH_SHORT).show();
+                                                    borrowText.setTextColor(Color.GRAY);
+                                                    returnText.setTextColor(Color.parseColor("#444A81"));
+                                                }
+                                            }
                                         }
-
-                                        borrowers.add(FirebaseAuth.getInstance().getUid());
-                                        List<BorrowedDocument> borrowedDocs = new ArrayList<BorrowedDocument>();
-                                        List<BorrowedDocument> borrowHistory = new ArrayList<BorrowedDocument>();
-                                        borrowedDocs.addAll(user.getBorrowedDocs());
-                                        borrowHistory.addAll(user.getBorrowHistory());
-
-                                        BorrowedDocument newBorrow = new BorrowedDocument(id);
-
-                                        borrowedDocs.add(newBorrow);
-                                        borrowHistory.add(newBorrow);
-
-                                        int borrowAmount = user.getBorrowAmount();
-                                        borrowAmount++;
-
-                                        documentReference.update("borrowers", borrowers);
-                                        userReference.update("borrowAmount", borrowAmount);
-                                        userReference.update("borrowedDocs", borrowedDocs);
-                                        userReference.update("borrowHistory", borrowHistory);
-
-                                        Toast.makeText(getContext(), "Successfully borrowed" + titleText.getText(), Toast.LENGTH_SHORT).show();
-                                        borrowText.setTextColor(Color.GRAY);
-                                        returnText.setTextColor(Color.parseColor("#444A81"));
-                                    }
+                                    });
                                 }
                             }
                         });
@@ -217,7 +228,6 @@ public class BookDetailsFragment extends Fragment {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         final User user = documentSnapshot.toObject(User.class);
                         if (user.hasBook(id)) {
-
                             documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @RequiresApi(api = Build.VERSION_CODES.O)
                                 @Override
@@ -226,8 +236,11 @@ public class BookDetailsFragment extends Fragment {
                                         Documents document = documentSnapshot.toObject(Documents.class);
                                         document.removeBorrower(FirebaseAuth.getInstance().getUid());
                                         user.returnBook(id);
+                                        int borrowAmount = user.getBorrowAmount();
+                                        borrowAmount--;
 
                                         userReference.update("borrowedDocs", user.getBorrowedDocs());
+                                        userReference.update("borrowAmount", borrowAmount);
                                         documentReference.update("borrowers", document.getBorrowers());
                                         Toast.makeText(getContext(), "You returned this book", Toast.LENGTH_SHORT).show();
                                         borrowText.setTextColor(Color.parseColor("#444A81"));
@@ -248,7 +261,6 @@ public class BookDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 fm.popBackStack();
-
             }
         });
 

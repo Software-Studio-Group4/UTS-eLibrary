@@ -34,7 +34,7 @@ public class AdminBookDetailsFragment extends Fragment {
 
     private static final String TAG = "Admin Book";
     Button backBtn, updateBtn, removeBtn;
-    TextView titleTf, authorText, genreText, publishedYearText, descriptionText;
+    TextView titleTf, authorText, genreText, publishedYearText, descriptionText, numOfCopiesText;
     ImageView bookCover;
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
@@ -94,6 +94,7 @@ public class AdminBookDetailsFragment extends Fragment {
         genreText = getView().findViewById(R.id.genreText);
         publishedYearText = getView().findViewById(R.id.publishedYearText);
         descriptionText = getView().findViewById(R.id.descriptionText);
+        numOfCopiesText = getView().findViewById(R.id.numOfCopiesText);
 
         final FragmentManager fm = getFragmentManager();
         final Fragment ViewAllBooksFragment = new ViewAllBooksFragment();
@@ -122,6 +123,7 @@ public class AdminBookDetailsFragment extends Fragment {
                     String genre = document.getGenre();
                     String publishedYear = document.getPublishedYear();
                     String description = document.getDescription();
+                    int borrowLimit = document.getBorrowLimit() - document.getBorrowers().size();
 
                     // Set text views
                     titleTf.setText(title);
@@ -129,6 +131,7 @@ public class AdminBookDetailsFragment extends Fragment {
                     genreText.setText("Genre: " + genre);
                     publishedYearText.setText("Published: " + publishedYear);
                     descriptionText.setText(description);
+                    numOfCopiesText.setText("Available copies: " + borrowLimit);
                     Picasso.get().load(bookCoverUrl).into(bookCover);
                 }
             }
@@ -154,6 +157,11 @@ public class AdminBookDetailsFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
+                            Documents document = documentSnapshot.toObject(Documents.class);
+                            if (document.getBorrowers().size() >= 1) {
+                                Toast.makeText(getContext(), "Document is currently borrowed by a user", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
                             final String objectID = documentSnapshot.getString("objectID");
                             documentReference.delete()
@@ -161,21 +169,18 @@ public class AdminBookDetailsFragment extends Fragment {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             index.deleteObjectAsync(objectID, null);
-                                            fm.popBackStack();
-                                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                            Toast.makeText(getContext(), "Document Deleted", Toast.LENGTH_SHORT).show();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Error deleting document", e);
+                                            Toast.makeText(getContext(), "Error deleting document", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                         }
                     }
                 });
-
-                Toast.makeText(getContext(), "Book Deleted", Toast.LENGTH_SHORT).show();
             }
         });
 

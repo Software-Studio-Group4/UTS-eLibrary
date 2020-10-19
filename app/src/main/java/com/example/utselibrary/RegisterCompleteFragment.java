@@ -3,12 +3,20 @@ package com.example.utselibrary;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import javax.annotation.Nullable;
 
@@ -17,6 +25,7 @@ import maes.tech.intentanim.CustomIntent;
 public class RegisterCompleteFragment extends Fragment {
 
     Button nextBtn;
+    FirebaseAuth fAuth = FirebaseAuth.getInstance();
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
